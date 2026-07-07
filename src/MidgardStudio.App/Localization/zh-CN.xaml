@@ -1,0 +1,229 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:s="clr-namespace:System;assembly=System.Runtime">
+
+    <!-- =====================================================================
+         Midgard Studio — 简体中文 (zh-CN) 字符串表。
+
+         保持本文件的 key 与 en.xaml 完全一一对应。新增 key 时务必两处都加，
+         否则该字符串会回退为英文（不会报错）。详见 LOCALIZATION.md。
+         ===================================================================== -->
+
+    <!-- ===== 品牌 ===== -->
+    <s:String x:Key="App_Title">Midgard Studio</s:String>
+    <s:String x:Key="App_Subtitle">仙境传说服务器工作室</s:String>
+
+    <!-- ===== MainWindow：菜单 ===== -->
+    <s:String x:Key="Menu_File">文件(_F)</s:String>
+    <s:String x:Key="Menu_File_ForgeItem">打造新物品…(_F)</s:String>
+    <s:String x:Key="Menu_File_ForgeItem_Tooltip">在一个流程中创建完整的自定义物品（服务端 + 客户端 + 精灵）</s:String>
+    <s:String x:Key="Menu_File_Save">保存(_S)</s:String>
+    <s:String x:Key="Menu_File_Save_Tooltip">写入待保存的更改（仅重写被修改过的文件）</s:String>
+    <s:String x:Key="Menu_File_RevealImport">打开 import 文件夹(_I)</s:String>
+    <s:String x:Key="Menu_File_OpenLua">打开客户端 lua 文件夹(_L)</s:String>
+    <s:String x:Key="Menu_File_Reload">重新加载数据库(_R)</s:String>
+    <s:String x:Key="Menu_File_Profiles">配置文件与设置…(_P)</s:String>
+    <s:String x:Key="Menu_File_SwitchProfile">切换配置文件(_W)</s:String>
+    <s:String x:Key="Menu_File_Settings">设置(_T)</s:String>
+    <s:String x:Key="Menu_File_Exit">退出(_X)</s:String>
+
+    <s:String x:Key="Menu_Edit">编辑(_E)</s:String>
+    <s:String x:Key="Menu_Edit_Undo">撤销(_U)</s:String>
+    <s:String x:Key="Menu_Edit_Redo">重做(_R)</s:String>
+    <s:String x:Key="Menu_Edit_QuickOpen">快速打开…(_Q)</s:String>
+
+    <s:String x:Key="Menu_View">视图(_V)</s:String>
+    <s:String x:Key="Menu_View_GoTo">跳转到(_G)</s:String>
+    <s:String x:Key="Menu_View_System">系统(_S)</s:String>
+    <s:String x:Key="Menu_View_Renewal">Renewal（重生）</s:String>
+    <s:String x:Key="Menu_View_PreRenewal">Pre-Renewal（前重生）</s:String>
+
+    <s:String x:Key="Menu_Tools">工具(_T)</s:String>
+    <s:String x:Key="Menu_Tools_Grf">GRF 浏览器(_G)</s:String>
+    <s:String x:Key="Menu_Tools_Validation">校验(_V)</s:String>
+    <s:String x:Key="Menu_Tools_MapCache">地图缓存编辑器(_M)</s:String>
+    <s:String x:Key="Menu_Tools_CashShop">商城管理器(_C)</s:String>
+    <s:String x:Key="Menu_Tools_Backup">备份管理器(_B)</s:String>
+
+    <s:String x:Key="Menu_Help">帮助(_H)</s:String>
+    <s:String x:Key="Menu_Help_CheckUpdates">检查更新…(_C)</s:String>
+    <s:String x:Key="Menu_Help_Documentation">文档(_D)</s:String>
+    <s:String x:Key="Menu_Help_About">关于 Midgard Studio(_A)</s:String>
+
+    <!-- ===== MainWindow：标题栏更新胶囊 ===== -->
+    <s:String x:Key="Update_PillLabel">有可用更新</s:String>
+    <s:String x:Key="Update_PopupTitle">有可用更新</s:String>
+    <s:String x:Key="Update_ViewRelease">查看发布</s:String>
+    <s:String x:Key="Update_Dismiss">关闭</s:String>
+
+    <!-- ===== MainWindow：状态胶囊 ===== -->
+    <s:String x:Key="Status_ActiveProfile">当前配置文件</s:String>
+    <s:String x:Key="Status_NoChanges">无更改</s:String>
+    <s:String x:Key="Status_UnsavedChanges">有未保存的更改</s:String>
+    <s:String x:Key="Status_Undo_Tooltip">撤销 (Ctrl+Z)</s:String>
+    <s:String x:Key="Status_Redo_Tooltip">重做 (Ctrl+Y)</s:String>
+
+    <!-- ===== MainWindow：右上角条目操作 ===== -->
+    <s:String x:Key="Btn_Yaml">YAML</s:String>
+    <s:String x:Key="Btn_Yaml_Tooltip">预览将要写入 import 文件的 YAML</s:String>
+    <s:String x:Key="Btn_CopyToImport">复制到 Import 以编辑</s:String>
+    <s:String x:Key="Btn_CopyToImport_Tooltip">让此基础组合变为可编辑（写入时复制）</s:String>
+    <s:String x:Key="Btn_NewCombo">新建组合</s:String>
+    <s:String x:Key="Btn_NewCombo_Tooltip">创建一个新的自定义组合</s:String>
+    <s:String x:Key="Btn_Save_Tooltip">写入待保存的更改 (Ctrl+S) —— 仅重写被修改过的文件</s:String>
+
+    <!-- ===== MainWindow：占位区段 ===== -->
+    <s:String x:Key="Placeholder_EditorLater">编辑器将在后续阶段上线。</s:String>
+
+    <!-- ===== MainWindow：命令面板 ===== -->
+    <s:String x:Key="Palette_Placeholder">按 id / aegis / 名称搜索任意数据库…</s:String>
+
+    <!-- ===== 导航区段（ShellViewModel） ===== -->
+    <s:String x:Key="Nav_Items">物品</s:String>
+    <s:String x:Key="Nav_Items_Desc">服务端物品数据库 (item_db)：属性、加成、限制和掉落来源。</s:String>
+    <s:String x:Key="Nav_ClientItems">客户端物品</s:String>
+    <s:String x:Key="Nav_ClientItems_Desc">客户端物品信息 (itemInfo.lua / itemInfo_C.lua)：名称、描述、槽数、外观与精灵。</s:String>
+    <s:String x:Key="Nav_Mobs">魔物</s:String>
+    <s:String x:Key="Nav_Mobs_Desc">魔物数据库 (mob_db)，含掉落、模式与客户端精灵注册。</s:String>
+    <s:String x:Key="Nav_MobAvail">魔物精灵复用</s:String>
+    <s:String x:Key="Nav_MobAvail_Desc">让一个魔物复用另一个魔物（或职业）的精灵 (mob_avail)。</s:String>
+    <s:String x:Key="Nav_Pets">宠物</s:String>
+    <s:String x:Key="Nav_Pets_Desc">宠物数据库 (pet_db)：捕捉、亲密度、进化与加成脚本。</s:String>
+    <s:String x:Key="Nav_Combos">物品组合</s:String>
+    <s:String x:Key="Nav_Combos_Desc">物品套装组合 (item_combos) 及其加成脚本。</s:String>
+    <s:String x:Key="Nav_Groups">物品分组</s:String>
+    <s:String x:Key="Nav_Groups_Desc">物品分组池 (item_group_db)，含子分组与概率。</s:String>
+    <s:String x:Key="Nav_Skills">技能</s:String>
+    <s:String x:Key="Nav_Skills_Desc">技能数据库 (skill_db)。</s:String>
+    <s:String x:Key="Nav_ClientSkills">客户端技能</s:String>
+    <s:String x:Key="Nav_ClientSkills_Desc">客户端技能信息 (skillinfoz)：名称、最高等级、SP 消耗、范围、前置技能、描述以及施法/延迟时间。</s:String>
+    <s:String x:Key="Nav_Achievements">成就</s:String>
+    <s:String x:Key="Nav_Achievements_Desc">成就数据库 (achievement_db)：目标、依赖与奖励。</s:String>
+    <s:String x:Key="Nav_Abra">职业变换</s:String>
+    <s:String x:Key="Nav_Abra_Desc">阿布拉克 / 胡言乱语随机技能表 (abra_db)。</s:String>
+    <s:String x:Key="Nav_Summon">召唤组</s:String>
+    <s:String x:Key="Nav_Summon_Desc">召唤组池 (mob_summon)：血腥树枝、枯树枝、职业变换、波利盒子……</s:String>
+    <s:String x:Key="Nav_Grf">GRF 浏览器</s:String>
+    <s:String x:Key="Nav_Grf_Desc">浏览客户端 GRF 压缩包：预览图标/精灵、读取 lua 文件。</s:String>
+    <s:String x:Key="Nav_CashShop">商城</s:String>
+    <s:String x:Key="Nav_CashShop_Desc">商城 (item_cash_db)：物品及其点券价格，按页签分组。</s:String>
+    <s:String x:Key="Nav_Validation">校验</s:String>
+    <s:String x:Key="Nav_Validation_Desc">对你的自定义和覆盖条目进行跨文件一致性检查。</s:String>
+
+    <!-- ===== 导航分组标题 ===== -->
+    <s:String x:Key="NavGroup_Server">服务端数据库</s:String>
+    <s:String x:Key="NavGroup_Client">客户端</s:String>
+    <s:String x:Key="NavGroup_Tools">工具</s:String>
+
+    <!-- ===== 模式标签 ===== -->
+    <s:String x:Key="Mode_Renewal">Renewal</s:String>
+    <s:String x:Key="Mode_PreRenewal">Pre-Renewal</s:String>
+
+    <!-- ===== ConfirmDialog 默认按钮 ===== -->
+    <s:String x:Key="Dlg_Yes">是</s:String>
+    <s:String x:Key="Dlg_No">取消</s:String>
+    <s:String x:Key="Dlg_OK">确定</s:String>
+    <s:String x:Key="Dlg_Cancel">取消</s:String>
+    <s:String x:Key="Dlg_Save">保存</s:String>
+    <s:String x:Key="Dlg_DontSave">不保存</s:String>
+    <s:String x:Key="Dlg_Confirm_Title">确认</s:String>
+
+    <!-- ===== AboutDialog ===== -->
+    <s:String x:Key="About_Title">关于 Midgard Studio</s:String>
+    <s:String x:Key="About_TitleBar">关于</s:String>
+    <s:String x:Key="About_Description">一个用于构建仙境传说（Ragnarok Online）服务端内容的原生工作室。它编辑服务端数据库——物品、魔物、技能、宠物、物品分组、组合等等——以及客户端数据：物品信息、精灵、图标和 GRF 浏览器。物品打造器一次性在服务端和客户端创建完整物品，并带有实时的精灵和图标预览。</s:String>
+    <s:String x:Key="About_SafetyNote">你的基础数据是安全的。编辑通过就地拼接写入 import 层和自定义 itemInfo 文件——既有的条目、注释和辅助函数都会保留，原始基础文件永远不会被修改。</s:String>
+    <s:String x:Key="About_CreatedBy">作者：</s:String>
+    <s:String x:Key="About_Close">关闭</s:String>
+
+    <!-- ===== SplashWindow ===== -->
+    <s:String x:Key="Splash_Tagline">S E R V E R   ·   C L I E N T   ·   O N E   S T U D I O</s:String>
+    <s:String x:Key="Splash_Loading">正在加载你的工作区…</s:String>
+
+    <!-- ===== SettingsView ===== -->
+    <s:String x:Key="Settings_Title">设置</s:String>
+    <s:String x:Key="Settings_Nav_General">常规</s:String>
+    <s:String x:Key="Settings_Nav_Shortcuts">快捷键</s:String>
+    <s:String x:Key="Settings_Nav_Autocomplete">自动补全</s:String>
+    <s:String x:Key="Settings_Nav_About">关于</s:String>
+    <s:String x:Key="Settings_Nav_Language">语言</s:String>
+
+    <s:String x:Key="Settings_Language_Title">语言</s:String>
+    <s:String x:Key="Settings_Language_Desc">选择界面语言。更改会立即生效，无需重启。</s:String>
+    <s:String x:Key="Settings_Language_Chinese">中文 (简体)</s:String>
+    <s:String x:Key="Settings_Language_English">English</s:String>
+
+    <s:String x:Key="Settings_SaveBehaviour">保存行为</s:String>
+    <s:String x:Key="Settings_SaveBehaviour_Desc">选择编辑何时写入磁盘。自动保存是安全的（就地写入，永远不会覆盖你的函数），但只有手动保存才会在备份管理器里创建带日期的还原点。</s:String>
+    <s:String x:Key="Settings_Save_Manual">手动保存</s:String>
+    <s:String x:Key="Settings_Save_Manual_Desc">仅在你点击“保存”(Ctrl+S) 时才写入文件。推荐。</s:String>
+    <s:String x:Key="Settings_Save_Interval">每隔 N 秒保存</s:String>
+    <s:String x:Key="Settings_Save_Interval_Label">间隔（秒）：</s:String>
+    <s:String x:Key="Settings_Save_Interval_Desc">待保存的更改会按这个定时器自动写入（最少 5 秒）。</s:String>
+    <s:String x:Key="Settings_Save_OnEdit">编辑后自动保存</s:String>
+    <s:String x:Key="Settings_Save_OnEdit_Desc">在你停止编辑片刻后即写入更改。</s:String>
+
+    <s:String x:Key="Settings_Backups">备份</s:String>
+    <s:String x:Key="Settings_Backups_Keep">为每个配置文件保留最新的</s:String>
+    <s:String x:Key="Settings_Backups_PerProfile">个快照</s:String>
+    <s:String x:Key="Settings_Backups_Desc">每次手动保存后以及每次还原前都会保存一个带日期的快照。超过此数量的旧快照会自动清理。可在“工具 ▸ 备份管理器”中管理它们。</s:String>
+
+    <s:String x:Key="Settings_Gate">校验闸门</s:String>
+    <s:String x:Key="Settings_Gate_Desc">手动保存对你即将写入条目中的错误级（Error）校验问题作何反应。警告和信息永远不会阻止保存。自动保存和退出时的保存永远不会被中断。</s:String>
+    <s:String x:Key="Settings_Gate_CheckBefore">手动保存前检查校验</s:String>
+    <s:String x:Key="Settings_Gate_Soft">软闸门</s:String>
+    <s:String x:Key="Settings_Gate_Soft_Desc">列出错误，让你选择“仍然保存”或停下来修复。推荐。</s:String>
+    <s:String x:Key="Settings_Gate_Hard">硬闸门</s:String>
+    <s:String x:Key="Settings_Gate_Hard_Desc">在错误级问题修复之前阻止手动保存。</s:String>
+    <s:String x:Key="Settings_Gate_Advisory">仅提示</s:String>
+    <s:String x:Key="Settings_Gate_Advisory_Desc">保存时从不检查校验；问题只出现在校验面板和行内。</s:String>
+
+    <s:String x:Key="Settings_Shortcuts">键盘快捷键</s:String>
+    <s:String x:Key="Settings_Shortcuts_Desc">点击某个字段并按下你想要的按键——包括 Ctrl+Shift+F 这样的组合。更改立即生效。退格键清除快捷键；Esc 取消。</s:String>
+    <s:String x:Key="Settings_Shortcuts_Placeholder">按下快捷键…</s:String>
+
+    <s:String x:Key="Settings_About_Card_Desc">一个用于仙境传说服务端数据库和客户端文件的原生编辑器——服务端 YAML、客户端 Lua、物品组合、掉落和精灵，集于一处。</s:String>
+    <s:String x:Key="Settings_About_Author">作者</s:String>
+    <s:String x:Key="Settings_About_Edition">版本</s:String>
+    <s:String x:Key="Settings_About_EditionValue">桌面版 (Windows)</s:String>
+
+    <!-- ===== 通用错误 / 对话框消息（C# 中使用） ===== -->
+    <s:String x:Key="Msg_UnexpectedError_Title">意外错误</s:String>
+    <s:String x:Key="Msg_UnexpectedError_Body">出了一些问题，但 Midgard Studio 会继续运行，以免你丢失工作：</s:String>
+    <s:String x:Key="Msg_Quit_Title">退出 Midgard Studio？</s:String>
+    <s:String x:Key="Msg_Quit_Body">尚未配置工作区，因此关闭设置向导将退出 Midgard Studio。</s:String>
+    <s:String x:Key="Msg_Quit_Yes">退出</s:String>
+    <s:String x:Key="Msg_UnsavedSwitch_Title">未保存的更改</s:String>
+    <s:String x:Key="Msg_UnsavedSwitch_Body">你有未保存的更改。切换配置文件将丢弃这些更改。要继续吗？</s:String>
+    <s:String x:Key="Msg_UnsavedSwitch_Yes">丢弃并切换</s:String>
+    <s:String x:Key="Msg_CloseUnsaved_Body">你有未保存的更改。要在关闭前保存吗？</s:String>
+    <s:String x:Key="Msg_Reload_Title">从磁盘重新加载</s:String>
+    <s:String x:Key="Msg_Reload_Body">要从磁盘重新加载所有数据吗？未保存的更改将被丢弃。</s:String>
+    <s:String x:Key="Msg_Reload_Yes">丢弃并重新加载</s:String>
+    <s:String x:Key="Msg_SaveFailed_Title">保存失败</s:String>
+    <s:String x:Key="Msg_SaveFailed_Body">你的更改未能完全保存，仍保留在编辑器中：</s:String>
+    <s:String x:Key="Msg_SaveFailed_Tail">请关闭可能正在使用这些文件的程序（例如正在运行的服务端），然后再次保存。</s:String>
+    <s:String x:Key="Msg_ValErrors_Title">校验错误</s:String>
+    <s:String x:Key="Msg_ValErrors_HardGate_Tail">请在保存前修复这些错误级问题（已启用硬闸门）。</s:String>
+    <s:String x:Key="Msg_ValErrors_Soft_Yes">仍然保存</s:String>
+    <s:String x:Key="Msg_ValErrors_Soft_No">先修复</s:String>
+    <s:String x:Key="Msg_Compat_Title">配置文件兼容性</s:String>
+    <s:String x:Key="Msg_Compat_Blocker_Intro">此配置文件的部分文件看起来是不同的或不支持的格式。加载没问题，但保存它们可能会失败或写入错误的数据：</s:String>
+    <s:String x:Key="Msg_Compat_Warn_Intro">此配置文件的部分文件在保存时可能无法完美往返：</s:String>
+    <s:String x:Key="Msg_Compat_More">……还有 {0} 项。</s:String>
+    <s:String x:Key="Msg_Compat_LoadAnyway">仍要加载此配置文件吗？</s:String>
+    <s:String x:Key="Msg_Compat_Yes">仍然加载</s:String>
+    <s:String x:Key="Msg_Update_Available">{0} 版本可用——你当前是 {1}。</s:String>
+    <s:String x:Key="Msg_Save_Summary_Single">已将 1 个文件写入磁盘。</s:String>
+    <s:String x:Key="Msg_Save_Summary_Multi">已将 {0} 个文件写入磁盘。</s:String>
+
+    <!-- ===== 保存摘要中保存文件的友好标签 ===== -->
+    <s:String x:Key="Label_ClientItems">客户端物品</s:String>
+    <s:String x:Key="Label_ClientSkills">客户端技能</s:String>
+    <s:String x:Key="Label_AccessorySprites">饰品精灵</s:String>
+    <s:String x:Key="Label_MobSprites">魔物精灵</s:String>
+    <s:String x:Key="Label_CashShop">商城</s:String>
+    <s:String x:Key="Label_BackupAfterSave">保存后自动创建的备份：{0}。</s:String>
+    <s:String x:Key="Label_BackupSavePrefix">保存 · {0}</s:String>
+
+</ResourceDictionary>

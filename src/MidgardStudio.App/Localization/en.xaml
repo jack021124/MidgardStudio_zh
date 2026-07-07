@@ -1,0 +1,235 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:s="clr-namespace:System;assembly=System.Runtime">
+
+    <!-- =====================================================================
+         Midgard Studio — English string table (neutral / fallback).
+
+         THIS FILE IS THE FALLBACK. Every key used in the app via
+         {DynamicResource Key} or LocalizationService.Get("Key") must exist
+         here, or the value degrades to the key name. When you add a new
+         translatable string, add its English value here AND a translated
+         value in zh-CN.xaml.
+
+         Key convention: <Area>_<Element>[_<Detail>], e.g. Menu_File,
+         Nav_Items, Btn_Save, Dlg_Quit_Title.
+         ===================================================================== -->
+
+    <!-- ===== Brand ===== -->
+    <s:String x:Key="App_Title">Midgard Studio</s:String>
+    <s:String x:Key="App_Subtitle">Ragnarok Server Studio</s:String>
+
+    <!-- ===== MainWindow: menus ===== -->
+    <s:String x:Key="Menu_File">_File</s:String>
+    <s:String x:Key="Menu_File_ForgeItem">_Forge new item…</s:String>
+    <s:String x:Key="Menu_File_ForgeItem_Tooltip">Create a complete custom item (server + client + sprite) in one flow</s:String>
+    <s:String x:Key="Menu_File_Save">_Save</s:String>
+    <s:String x:Key="Menu_File_Save_Tooltip">Write pending changes (only modified files are rewritten)</s:String>
+    <s:String x:Key="Menu_File_RevealImport">Reveal _import folder</s:String>
+    <s:String x:Key="Menu_File_OpenLua">Open client _lua folder</s:String>
+    <s:String x:Key="Menu_File_Reload">_Reload Database</s:String>
+    <s:String x:Key="Menu_File_Profiles">_Profiles &amp; configuration…</s:String>
+    <s:String x:Key="Menu_File_SwitchProfile">S_witch profile</s:String>
+    <s:String x:Key="Menu_File_Settings">Se_ttings</s:String>
+    <s:String x:Key="Menu_File_Exit">E_xit</s:String>
+
+    <s:String x:Key="Menu_Edit">_Edit</s:String>
+    <s:String x:Key="Menu_Edit_Undo">_Undo</s:String>
+    <s:String x:Key="Menu_Edit_Redo">_Redo</s:String>
+    <s:String x:Key="Menu_Edit_QuickOpen">_Quick open…</s:String>
+
+    <s:String x:Key="Menu_View">_View</s:String>
+    <s:String x:Key="Menu_View_GoTo">_Go to</s:String>
+    <s:String x:Key="Menu_View_System">_System</s:String>
+    <s:String x:Key="Menu_View_Renewal">Renewal</s:String>
+    <s:String x:Key="Menu_View_PreRenewal">Pre-Renewal</s:String>
+
+    <s:String x:Key="Menu_Tools">_Tools</s:String>
+    <s:String x:Key="Menu_Tools_Grf">_GRF Browser</s:String>
+    <s:String x:Key="Menu_Tools_Validation">_Validation</s:String>
+    <s:String x:Key="Menu_Tools_MapCache">_Map Cache Editor</s:String>
+    <s:String x:Key="Menu_Tools_CashShop">_Cash Shop Manager</s:String>
+    <s:String x:Key="Menu_Tools_Backup">_Backup Manager</s:String>
+
+    <s:String x:Key="Menu_Help">_Help</s:String>
+    <s:String x:Key="Menu_Help_CheckUpdates">_Check for Updates…</s:String>
+    <s:String x:Key="Menu_Help_Documentation">_Documentation</s:String>
+    <s:String x:Key="Menu_Help_About">_About Midgard Studio</s:String>
+
+    <!-- ===== MainWindow: title-bar update pill ===== -->
+    <s:String x:Key="Update_PillLabel">Update Available</s:String>
+    <s:String x:Key="Update_PopupTitle">Update available</s:String>
+    <s:String x:Key="Update_ViewRelease">View release</s:String>
+    <s:String x:Key="Update_Dismiss">Dismiss</s:String>
+
+    <!-- ===== MainWindow: status chips ===== -->
+    <s:String x:Key="Status_ActiveProfile">Active profile</s:String>
+    <s:String x:Key="Status_NoChanges">No changes</s:String>
+    <s:String x:Key="Status_UnsavedChanges">Unsaved changes</s:String>
+    <s:String x:Key="Status_Undo_Tooltip">Undo (Ctrl+Z)</s:String>
+    <s:String x:Key="Status_Redo_Tooltip">Redo (Ctrl+Y)</s:String>
+
+    <!-- ===== MainWindow: top-right record actions ===== -->
+    <s:String x:Key="Btn_Yaml">YAML</s:String>
+    <s:String x:Key="Btn_Yaml_Tooltip">Preview the YAML written to the import file</s:String>
+    <s:String x:Key="Btn_CopyToImport">Copy to Import to edit</s:String>
+    <s:String x:Key="Btn_CopyToImport_Tooltip">Make this base combo editable (copy-on-write)</s:String>
+    <s:String x:Key="Btn_NewCombo">New combo</s:String>
+    <s:String x:Key="Btn_NewCombo_Tooltip">Create a new custom combo</s:String>
+    <s:String x:Key="Btn_Save_Tooltip">Write pending changes (Ctrl+S) — only modified files are rewritten</s:String>
+
+    <!-- ===== MainWindow: placeholder section ===== -->
+    <s:String x:Key="Placeholder_EditorLater">Editor coming online in a later phase.</s:String>
+
+    <!-- ===== MainWindow: command palette ===== -->
+    <s:String x:Key="Palette_Placeholder">Search any database by id / aegis / name…</s:String>
+
+    <!-- ===== Navigation sections (ShellViewModel) ===== -->
+    <s:String x:Key="Nav_Items">Items</s:String>
+    <s:String x:Key="Nav_Items_Desc">Server item database (item_db): stats, bonuses, restrictions and drop sources.</s:String>
+    <s:String x:Key="Nav_ClientItems">Client Items</s:String>
+    <s:String x:Key="Nav_ClientItems_Desc">Client item info (itemInfo.lua / itemInfo_C.lua): names, descriptions, slots, view and sprite.</s:String>
+    <s:String x:Key="Nav_Mobs">Mobs</s:String>
+    <s:String x:Key="Nav_Mobs_Desc">Monster database (mob_db) with drops, modes and client sprite registration.</s:String>
+    <s:String x:Key="Nav_MobAvail">Mob Sprite Reuse</s:String>
+    <s:String x:Key="Nav_MobAvail_Desc">Reuse another mob's (or a job) sprite for a mob (mob_avail).</s:String>
+    <s:String x:Key="Nav_Pets">Pets</s:String>
+    <s:String x:Key="Nav_Pets_Desc">Pet database (pet_db): taming, intimacy, evolution and bonus scripts.</s:String>
+    <s:String x:Key="Nav_Combos">Item Combos</s:String>
+    <s:String x:Key="Nav_Combos_Desc">Item set combos (item_combos) and their bonus scripts.</s:String>
+    <s:String x:Key="Nav_Groups">Item Groups</s:String>
+    <s:String x:Key="Nav_Groups_Desc">Item group pools (item_group_db) with sub-groups and rates.</s:String>
+    <s:String x:Key="Nav_Skills">Skills</s:String>
+    <s:String x:Key="Nav_Skills_Desc">Skill database (skill_db).</s:String>
+    <s:String x:Key="Nav_ClientSkills">Client Skills</s:String>
+    <s:String x:Key="Nav_ClientSkills_Desc">Client skill info (skillinfoz): names, max level, SP cost, range, prerequisites, descriptions and cast/delay timings.</s:String>
+    <s:String x:Key="Nav_Achievements">Achievements</s:String>
+    <s:String x:Key="Nav_Achievements_Desc">Achievement database (achievement_db): targets, dependencies and rewards.</s:String>
+    <s:String x:Key="Nav_Abra">Class Change</s:String>
+    <s:String x:Key="Nav_Abra_Desc">Abracadabra / Hocus-Pocus random skill table (abra_db).</s:String>
+    <s:String x:Key="Nav_Summon">Summon Groups</s:String>
+    <s:String x:Key="Nav_Summon_Desc">Summon group pools (mob_summon): Bloody Branch, Dead Branch, Class Change, Poring Box, …</s:String>
+    <s:String x:Key="Nav_Grf">GRF Browser</s:String>
+    <s:String x:Key="Nav_Grf_Desc">Browse client GRF archives: preview icons/sprites and read lua files.</s:String>
+    <s:String x:Key="Nav_CashShop">Cash Shop</s:String>
+    <s:String x:Key="Nav_CashShop_Desc">Cash shop (item_cash_db): items and their cash-point prices, per tab.</s:String>
+    <s:String x:Key="Nav_Validation">Validation</s:String>
+    <s:String x:Key="Nav_Validation_Desc">Cross-file consistency checks for your custom and overridden entries.</s:String>
+
+    <!-- ===== Navigation group headers ===== -->
+    <s:String x:Key="NavGroup_Server">Server Databases</s:String>
+    <s:String x:Key="NavGroup_Client">Client</s:String>
+    <s:String x:Key="NavGroup_Tools">Tools</s:String>
+
+    <!-- ===== Mode label ===== -->
+    <s:String x:Key="Mode_Renewal">Renewal</s:String>
+    <s:String x:Key="Mode_PreRenewal">Pre-Renewal</s:String>
+
+    <!-- ===== ConfirmDialog default buttons ===== -->
+    <s:String x:Key="Dlg_Yes">Yes</s:String>
+    <s:String x:Key="Dlg_No">Cancel</s:String>
+    <s:String x:Key="Dlg_OK">OK</s:String>
+    <s:String x:Key="Dlg_Cancel">Cancel</s:String>
+    <s:String x:Key="Dlg_Save">Save</s:String>
+    <s:String x:Key="Dlg_DontSave">Don't save</s:String>
+    <s:String x:Key="Dlg_Confirm_Title">Confirm</s:String>
+
+    <!-- ===== AboutDialog ===== -->
+    <s:String x:Key="About_Title">About Midgard Studio</s:String>
+    <s:String x:Key="About_TitleBar">About</s:String>
+    <s:String x:Key="About_Description">A native studio for building Ragnarok Online server content. It edits the server databases — items, monsters, skills, pets, item groups, combos and more — alongside the client data: item info, sprites, icons and the GRF browser. The Item Forge creates a complete item across server and client in one pass, with live sprite and icon previews.</s:String>
+    <s:String x:Key="About_SafetyNote">Your base data stays safe. Edits are written to the import layer and the custom itemInfo file using in-place splicing — existing entries, comments and helper functions are preserved, and the original base files are never modified.</s:String>
+    <s:String x:Key="About_CreatedBy">Created by </s:String>
+    <s:String x:Key="About_Close">Close</s:String>
+
+    <!-- ===== SplashWindow ===== -->
+    <s:String x:Key="Splash_Tagline">S E R V E R   ·   C L I E N T   ·   O N E   S T U D I O</s:String>
+    <s:String x:Key="Splash_Loading">Loading your workspace…</s:String>
+
+    <!-- ===== SettingsView ===== -->
+    <s:String x:Key="Settings_Title">Settings</s:String>
+    <s:String x:Key="Settings_Nav_General">General</s:String>
+    <s:String x:Key="Settings_Nav_Shortcuts">Shortcuts</s:String>
+    <s:String x:Key="Settings_Nav_Autocomplete">Autocomplete</s:String>
+    <s:String x:Key="Settings_Nav_About">About</s:String>
+    <s:String x:Key="Settings_Nav_Language">Language</s:String>
+
+    <s:String x:Key="Settings_Language_Title">Language</s:String>
+    <s:String x:Key="Settings_Language_Desc">Choose the interface language. Changes apply immediately — no restart needed.</s:String>
+    <s:String x:Key="Settings_Language_Chinese">中文 (简体)</s:String>
+    <s:String x:Key="Settings_Language_English">English</s:String>
+
+    <s:String x:Key="Settings_SaveBehaviour">Saving behaviour</s:String>
+    <s:String x:Key="Settings_SaveBehaviour_Desc">Choose when edits are written to disk. Auto-save writes safely (in-place, never overwriting your functions) but only manual saves create a dated restore point in the Backup Manager.</s:String>
+    <s:String x:Key="Settings_Save_Manual">Manual save</s:String>
+    <s:String x:Key="Settings_Save_Manual_Desc">Files are written only when you click Save (Ctrl+S). Recommended.</s:String>
+    <s:String x:Key="Settings_Save_Interval">Save every N seconds</s:String>
+    <s:String x:Key="Settings_Save_Interval_Label">Interval (seconds):</s:String>
+    <s:String x:Key="Settings_Save_Interval_Desc">Pending changes are written automatically on this timer (minimum 5 seconds).</s:String>
+    <s:String x:Key="Settings_Save_OnEdit">Auto-save on edits</s:String>
+    <s:String x:Key="Settings_Save_OnEdit_Desc">Changes are written a moment after you stop editing.</s:String>
+
+    <s:String x:Key="Settings_Backups">Backups</s:String>
+    <s:String x:Key="Settings_Backups_Keep">Keep the newest</s:String>
+    <s:String x:Key="Settings_Backups_PerProfile">snapshots per profile</s:String>
+    <s:String x:Key="Settings_Backups_Desc">A dated snapshot is saved after every manual save and before every restore. Older snapshots beyond this count are pruned automatically. Manage them in Tools ▸ Backup Manager.</s:String>
+
+    <s:String x:Key="Settings_Gate">Validation gate</s:String>
+    <s:String x:Key="Settings_Gate_Desc">How a manual save reacts to Error-level validation issues in the entries you're about to write. Warnings and info never block. Auto-save and exit-save are never interrupted.</s:String>
+    <s:String x:Key="Settings_Gate_CheckBefore">Check validation before a manual save</s:String>
+    <s:String x:Key="Settings_Gate_Soft">Soft gate</s:String>
+    <s:String x:Key="Settings_Gate_Soft_Desc">Lists the errors and lets you Save anyway or stop to fix them. Recommended.</s:String>
+    <s:String x:Key="Settings_Gate_Hard">Hard gate</s:String>
+    <s:String x:Key="Settings_Gate_Hard_Desc">Blocks a manual save until the Error-level issues are fixed.</s:String>
+    <s:String x:Key="Settings_Gate_Advisory">Advisory only</s:String>
+    <s:String x:Key="Settings_Gate_Advisory_Desc">Never inspects validation on save; issues appear only in the Validation panel and inline.</s:String>
+
+    <s:String x:Key="Settings_Shortcuts">Keyboard shortcuts</s:String>
+    <s:String x:Key="Settings_Shortcuts_Desc">Click a field and press the keys you want — including combinations like Ctrl+Shift+F. Changes apply immediately. Backspace clears a shortcut; Esc cancels.</s:String>
+    <s:String x:Key="Settings_Shortcuts_Placeholder">Press a shortcut…</s:String>
+
+    <s:String x:Key="Settings_About_Card_Desc">A native editor for Ragnarok server databases and client files — server YAML, client Lua, item combos, drops and sprites in one place.</s:String>
+    <s:String x:Key="Settings_About_Author">Author</s:String>
+    <s:String x:Key="Settings_About_Edition">Edition</s:String>
+    <s:String x:Key="Settings_About_EditionValue">Desktop (Windows)</s:String>
+
+    <!-- ===== Common error / dialog messages (used from C#) ===== -->
+    <s:String x:Key="Msg_UnexpectedError_Title">Unexpected error</s:String>
+    <s:String x:Key="Msg_UnexpectedError_Body">Something went wrong, but Midgard Studio will keep running so you don't lose your work:</s:String>
+    <s:String x:Key="Msg_Quit_Title">Quit Midgard Studio?</s:String>
+    <s:String x:Key="Msg_Quit_Body">No workspace is configured yet, so closing setup will exit Midgard Studio.</s:String>
+    <s:String x:Key="Msg_Quit_Yes">Quit</s:String>
+    <s:String x:Key="Msg_UnsavedSwitch_Title">Unsaved changes</s:String>
+    <s:String x:Key="Msg_UnsavedSwitch_Body">You have unsaved changes. Switching profiles will discard them. Continue?</s:String>
+    <s:String x:Key="Msg_UnsavedSwitch_Yes">Discard &amp; switch</s:String>
+    <s:String x:Key="Msg_CloseUnsaved_Body">You have unsaved changes. Save them before closing?</s:String>
+    <s:String x:Key="Msg_Reload_Title">Reload from disk</s:String>
+    <s:String x:Key="Msg_Reload_Body">Reload all data from disk? Unsaved changes will be discarded.</s:String>
+    <s:String x:Key="Msg_Reload_Yes">Discard &amp; reload</s:String>
+    <s:String x:Key="Msg_SaveFailed_Title">Save failed</s:String>
+    <s:String x:Key="Msg_SaveFailed_Body">Your changes were NOT fully saved and are still here in the editor:</s:String>
+    <s:String x:Key="Msg_SaveFailed_Tail">Close anything that might be using these files (for example a running server), then save again.</s:String>
+    <s:String x:Key="Msg_ValErrors_Title">Validation errors</s:String>
+    <s:String x:Key="Msg_ValErrors_HardGate_Tail">Fix these Error-level issues before saving (hard gate is enabled).</s:String>
+    <s:String x:Key="Msg_ValErrors_Soft_Yes">Save anyway</s:String>
+    <s:String x:Key="Msg_ValErrors_Soft_No">Fix first</s:String>
+    <s:String x:Key="Msg_Compat_Title">Profile compatibility</s:String>
+    <s:String x:Key="Msg_Compat_Blocker_Intro">Some of this profile's files look like a different or unsupported format. Loading is fine, but SAVING them could fail or write the wrong data:</s:String>
+    <s:String x:Key="Msg_Compat_Warn_Intro">Some of this profile's files may not round-trip perfectly when saved:</s:String>
+    <s:String x:Key="Msg_Compat_More">…and {0} more.</s:String>
+    <s:String x:Key="Msg_Compat_LoadAnyway">Load this profile anyway?</s:String>
+    <s:String x:Key="Msg_Compat_Yes">Load anyway</s:String>
+    <s:String x:Key="Msg_Update_Available">Version {0} is available — you're on {1}.</s:String>
+    <s:String x:Key="Msg_Save_Summary_Single">1 file was written to disk.</s:String>
+    <s:String x:Key="Msg_Save_Summary_Multi">{0} files were written to disk.</s:String>
+
+    <!-- ===== Save-summary saved-file friendly labels ===== -->
+    <s:String x:Key="Label_ClientItems">Client items</s:String>
+    <s:String x:Key="Label_ClientSkills">Client skills</s:String>
+    <s:String x:Key="Label_AccessorySprites">Accessory sprites</s:String>
+    <s:String x:Key="Label_MobSprites">Mob sprites</s:String>
+    <s:String x:Key="Label_CashShop">Cash shop</s:String>
+    <s:String x:Key="Label_BackupAfterSave">Automatic backup taken after saving: {0}.</s:String>
+    <s:String x:Key="Label_BackupSavePrefix">Save · {0}</s:String>
+
+</ResourceDictionary>

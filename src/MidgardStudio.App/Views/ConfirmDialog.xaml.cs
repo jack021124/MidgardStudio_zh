@@ -1,4 +1,5 @@
 using System.Windows;
+using MidgardStudio.App.Localization;
 using Wpf.Ui.Controls;
 
 namespace MidgardStudio.App.Views;
@@ -20,19 +21,19 @@ public partial class ConfirmDialog : FluentWindow
     }
 
     /// <summary>Shows a themed Yes/Cancel confirmation. Returns true when the primary button is clicked.</summary>
-    public static bool Show(string title, string message, string yes = "Yes", string no = "Cancel")
+    public static bool Show(string title, string message, string? yes = null, string? no = null)
     {
         var dialog = Create(title, message);
-        dialog.YesButton.Content = yes;
-        dialog.NoButton.Content = no;
+        dialog.YesButton.Content = yes ?? LocalizationService.Get("Dlg_Yes");
+        dialog.NoButton.Content = no ?? LocalizationService.Get("Dlg_No");
         return dialog.ShowDialog() == true;
     }
 
     /// <summary>Shows a themed single-button informational alert.</summary>
-    public static void Alert(string title, string message, string ok = "OK")
+    public static void Alert(string title, string message, string? ok = null)
     {
         var dialog = Create(title, message);
-        dialog.YesButton.Content = ok;
+        dialog.YesButton.Content = ok ?? LocalizationService.Get("Dlg_OK");
         dialog.NoButton.Visibility = Visibility.Collapsed;
         dialog.ShowDialog();
     }
@@ -42,13 +43,13 @@ public partial class ConfirmDialog : FluentWindow
 
     /// <summary>Shows a themed three-button prompt (primary / alternate / cancel) — e.g. "Delete both" /
     /// "This side only" / "Cancel". Returns which button was clicked (Cancel on close).</summary>
-    public static Choice Choose(string title, string message, string primary, string alternate, string cancel = "Cancel")
+    public static Choice Choose(string title, string message, string primary, string alternate, string? cancel = null)
     {
         var dialog = Create(title, message);
         dialog.YesButton.Content = primary;
         dialog.AltButton.Content = alternate;
         dialog.AltButton.Visibility = Visibility.Visible;
-        dialog.NoButton.Content = cancel;
+        dialog.NoButton.Content = cancel ?? LocalizationService.Get("Dlg_Cancel");
         dialog.ShowDialog();
         return dialog._choice switch
         {
@@ -62,10 +63,10 @@ public partial class ConfirmDialog : FluentWindow
     public static SavePrompt AskSave(string title, string message)
     {
         var dialog = Create(title, message);
-        dialog.YesButton.Content = "Save";
-        dialog.AltButton.Content = "Don't save";
+        dialog.YesButton.Content = LocalizationService.Get("Dlg_Save");
+        dialog.AltButton.Content = LocalizationService.Get("Dlg_DontSave");
         dialog.AltButton.Visibility = Visibility.Visible;
-        dialog.NoButton.Content = "Cancel";
+        dialog.NoButton.Content = LocalizationService.Get("Dlg_Cancel");
         dialog.ShowDialog();
         return dialog._choice;
     }

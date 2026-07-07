@@ -59,6 +59,10 @@ public sealed partial class SettingsViewModel : ObservableObject
             Shortcuts.Add(new ShortcutRowViewModel(key, display, gesture, SetShortcut));
         }
 
+        // Seed the language dropdown from the current (already-initialized) UI language.
+        Languages.Add(new("zh-CN", Localization.LocalizationService.Get("Settings_Language_Chinese")));
+        Languages.Add(new("en", Localization.LocalizationService.Get("Settings_Language_English")));
+
         BuildAutocomplete();
     }
 
@@ -232,6 +236,41 @@ public sealed partial class SettingsViewModel : ObservableObject
     [ObservableProperty] private ValidationGateMode _saveGate;
     [ObservableProperty] private bool _validateBeforeSave;
 
+    // ===== Interface language =====
+
+    /// <summary>The interface languages offered in Settings, in display order. Each item carries the
+    /// culture code (<see cref="AppSettings.Language"/>) and a localized display name. Rebuilt after a
+    /// switch so the picker's own labels read in the newly-active language.</summary>
+    public ObservableCollection<LanguageOption> Languages { get; } = [];
+
+    /// <summary>The currently selected language code. Setter persists to settings and swaps the live
+    /// dictionary so the whole UI refreshes without a restart.</summary>
+    public string SelectedLanguage
+    {
+        get => _settings.Settings.Language;
+        set
+        {
+            if (value == _settings.Settings.Language) return;
+            _settings.Settings.Language = value;
+            _settings.Save();
+            Localization.LocalizationService.SetLanguage(value);
+            // Rebuild the dropdown labels in the now-active language, then re-announce the selection so
+            // the ComboBox keeps the right item highlighted.
+            RebuildLanguages();
+            OnPropertyChanged(nameof(SelectedLanguage));
+        }
+    }
+
+    private void RebuildLanguages()
+    {
+        var current = SelectedLanguage;
+        Languages.Clear();
+        Languages.Add(new("zh-CN", Localization.LocalizationService.Get("Settings_Language_Chinese")));
+        Languages.Add(new("en", Localization.LocalizationService.Get("Settings_Language_English")));
+        OnPropertyChanged(nameof(Languages));
+        OnPropertyChanged(nameof(SelectedLanguage));
+    }
+
     public bool IsGateAdvisory { get => SaveGate == ValidationGateMode.Advisory; set { if (value) SaveGate = ValidationGateMode.Advisory; } }
     public bool IsGateSoft { get => SaveGate == ValidationGateMode.SoftGate; set { if (value) SaveGate = ValidationGateMode.SoftGate; } }
     public bool IsGateHard { get => SaveGate == ValidationGateMode.HardGate; set { if (value) SaveGate = ValidationGateMode.HardGate; } }
@@ -320,4 +359,13 @@ public sealed partial class AcLabelViewModel : ObservableObject
     [ObservableProperty] private string _override;
 
     partial void OnOverrideChanged(string value) => _set(value);
+}
+
+/// <summary>One entry in the Settings ▸ Language dropdown. <see cref="Code"/> is the persisted value
+/// (matches <see cref="AppSettings.Language"/>); <see cref="Display"/> is the user-facing label, which is
+/// itself localized so the picker reads naturally in whichever language is active.</summary>
+public sealed class LanguageOption(string code, string display)
+{
+    public string Code { get; } = code;
+    public string Display { get; set; } = display;
 }

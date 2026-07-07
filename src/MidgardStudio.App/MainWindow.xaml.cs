@@ -119,8 +119,8 @@ public partial class MainWindow : FluentWindow
     {
         if (!_closing && _viewModel.HasUnsavedChanges)
         {
-            switch (Views.ConfirmDialog.AskSave("Unsaved changes",
-                "You have unsaved changes. Save them before closing?"))
+            switch (Views.ConfirmDialog.AskSave(Localization.LocalizationService.Get("Msg_UnsavedSwitch_Title"),
+                Localization.LocalizationService.Get("Msg_CloseUnsaved_Body")))
             {
                 case Views.SavePrompt.Save:
                     if (!_viewModel.SaveForExit()) { e.Cancel = true; return; } // save failed → stay open

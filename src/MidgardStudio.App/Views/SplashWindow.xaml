@@ -52,7 +52,7 @@
 
                 <TextBlock x:Name="TitleText" Text="Midgard Studio" FontSize="32" FontWeight="SemiBold"
                            HorizontalAlignment="Center" Margin="0,16,0,0" Foreground="#E8E2F4" />
-                <TextBlock Text="S E R V E R   ·   C L I E N T   ·   O N E   S T U D I O" FontSize="9.5"
+                <TextBlock Text="{DynamicResource Splash_Tagline}" FontSize="9.5"
                            HorizontalAlignment="Center" Margin="0,7,0,0" Foreground="#8A82A8" />
 
                 <!-- Indeterminate shimmer progress -->
@@ -70,7 +70,7 @@
                         </Border.RenderTransform>
                     </Border>
                 </Border>
-                <TextBlock Text="Loading your workspace…" FontSize="11" HorizontalAlignment="Center"
+                <TextBlock Text="{DynamicResource Splash_Loading}" FontSize="11" HorizontalAlignment="Center"
                            Margin="0,13,0,0" Foreground="#6E6788" />
             </StackPanel>
         </Grid>

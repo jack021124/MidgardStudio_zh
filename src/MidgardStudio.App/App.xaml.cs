@@ -31,6 +31,13 @@ public partial class App : Application
         // RO client lua/lub and GRF entry names use legacy single-byte codepages (default 1252).
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
+        // Load the UI language dictionary before any window/view is created, so {DynamicResource}
+        // keys resolve on first parse. The persisted choice lives in app-settings.json (defaults to zh-CN).
+        string savedLanguage = ReadSavedLanguage();
+
+        // Let the Grf layer decode formats its ImageProvider can't (e.g. .jpg water textures) via WPF.
+        MidgardStudio.Grf.GrfService.EncodedImageDecoder = DecodeEncodedImage;
+
         // Let the Grf layer decode formats its ImageProvider can't (e.g. .jpg water textures) via WPF.
         MidgardStudio.Grf.GrfService.EncodedImageDecoder = DecodeEncodedImage;
 
@@ -47,6 +54,11 @@ public partial class App : Application
             .CreateLogger();
 
         Log.Information("Midgard Studio starting up.");
+
+        // Apply the UI language now that the logger is up. Done after logging so a bad dictionary
+        // (caught internally) is still visible in the log; done before window construction so all
+        // {DynamicResource} bindings resolve on first parse.
+        Localization.LocalizationService.Initialize(savedLanguage);
 
         _host = Host.CreateDefaultBuilder()
             .UseSerilog()
@@ -212,11 +224,28 @@ public partial class App : Application
 
         try
         {
-            Views.ConfirmDialog.Alert("Unexpected error",
-                "Something went wrong, but Midgard Studio will keep running so you don't lose your work:\n\n" +
-                e.Exception.Message);
+            Views.ConfirmDialog.Alert(
+                Localization.LocalizationService.Get("Msg_UnexpectedError_Title"),
+                Localization.LocalizationService.Get("Msg_UnexpectedError_Body") + "\n\n" + e.Exception.Message);
         }
         catch { /* never let the error handler itself bring the app down */ }
+    }
+
+    /// <summary>Reads the persisted <c>Language</c> field from app-settings.json without spinning up the
+    /// full host — needed early in startup so the language dictionary is in place before any view is built.</summary>
+    private static string ReadSavedLanguage()
+    {
+        try
+        {
+            var path = Path.Combine(MidgardStudio.Core.AppPaths.RoamingDir, "app-settings.json");
+            if (!File.Exists(path)) return "zh-CN";
+            using var doc = System.Text.Json.JsonDocument.Parse(File.ReadAllText(path));
+            if (doc.RootElement.TryGetProperty("Language", out var lang) &&
+                Localization.LocalizationService.IsSupported(lang.GetString()))
+                return lang.GetString()!;
+        }
+        catch { /* corrupt or missing — fall through to default */ }
+        return "zh-CN";
     }
 
     protected override void OnExit(ExitEventArgs e)

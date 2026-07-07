@@ -48,6 +48,10 @@ public sealed class AppSettings
     /// onboarding screens are presented on launch (they run exactly once).</summary>
     public bool HasSeenOnboarding { get; set; }
 
+    /// <summary>Interface language code (e.g. "zh-CN", "en"). Defaults to Simplified Chinese on
+    /// first launch; persisted so the choice survives restarts. See <see cref="Localization.LocalizationService"/>.</summary>
+    public string Language { get; set; } = "zh-CN";
+
     /// <summary>Options for the client-item Autocomplete generator.</summary>
     public MidgardStudio.Core.Lua.AutocompleteConfig Autocomplete { get; set; } = new();
 }

@@ -8,8 +8,12 @@ namespace MidgardStudio.App.ViewModels;
 /// </summary>
 public sealed class DbSectionViewModel
 {
+    /// <summary>The nav group label used when no category is passed — localized via the resource key
+    /// <c>NavGroup_Server</c> so the default group reads in the active language.</summary>
+    private const string DefaultCategoryKey = "NavGroup_Server";
+
     public DbSectionViewModel(string key, string title, SymbolRegular icon, string description, string filePath,
-        string? schemaId = null, string category = "Server Databases")
+        string? schemaId = null, string? category = null)
     {
         Key = key;
         Title = title;
@@ -17,7 +21,9 @@ public sealed class DbSectionViewModel
         Description = description;
         FilePath = filePath;
         SchemaId = schemaId;
-        Category = category;
+        // category is null only when it's the default Server group; resolve it localized so the side-nav
+        // group header reads in the active language without every caller passing the key.
+        Category = category ?? Localization.LocalizationService.Get(DefaultCategoryKey);
     }
 
     public string Key { get; }

@@ -9,7 +9,7 @@
                  xmlns:common="clr-namespace:MidgardStudio.App.Common"
                  mc:Ignorable="d"
                  d:DataContext="{d:DesignInstance Type=vm:ShellViewModel}"
-                 Title="Midgard Studio"
+                 Title="{DynamicResource App_Title}"
                  Icon="/Assets/logo.png"
                  Width="1320" Height="860"
                  MinWidth="980" MinHeight="640"
@@ -91,7 +91,7 @@
                         <TextBlock Text="{Binding FilePath}" Opacity="0.6" FontFamily="Consolas"
                                    TextWrapping="Wrap" TextAlignment="Center" />
                     </Border>
-                    <TextBlock Text="Editor coming online in a later phase." Opacity="0.45"
+                    <TextBlock Text="{DynamicResource Placeholder_EditorLater}" Opacity="0.45"
                                HorizontalAlignment="Center" Margin="0,16,0,0" FontStyle="Italic" />
                 </StackPanel>
             </ui:Card>
@@ -116,7 +116,7 @@
              drag — see wiki/gotchas/wpf-mvvm.md — so it lives here instead.) -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="13,0,0,0">
             <Image Source="/Assets/logo.png" Width="20" Height="20" VerticalAlignment="Center" IsHitTestVisible="False" />
-            <TextBlock Text="Midgard Studio" Margin="10,0,0,0" Foreground="#ECECF4" FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center" IsHitTestVisible="False" />
+            <TextBlock Text="{DynamicResource App_Title}" Margin="10,0,0,0" Foreground="#ECECF4" FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center" IsHitTestVisible="False" />
             <!-- Version pill (brand-violet tint to match the logo). -->
             <Border Margin="10,0,0,0" VerticalAlignment="Center" CornerRadius="8" Padding="7,1"
                     Background="#2A2140" BorderBrush="#4C3C72" BorderThickness="1" IsHitTestVisible="False">
@@ -149,7 +149,7 @@
                                             BorderThickness="{TemplateBinding BorderThickness}">
                                         <StackPanel Orientation="Horizontal">
                                             <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="12" Foreground="#ECE3FF" VerticalAlignment="Center" />
-                                            <TextBlock Text="Update Available" Foreground="#F4EEFF" FontSize="11" FontWeight="SemiBold" Margin="5,0,0,0" VerticalAlignment="Center" />
+                                            <TextBlock Text="{DynamicResource Update_PillLabel}" Foreground="#F4EEFF" FontSize="11" FontWeight="SemiBold" Margin="5,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </Border>
                                 </ControlTemplate>
@@ -187,16 +187,16 @@
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                             <ui:SymbolIcon Symbol="Sparkle24" Foreground="#C9B6FF" FontSize="15" VerticalAlignment="Center" />
-                            <TextBlock Text="Update available" FontWeight="SemiBold" Foreground="#F2ECFF" FontSize="14" Margin="8,0,0,0" VerticalAlignment="Center" />
+                            <TextBlock Text="{DynamicResource Update_PopupTitle}" FontWeight="SemiBold" Foreground="#F2ECFF" FontSize="14" Margin="8,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
                         <TextBlock Foreground="#E8DEFF" FontSize="20" FontWeight="Bold" Text="{Binding LatestVersion}" />
                         <TextBlock Text="{Binding UpdateMessage}" Foreground="#B3A4DC" FontSize="12" TextWrapping="Wrap" Margin="0,2,0,12" />
                         <StackPanel Orientation="Horizontal">
-                            <ui:Button Content="View release" Appearance="Primary" Command="{Binding OpenUpdateCommand}" Click="OnUpdateActionClicked">
+                            <ui:Button Content="{DynamicResource Update_ViewRelease}" Appearance="Primary" Command="{Binding OpenUpdateCommand}" Click="OnUpdateActionClicked">
                                 <ui:Button.Icon><ui:SymbolIcon Symbol="Open24" /></ui:Button.Icon>
                             </ui:Button>
                             <!-- Dismiss only closes this popup; it never hides the pill. -->
-                            <ui:Button Content="Dismiss" Margin="8,0,0,0" Click="OnUpdateActionClicked" />
+                            <ui:Button Content="{DynamicResource Update_Dismiss}" Margin="8,0,0,0" Click="OnUpdateActionClicked" />
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -208,31 +208,31 @@
             <Grid>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Menu VerticalAlignment="Center" Background="Transparent">
-                    <MenuItem Header="_File">
-                        <MenuItem Header="_Forge new item…" Command="{Binding OpenForgeCommand}"
-                                  ToolTip="Create a complete custom item (server + client + sprite) in one flow">
+                    <MenuItem Header="{DynamicResource Menu_File}">
+                        <MenuItem Header="{DynamicResource Menu_File_ForgeItem}" Command="{Binding OpenForgeCommand}"
+                                  ToolTip="{DynamicResource Menu_File_ForgeItem_Tooltip}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="Add24" /></MenuItem.Icon>
                         </MenuItem>
                         <Separator />
-                        <MenuItem Header="_Save" InputGestureText="Ctrl+S" Command="{Binding SaveCommand}"
-                                  ToolTip="Write pending changes (only modified files are rewritten)">
+                        <MenuItem Header="{DynamicResource Menu_File_Save}" InputGestureText="Ctrl+S" Command="{Binding SaveCommand}"
+                                  ToolTip="{DynamicResource Menu_File_Save_Tooltip}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="Save24" /></MenuItem.Icon>
                         </MenuItem>
                         <Separator />
-                        <MenuItem Header="Reveal _import folder" Command="{Binding RevealImportFolderCommand}">
+                        <MenuItem Header="{DynamicResource Menu_File_RevealImport}" Command="{Binding RevealImportFolderCommand}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="Folder24" /></MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Open client _lua folder" Command="{Binding OpenLuaFolderCommand}">
+                        <MenuItem Header="{DynamicResource Menu_File_OpenLua}" Command="{Binding OpenLuaFolderCommand}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="Folder24" /></MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="_Reload Database" Command="{Binding ReloadDataCommand}">
+                        <MenuItem Header="{DynamicResource Menu_File_Reload}" Command="{Binding ReloadDataCommand}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="ArrowClockwise24" /></MenuItem.Icon>
                         </MenuItem>
                         <Separator />
-                        <MenuItem Header="_Profiles &amp; configuration…" InputGestureText="Ctrl+," Command="{Binding OpenWizardCommand}">
+                        <MenuItem Header="{DynamicResource Menu_File_Profiles}" InputGestureText="Ctrl+," Command="{Binding OpenWizardCommand}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="Settings24" /></MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="S_witch profile" ItemsSource="{Binding Profiles}">
+                        <MenuItem Header="{DynamicResource Menu_File_SwitchProfile}" ItemsSource="{Binding Profiles}">
                             <MenuItem.ItemContainerStyle>
                                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                                     <Setter Property="Header" Value="{Binding Name}" />
@@ -246,71 +246,71 @@
                             </MenuItem.ItemContainerStyle>
                         </MenuItem>
                         <Separator />
-                        <MenuItem Header="Se_ttings" Command="{Binding OpenSettingsCommand}">
+                        <MenuItem Header="{DynamicResource Menu_File_Settings}" Command="{Binding OpenSettingsCommand}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="Settings24" /></MenuItem.Icon>
                         </MenuItem>
                         <Separator />
-                        <MenuItem Header="E_xit" Command="{Binding ExitCommand}" />
+                        <MenuItem Header="{DynamicResource Menu_File_Exit}" Command="{Binding ExitCommand}" />
                     </MenuItem>
 
-                    <MenuItem Header="_Edit">
-                        <MenuItem Header="_Undo" InputGestureText="Ctrl+Z" Command="{Binding UndoCommand}">
+                    <MenuItem Header="{DynamicResource Menu_Edit}">
+                        <MenuItem Header="{DynamicResource Menu_Edit_Undo}" InputGestureText="Ctrl+Z" Command="{Binding UndoCommand}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="ArrowUndo24" /></MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="_Redo" InputGestureText="Ctrl+Y" Command="{Binding RedoCommand}">
+                        <MenuItem Header="{DynamicResource Menu_Edit_Redo}" InputGestureText="Ctrl+Y" Command="{Binding RedoCommand}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="ArrowRedo24" /></MenuItem.Icon>
                         </MenuItem>
                         <Separator />
-                        <MenuItem Header="_Quick open…" InputGestureText="Ctrl+K" Command="{Binding OpenPaletteCommand}" />
+                        <MenuItem Header="{DynamicResource Menu_Edit_QuickOpen}" InputGestureText="Ctrl+K" Command="{Binding OpenPaletteCommand}" />
                     </MenuItem>
 
-                    <MenuItem Header="_View">
-                        <MenuItem Header="_Go to">
-                            <MenuItem Header="Server Items" Command="{Binding GoSectionCommand}" CommandParameter="items" />
-                            <MenuItem Header="Client Items" Command="{Binding GoSectionCommand}" CommandParameter="client_items" />
-                            <MenuItem Header="Mobs" Command="{Binding GoSectionCommand}" CommandParameter="mobs" />
-                            <MenuItem Header="Pets" Command="{Binding GoSectionCommand}" CommandParameter="pets" />
-                            <MenuItem Header="Skills" Command="{Binding GoSectionCommand}" CommandParameter="skills" />
-                            <MenuItem Header="Item Combos" Command="{Binding GoSectionCommand}" CommandParameter="combos" />
-                            <MenuItem Header="Item Groups" Command="{Binding GoSectionCommand}" CommandParameter="groups" />
+                    <MenuItem Header="{DynamicResource Menu_View}">
+                        <MenuItem Header="{DynamicResource Menu_View_GoTo}">
+                            <MenuItem Header="{DynamicResource Nav_Items}" Command="{Binding GoSectionCommand}" CommandParameter="items" />
+                            <MenuItem Header="{DynamicResource Nav_ClientItems}" Command="{Binding GoSectionCommand}" CommandParameter="client_items" />
+                            <MenuItem Header="{DynamicResource Nav_Mobs}" Command="{Binding GoSectionCommand}" CommandParameter="mobs" />
+                            <MenuItem Header="{DynamicResource Nav_Pets}" Command="{Binding GoSectionCommand}" CommandParameter="pets" />
+                            <MenuItem Header="{DynamicResource Nav_Skills}" Command="{Binding GoSectionCommand}" CommandParameter="skills" />
+                            <MenuItem Header="{DynamicResource Nav_Combos}" Command="{Binding GoSectionCommand}" CommandParameter="combos" />
+                            <MenuItem Header="{DynamicResource Nav_Groups}" Command="{Binding GoSectionCommand}" CommandParameter="groups" />
                         </MenuItem>
                         <Separator />
-                        <MenuItem Header="_System">
-                            <MenuItem Header="Renewal" IsCheckable="False" Command="{Binding EnableRenewalCommand}"
+                        <MenuItem Header="{DynamicResource Menu_View_System}">
+                            <MenuItem Header="{DynamicResource Menu_View_Renewal}" IsCheckable="False" Command="{Binding EnableRenewalCommand}"
                                       IsChecked="{Binding IsRenewal, Mode=OneWay}" />
-                            <MenuItem Header="Pre-Renewal" IsCheckable="False" Command="{Binding EnablePreRenewalCommand}"
+                            <MenuItem Header="{DynamicResource Menu_View_PreRenewal}" IsCheckable="False" Command="{Binding EnablePreRenewalCommand}"
                                       IsChecked="{Binding IsRenewal, Converter={StaticResource InverseBool}, Mode=OneWay}" />
                         </MenuItem>
                     </MenuItem>
 
-                    <MenuItem Header="_Tools">
-                        <MenuItem Header="_GRF Browser" Command="{Binding GoSectionCommand}" CommandParameter="grf">
+                    <MenuItem Header="{DynamicResource Menu_Tools}">
+                        <MenuItem Header="{DynamicResource Menu_Tools_Grf}" Command="{Binding GoSectionCommand}" CommandParameter="grf">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="FolderZip24" /></MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="_Validation" Command="{Binding GoSectionCommand}" CommandParameter="validation">
+                        <MenuItem Header="{DynamicResource Menu_Tools_Validation}" Command="{Binding GoSectionCommand}" CommandParameter="validation">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="Checkmark24" /></MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="_Map Cache Editor" Command="{Binding OpenMapCacheEditorCommand}">
+                        <MenuItem Header="{DynamicResource Menu_Tools_MapCache}" Command="{Binding OpenMapCacheEditorCommand}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="Map24" /></MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="_Cash Shop Manager" Command="{Binding OpenCashShopManagerCommand}">
+                        <MenuItem Header="{DynamicResource Menu_Tools_CashShop}" Command="{Binding OpenCashShopManagerCommand}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="Cart24" /></MenuItem.Icon>
                         </MenuItem>
                         <Separator />
-                        <MenuItem Header="_Backup Manager" Command="{Binding OpenBackupManagerCommand}">
+                        <MenuItem Header="{DynamicResource Menu_Tools_Backup}" Command="{Binding OpenBackupManagerCommand}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="Save24" /></MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
 
-                    <MenuItem Header="_Help">
-                        <MenuItem Header="_Check for Updates…" Command="{Binding CheckForUpdatesCommand}">
+                    <MenuItem Header="{DynamicResource Menu_Help}">
+                        <MenuItem Header="{DynamicResource Menu_Help_CheckUpdates}" Command="{Binding CheckForUpdatesCommand}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="ArrowSync24" /></MenuItem.Icon>
                         </MenuItem>
                         <Separator />
-                        <MenuItem Header="_Documentation" Command="{Binding OpenDocsCommand}">
+                        <MenuItem Header="{DynamicResource Menu_Help_Documentation}" Command="{Binding OpenDocsCommand}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="Open24" /></MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="_About Midgard Studio" Command="{Binding AboutCommand}">
+                        <MenuItem Header="{DynamicResource Menu_Help_About}" Command="{Binding AboutCommand}">
                             <MenuItem.Icon><Image Source="/Assets/logo.png" Width="16" Height="16" /></MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
@@ -321,7 +321,7 @@
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <ui:SymbolIcon Symbol="Person24" FontSize="13" Opacity="0.6" Margin="0,0,6,0" VerticalAlignment="Center" />
                             <TextBlock Text="{Binding ActiveProfileName}" FontSize="12" VerticalAlignment="Center" Opacity="0.9"
-                                       ToolTip="Active profile" />
+                                       ToolTip="{DynamicResource Status_ActiveProfile}" />
                         </StackPanel>
                     </Border>
 
@@ -352,10 +352,10 @@
                             <TextBlock VerticalAlignment="Center" FontSize="12" Opacity="0.9">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
-                                        <Setter Property="Text" Value="No changes" />
+                                        <Setter Property="Text" Value="{DynamicResource Status_NoChanges}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsModified}" Value="True">
-                                                <Setter Property="Text" Value="Unsaved changes" />
+                                                <Setter Property="Text" Value="{DynamicResource Status_UnsavedChanges}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -367,11 +367,11 @@
                     <!-- Undo / redo arrows (right after the changes indicator); auto-grey via CanExecute -->
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="8,0,0,0">
                         <ui:Button Appearance="Transparent" Padding="7,4" Margin="0,0,2,0"
-                                   Command="{Binding UndoCommand}" ToolTip="Undo (Ctrl+Z)">
+                                   Command="{Binding UndoCommand}" ToolTip="{DynamicResource Status_Undo_Tooltip}">
                             <ui:Button.Icon><ui:SymbolIcon Symbol="ArrowUndo24" FontSize="16" /></ui:Button.Icon>
                         </ui:Button>
                         <ui:Button Appearance="Transparent" Padding="7,4"
-                                   Command="{Binding RedoCommand}" ToolTip="Redo (Ctrl+Y)">
+                                   Command="{Binding RedoCommand}" ToolTip="{DynamicResource Status_Redo_Tooltip}">
                             <ui:Button.Icon><ui:SymbolIcon Symbol="ArrowRedo24" FontSize="16" /></ui:Button.Icon>
                         </ui:Button>
                     </StackPanel>
@@ -381,9 +381,9 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
                                 Visibility="{Binding ActiveWorkspace.Editor.HasRecord, Converter={StaticResource BoolToVis}, FallbackValue=Collapsed}">
-                        <ui:Button Content="YAML" Command="{Binding ActiveWorkspace.ShowYamlCommand}" Margin="0,0,6,0"
-                                   ToolTip="Preview the YAML written to the import file" />
-                        <ui:Button Content="Copy to Import to edit" Appearance="Primary"
+                        <ui:Button Content="{DynamicResource Btn_Yaml}" Command="{Binding ActiveWorkspace.ShowYamlCommand}" Margin="0,0,6,0"
+                                   ToolTip="{DynamicResource Btn_Yaml_Tooltip}" />
+                        <ui:Button Content="{DynamicResource Btn_CopyToImport}" Appearance="Primary"
                                    Command="{Binding ActiveWorkspace.Editor.CreateOverrideCommand}"
                                    Visibility="{Binding ActiveWorkspace.Editor.IsEditable, Converter={StaticResource BoolToVis}, ConverterParameter=invert, FallbackValue=Collapsed}" />
                         <Border Width="1" Height="18" Background="#22FFFFFF" Margin="8,0" />
@@ -392,12 +392,12 @@
                     <!-- Item Combos actions (only on that screen) -->
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
                                 Visibility="{Binding ActiveCombo, Converter={StaticResource NotNullToVis}, FallbackValue=Collapsed}">
-                        <ui:Button Content="Copy to Import to edit" Appearance="Primary" Margin="0,0,6,0"
+                        <ui:Button Content="{DynamicResource Btn_CopyToImport}" Appearance="Primary" Margin="0,0,6,0"
                                    Command="{Binding ActiveCombo.CreateOverrideCommand}"
                                    Visibility="{Binding ActiveCombo.IsBaseSelected, Converter={StaticResource BoolToVis}, FallbackValue=Collapsed}"
-                                   ToolTip="Make this base combo editable (copy-on-write)" />
-                        <ui:Button Content="New combo" Command="{Binding ActiveCombo.AddComboSetCommand}"
-                                   ToolTip="Create a new custom combo">
+                                   ToolTip="{DynamicResource Btn_CopyToImport_Tooltip}" />
+                        <ui:Button Content="{DynamicResource Btn_NewCombo}" Command="{Binding ActiveCombo.AddComboSetCommand}"
+                                   ToolTip="{DynamicResource Btn_NewCombo_Tooltip}">
                             <ui:Button.Icon><ui:SymbolIcon Symbol="Add24" /></ui:Button.Icon>
                         </ui:Button>
                         <Border Width="1" Height="18" Background="#22FFFFFF" Margin="8,0" />
@@ -406,7 +406,7 @@
                     <!-- Save: black button; the border ring animates the logo gradient only when there's
                          something to save (enabled). Disabled = plain black. -->
                     <Button Command="{Binding SaveCommand}" Cursor="Hand"
-                            ToolTip="Write pending changes (Ctrl+S) — only modified files are rewritten">
+                            ToolTip="{DynamicResource Btn_Save_Tooltip}">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Grid>
@@ -414,7 +414,7 @@
                                     <Border x:Name="Fill" CornerRadius="6" Margin="2" Background="#0C0C12" Padding="13,6">
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                             <ui:SymbolIcon Symbol="Save24" FontSize="16" Foreground="White" VerticalAlignment="Center" />
-                                            <TextBlock Text="Save" Foreground="White" FontWeight="Medium" Margin="7,0,0,0" VerticalAlignment="Center" />
+                                            <TextBlock Text="{DynamicResource Menu_File_Save}" Foreground="White" FontWeight="Medium" Margin="7,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </Border>
                                 </Grid>
@@ -517,7 +517,7 @@
                      Background="#FF1E1E26" BorderBrush="#33FFFFFF" BorderThickness="1">
                 <DockPanel>
                     <ui:TextBox x:Name="PaletteSearchBox" DockPanel.Dock="Top"
-                                PlaceholderText="Search any database by id / aegis / name…"
+                                PlaceholderText="{DynamicResource Palette_Placeholder}"
                                 Text="{Binding PaletteQuery, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8" />
                     <ListBox x:Name="PaletteResultsBox" ItemsSource="{Binding PaletteResults}" MaxHeight="380">
                         <ListBox.InputBindings>

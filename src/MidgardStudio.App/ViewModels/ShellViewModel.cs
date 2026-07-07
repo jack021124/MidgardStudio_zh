@@ -118,7 +118,7 @@ public partial class ShellViewModel : ObservableObject
     /// <summary>The one-time onboarding tour, shown over everything on first run (<see cref="ShowOnboarding"/>).</summary>
     public OnboardingViewModel Onboarding => _onboarding;
 
-    public string ModeLabel => IsRenewal ? "Renewal" : "Pre-Renewal";
+    public string ModeLabel => IsRenewal ? L("Mode_Renewal") : L("Mode_PreRenewal");
 
     /// <summary>Name of the active profile, shown in the menu-bar status strip.</summary>
     public string ActiveProfileName => _session.Config.Name;
@@ -179,8 +179,8 @@ public partial class ShellViewModel : ObservableObject
             var profile = _configService.ActiveProfile;
             if (profile is not null && profile.Paths.AllExist())
                 ShowWizard = false;
-            else if (Views.ConfirmDialog.Show("Quit Midgard Studio?",
-                         "No workspace is configured yet, so closing setup will exit Midgard Studio.", yes: "Quit"))
+            else if (Views.ConfirmDialog.Show(L("Msg_Quit_Title"),
+                         L("Msg_Quit_Body"), yes: L("Msg_Quit_Yes")))
                 Exit();
         };
         _validation.Navigate = NavigateToIssue;
@@ -229,7 +229,7 @@ public partial class ShellViewModel : ObservableObject
         if (info is null) return; // up to date / couldn't check — no pill
         if (!string.IsNullOrEmpty(info.Url)) _updateUrl = info.Url; // else keep the releases-page fallback
         LatestVersion = "v" + info.Version;
-        UpdateMessage = $"Version {info.Version} is available — you're on {AppVersion}.";
+        UpdateMessage = string.Format(L("Msg_Update_Available"), info.Version, AppVersion);
         UpdateAvailable = true;
     }
 
@@ -287,52 +287,58 @@ public partial class ShellViewModel : ObservableObject
         string db = p.ServerDbRoot;
         string re(string file) => Path.Combine(db, "re", file);
 
-        Sections.Add(new("items", "Items", SymbolRegular.BoxMultiple24,
-            "Server item database (item_db): stats, bonuses, restrictions and drop sources.",
+        // Section labels + descriptions are localized at build time (read from the active language
+        // dictionary). They are static once built; switching language mid-session re-reads them on the
+        // next profile switch / rebuild. Keyed to match the localization entries in en.xaml/zh-CN.xaml.
+        Sections.Add(new("items", L("Nav_Items"), SymbolRegular.BoxMultiple24,
+            L("Nav_Items_Desc"),
             re("item_db_equip.yml"), schemaId: "item_db"));
-        Sections.Add(new("client_items", "Client Items", SymbolRegular.Image24,
-            "Client item info (itemInfo.lua / itemInfo_C.lua): names, descriptions, slots, view and sprite.",
-            string.Empty, category: "Client"));
-        Sections.Add(new("mobs", "Mobs", SymbolRegular.Bug24,
-            "Monster database (mob_db) with drops, modes and client sprite registration.",
+        Sections.Add(new("client_items", L("Nav_ClientItems"), SymbolRegular.Image24,
+            L("Nav_ClientItems_Desc"),
+            string.Empty, category: L("NavGroup_Client")));
+        Sections.Add(new("mobs", L("Nav_Mobs"), SymbolRegular.Bug24,
+            L("Nav_Mobs_Desc"),
             re("mob_db.yml"), schemaId: "mob_db"));
-        Sections.Add(new("mob_avail", "Mob Sprite Reuse", SymbolRegular.ArrowSwap24,
-            "Reuse another mob's (or a job) sprite for a mob (mob_avail).",
+        Sections.Add(new("mob_avail", L("Nav_MobAvail"), SymbolRegular.ArrowSwap24,
+            L("Nav_MobAvail_Desc"),
             Path.Combine(db, "import", "mob_avail.yml"), schemaId: "mob_avail"));
-        Sections.Add(new("pets", "Pets", SymbolRegular.Heart24,
-            "Pet database (pet_db): taming, intimacy, evolution and bonus scripts.",
+        Sections.Add(new("pets", L("Nav_Pets"), SymbolRegular.Heart24,
+            L("Nav_Pets_Desc"),
             re("pet_db.yml"), schemaId: "pet_db"));
-        Sections.Add(new("combos", "Item Combos", SymbolRegular.Link24,
-            "Item set combos (item_combos) and their bonus scripts.",
+        Sections.Add(new("combos", L("Nav_Combos"), SymbolRegular.Link24,
+            L("Nav_Combos_Desc"),
             re("item_combos.yml"), schemaId: "item_combos"));
-        Sections.Add(new("groups", "Item Groups", SymbolRegular.Folder24,
-            "Item group pools (item_group_db) with sub-groups and rates.",
+        Sections.Add(new("groups", L("Nav_Groups"), SymbolRegular.Folder24,
+            L("Nav_Groups_Desc"),
             re("item_group_db.yml"), schemaId: "item_group_db"));
-        Sections.Add(new("skills", "Skills", SymbolRegular.Flash24,
-            "Skill database (skill_db).",
+        Sections.Add(new("skills", L("Nav_Skills"), SymbolRegular.Flash24,
+            L("Nav_Skills_Desc"),
             re("skill_db.yml"), schemaId: "skill_db"));
-        Sections.Add(new("client_skills", "Client Skills", SymbolRegular.BookStar24,
-            "Client skill info (skillinfoz): names, max level, SP cost, range, prerequisites, descriptions and cast/delay timings.",
-            string.Empty, category: "Client"));
-        Sections.Add(new("achievements", "Achievements", SymbolRegular.Trophy24,
-            "Achievement database (achievement_db): targets, dependencies and rewards.",
+        Sections.Add(new("client_skills", L("Nav_ClientSkills"), SymbolRegular.BookStar24,
+            L("Nav_ClientSkills_Desc"),
+            string.Empty, category: L("NavGroup_Client")));
+        Sections.Add(new("achievements", L("Nav_Achievements"), SymbolRegular.Trophy24,
+            L("Nav_Achievements_Desc"),
             re("achievement_db.yml"), schemaId: "achievement_db"));
-        Sections.Add(new("abra", "Class Change", SymbolRegular.Sparkle24,
-            "Abracadabra / Hocus-Pocus random skill table (abra_db).",
+        Sections.Add(new("abra", L("Nav_Abra"), SymbolRegular.Sparkle24,
+            L("Nav_Abra_Desc"),
             Path.Combine(db, "abra_db.yml"), schemaId: "abra_db"));
-        Sections.Add(new("summon", "Summon Groups", SymbolRegular.Star24,
-            "Summon group pools (mob_summon): Bloody Branch, Dead Branch, Class Change, Poring Box, ...",
+        Sections.Add(new("summon", L("Nav_Summon"), SymbolRegular.Star24,
+            L("Nav_Summon_Desc"),
             re("mob_summon.yml"), schemaId: "mob_summon"));
-        Sections.Add(new("grf", "GRF Browser", SymbolRegular.FolderZip24,
-            "Browse client GRF archives: preview icons/sprites and read lua files.",
-            "data\\luafiles514\\lua files", category: "Client"));
-        Sections.Add(new("cash_shop", "Cash Shop", SymbolRegular.Cart24,
-            "Cash shop (item_cash_db): items and their cash-point prices, per tab.",
-            string.Empty, category: "Tools"));
-        Sections.Add(new("validation", "Validation", SymbolRegular.Checkmark24,
-            "Cross-file consistency checks for your custom and overridden entries.",
-            string.Empty, category: "Tools"));
+        Sections.Add(new("grf", L("Nav_Grf"), SymbolRegular.FolderZip24,
+            L("Nav_Grf_Desc"),
+            "data\\luafiles514\\lua files", category: L("NavGroup_Client")));
+        Sections.Add(new("cash_shop", L("Nav_CashShop"), SymbolRegular.Cart24,
+            L("Nav_CashShop_Desc"),
+            string.Empty, category: L("NavGroup_Tools")));
+        Sections.Add(new("validation", L("Nav_Validation"), SymbolRegular.Checkmark24,
+            L("Nav_Validation_Desc"),
+            string.Empty, category: L("NavGroup_Tools")));
     }
+
+    /// <summary>Shorthand for a localized string read from the active language dictionary.</summary>
+    private static string L(string key) => Localization.LocalizationService.Get(key);
 
     partial void OnSelectedSectionChanged(DbSectionViewModel? value) => RebuildContent();
 
@@ -424,9 +430,9 @@ public partial class ShellViewModel : ObservableObject
         // there are unsaved edits (only happens when re-opening the wizard mid-session).
         if (persist && _session.Commands.IsModified)
         {
-            if (!Views.ConfirmDialog.Show("Unsaved changes",
-                    "You have unsaved changes. Switching profiles will discard them. Continue?",
-                    yes: "Discard & switch")) return;
+            if (!Views.ConfirmDialog.Show(L("Msg_UnsavedSwitch_Title"),
+                    L("Msg_UnsavedSwitch_Body"),
+                    yes: L("Msg_UnsavedSwitch_Yes"))) return;
         }
 
         // Pre-flight: warn (and let the user back out) if this profile's files are an old/unsupported format
@@ -466,14 +472,14 @@ public partial class ShellViewModel : ObservableObject
         bool hasBlocker = findings.Any(f => f.Severity == CompatSeverity.Blocker);
         var sb = new System.Text.StringBuilder();
         sb.Append(hasBlocker
-            ? "Some of this profile's files look like a different or unsupported format. Loading is fine, but SAVING them could fail or write the wrong data:\n\n"
-            : "Some of this profile's files may not round-trip perfectly when saved:\n\n");
+            ? L("Msg_Compat_Blocker_Intro")
+            : L("Msg_Compat_Warn_Intro")).Append("\n\n");
         foreach (var f in findings.Take(12))
             sb.Append(f.Severity == CompatSeverity.Blocker ? "  ⛔ " : "  ⚠ ").Append(f.Message).Append('\n');
-        if (findings.Count > 12) sb.Append($"  …and {findings.Count - 12} more.\n");
-        sb.Append("\nLoad this profile anyway?");
+        if (findings.Count > 12) sb.Append("  ").Append(string.Format(L("Msg_Compat_More"), findings.Count - 12)).Append('\n');
+        sb.Append("\n").Append(L("Msg_Compat_LoadAnyway"));
 
-        return Views.ConfirmDialog.Show("Profile compatibility", sb.ToString(), yes: "Load anyway");
+        return Views.ConfirmDialog.Show(L("Msg_Compat_Title"), sb.ToString(), yes: L("Msg_Compat_Yes"));
     }
 
     [RelayCommand]
@@ -526,9 +532,9 @@ public partial class ShellViewModel : ObservableObject
     {
         if (_session.Commands.IsModified)
         {
-            if (!Views.ConfirmDialog.Show("Reload from disk",
-                    "Reload all data from disk? Unsaved changes will be discarded.",
-                    yes: "Discard & reload")) return;
+            if (!Views.ConfirmDialog.Show(L("Msg_Reload_Title"),
+                    L("Msg_Reload_Body"),
+                    yes: L("Msg_Reload_Yes"))) return;
         }
 
         _session.ApplyProfile(_session.Config); // clears caches + undo so the next read re-loads from disk
@@ -634,9 +640,9 @@ public partial class ShellViewModel : ObservableObject
             // Background auto-save (interval/on-edit) must not pop a modal every tick when a file is locked
             // (e.g. a running server) — it just logs and leaves the Save button lit. Only interactive saves alert.
             if (interactive)
-                Views.ConfirmDialog.Alert("Save failed",
-                    "Your changes were NOT fully saved and are still here in the editor:\n\n" + ex.Message +
-                    "\n\nClose anything that might be using these files (for example a running server), then save again.");
+                Views.ConfirmDialog.Alert(L("Msg_SaveFailed_Title"),
+                    L("Msg_SaveFailed_Body") + "\n\n" + ex.Message +
+                    "\n\n" + L("Msg_SaveFailed_Tail"));
             return false;
         }
 
@@ -649,18 +655,19 @@ public partial class ShellViewModel : ObservableObject
         var written = saveTargets
             .Select(t => new Views.SaveSummaryDialog.SavedFile(_schemas.Get(t.Id)?.DisplayName ?? t.Id, t.ImportFilePath))
             .ToList();
-        if (clientDirty) written.Add(new("Client items", _clientItems.SaveTargetPath));
-        if (clientSkillDirty) written.Add(new("Client skills", _clientSkills.SaveTargetPath));
-        if (spriteDirty) written.Add(new("Accessory sprites", _sprite.SaveTargetPath));
-        if (mobSpriteDirty) written.Add(new("Mob sprites", _mobSprite.SaveTargetPath));
-        if (cashShopDirty) written.Add(new("Cash shop", _cashShop.SaveTargetPath));
+        if (clientDirty) written.Add(new(L("Label_ClientItems"), _clientItems.SaveTargetPath));
+        if (clientSkillDirty) written.Add(new(L("Label_ClientSkills"), _clientSkills.SaveTargetPath));
+        if (spriteDirty) written.Add(new(L("Label_AccessorySprites"), _sprite.SaveTargetPath));
+        if (mobSpriteDirty) written.Add(new(L("Label_MobSprites"), _mobSprite.SaveTargetPath));
+        if (cashShopDirty) written.Add(new(L("Label_CashShop"), _cashShop.SaveTargetPath));
 
         // Snapshot the freshly-saved state into a dated, self-describing backup (manual saves only).
         if (createBackup)
         {
             var names = written.Select(w => w.Label).ToList();
-            _backups.CreateBackup("Save · " + string.Join(", ", names),
-                $"Automatic backup taken after saving: {string.Join(", ", names)}.");
+            var joined = string.Join(", ", names);
+            _backups.CreateBackup(string.Format(L("Label_BackupSavePrefix"), joined),
+                string.Format(L("Label_BackupAfterSave"), joined));
             _backupVm?.RefreshCommand.Execute(null);
         }
 
@@ -669,8 +676,8 @@ public partial class ShellViewModel : ObservableObject
         if (showSummary)
         {
             string summary = written.Count == 1
-                ? "1 file was written to disk."
-                : $"{written.Count} files were written to disk.";
+                ? L("Msg_Save_Summary_Single")
+                : string.Format(L("Msg_Save_Summary_Multi"), written.Count);
             Views.SaveSummaryDialog.Show(summary, written);
         }
 
@@ -703,12 +710,12 @@ public partial class ShellViewModel : ObservableObject
         string message = MidgardStudio.Core.Validation.SaveGate.FormatErrors(report);
         if (settings.SaveGate == ValidationGateMode.HardGate)
         {
-            Views.ConfirmDialog.Alert("Validation errors",
-                message + "\n\nFix these Error-level issues before saving (hard gate is enabled).");
+            Views.ConfirmDialog.Alert(L("Msg_ValErrors_Title"),
+                message + "\n\n" + L("Msg_ValErrors_HardGate_Tail"));
             return false;
         }
 
-        return Views.ConfirmDialog.Show("Validation errors", message, yes: "Save anyway", no: "Fix first");
+        return Views.ConfirmDialog.Show(L("Msg_ValErrors_Title"), message, yes: L("Msg_ValErrors_Soft_Yes"), no: L("Msg_ValErrors_Soft_No"));
     }
 
     [RelayCommand]
@@ -982,5 +989,7 @@ public sealed class ProfileMenuItemViewModel
     public WorkspaceConfig Config { get; }
     public string Name => Config.Name;
     public bool IsActive { get; }
-    public string ModeText => Config.DefaultMode == ServerMode.Renewal ? "Renewal" : "Pre-Renewal";
+    public string ModeText => Config.DefaultMode == ServerMode.Renewal
+        ? Localization.LocalizationService.Get("Mode_Renewal")
+        : Localization.LocalizationService.Get("Mode_PreRenewal");
 }

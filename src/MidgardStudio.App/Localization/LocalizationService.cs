@@ -48,9 +48,14 @@ public static class LocalizationService
 
         // If even the English fallback is somehow missing, there's nothing to merge — leave the
         // resource tree untouched (every key will resolve to its own name, but the app still runs).
-        if (dict is null) return;
+        if (dict is null)
+        {
+            Serilog.Log.Warning("Language dictionary could not be loaded for '{Lang}'; UI keys will fall back.", _currentLanguage);
+            return;
+        }
 
         ReplaceActiveDictionary(dict);
+        Serilog.Log.Information("UI language set to '{Lang}' ({Count} resources).", _currentLanguage, dict.Count);
     }
 
     /// <summary>

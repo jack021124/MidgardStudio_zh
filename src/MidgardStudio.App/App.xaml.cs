@@ -38,9 +38,6 @@ public partial class App : Application
         // Let the Grf layer decode formats its ImageProvider can't (e.g. .jpg water textures) via WPF.
         MidgardStudio.Grf.GrfService.EncodedImageDecoder = DecodeEncodedImage;
 
-        // Let the Grf layer decode formats its ImageProvider can't (e.g. .jpg water textures) via WPF.
-        MidgardStudio.Grf.GrfService.EncodedImageDecoder = DecodeEncodedImage;
-
         string logDir = Path.Combine(AppPaths.LocalDir, "logs"); // machine-local, disposable
         Directory.CreateDirectory(logDir);
 

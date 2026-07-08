@@ -19,13 +19,17 @@ public sealed partial class ShortcutRowViewModel : ObservableObject
     public ShortcutRowViewModel(string key, string display, string gesture, Action<string, string> set)
     {
         Key = key;
-        Display = display;
+        _display = display;
         _gesture = gesture;
         _set = set;
     }
 
     public string Key { get; }
-    public string Display { get; }
+
+    [ObservableProperty] private string _display;
+
+    /// <summary>Re-resolves the action label after a language switch (gesture is unchanged).</summary>
+    public void RefreshDisplay(string display) => Display = display;
 
     [ObservableProperty] private string _gesture;
 
@@ -53,18 +57,43 @@ public sealed partial class SettingsViewModel : ObservableObject
         _saveGate = settings.Settings.SaveGate;
         _validateBeforeSave = settings.Settings.ValidateOnSave;
 
-        foreach (var (key, display, def) in AppSettingsService.ShortcutDefs)
-        {
-            string gesture = settings.Settings.Shortcuts.TryGetValue(key, out var g) && !string.IsNullOrWhiteSpace(g) ? g : def;
-            Shortcuts.Add(new ShortcutRowViewModel(key, display, gesture, SetShortcut));
-        }
+        BuildShortcuts();
 
         // Seed the language dropdown from the current (already-initialized) UI language.
         Languages.Add(new("zh-CN", Localization.LocalizationService.Get("Settings_Language_Chinese")));
         Languages.Add(new("en", Localization.LocalizationService.Get("Settings_Language_English")));
 
         BuildAutocomplete();
+
+        // Rebuild the localized rows when the interface language changes at runtime so toggle/label/
+        // shortcut names follow the new language without a restart.
+        Localization.LocalizationService.LanguageChanged += OnLanguageChanged;
     }
+
+    private void OnLanguageChanged()
+    {
+        // Re-resolve the shortcut action labels in place (gestures are unchanged).
+        for (int i = 0; i < Shortcuts.Count && i < AppSettingsService.ShortcutDefs.Length; i++)
+            Shortcuts[i].RefreshDisplay(L("Shortcut_" + AppSettingsService.ShortcutDefs[i].Key));
+
+        // Rebuild the autocomplete rows so toggle/colour/field-label names read in the new language.
+        AutocompleteToggles.Clear();
+        SemanticColors.Clear();
+        ElementColors.Clear();
+        FieldLabels.Clear();
+        BuildAutocomplete();
+    }
+
+    private void BuildShortcuts()
+    {
+        foreach (var (key, _, def) in AppSettingsService.ShortcutDefs)
+        {
+            string gesture = _settings.Settings.Shortcuts.TryGetValue(key, out var g) && !string.IsNullOrWhiteSpace(g) ? g : def;
+            Shortcuts.Add(new ShortcutRowViewModel(key, L("Shortcut_" + key), gesture, SetShortcut));
+        }
+    }
+
+    private static string L(string key) => Localization.LocalizationService.Get(key);
 
     // ===== Autocomplete settings =====
 
@@ -110,26 +139,26 @@ public sealed partial class SettingsViewModel : ObservableObject
         _defaultUnidentifiedDescription = Ac.DefaultUnidentifiedDescription;
         _missingValueText = Ac.MissingValueText;
 
-        foreach (var (key, display) in AutocompleteConfig.ToggleKeys)
-            AutocompleteToggles.Add(new AcToggleViewModel(display, Ac.GetToggle(key),
+        foreach (var (key, _) in AutocompleteConfig.ToggleKeys)
+            AutocompleteToggles.Add(new AcToggleViewModel(L("AcToggle_" + key), Ac.GetToggle(key),
                 v => { Ac.SetToggle(key, v); _settings.Save(); RefreshPreview(); }));
 
-        void AddSemantic(string name, Func<string> get, Action<string> set) =>
-            SemanticColors.Add(new AcColorViewModel(name, get(), hex => { set(NormalizeHex(hex)); _settings.Save(); RefreshPreview(); }));
-        AddSemantic("Values (numbers)", () => Ac.ValueColor, v => Ac.ValueColor = v);
-        AddSemantic("Labels (class / jobs)", () => Ac.LabelColor, v => Ac.LabelColor = v);
-        AddSemantic("Attack", () => Ac.AttackColor, v => Ac.AttackColor = v);
-        AddSemantic("Defense", () => Ac.DefenseColor, v => Ac.DefenseColor = v);
-        AddSemantic("Skill names", () => Ac.SkillColor, v => Ac.SkillColor = v);
+        void AddSemantic(string resKey, Func<string> get, Action<string> set) =>
+            SemanticColors.Add(new AcColorViewModel(L(resKey), get(), hex => { set(NormalizeHex(hex)); _settings.Save(); RefreshPreview(); }));
+        AddSemantic("AcColor_Values", () => Ac.ValueColor, v => Ac.ValueColor = v);
+        AddSemantic("AcColor_Labels", () => Ac.LabelColor, v => Ac.LabelColor = v);
+        AddSemantic("AcColor_Attack", () => Ac.AttackColor, v => Ac.AttackColor = v);
+        AddSemantic("AcColor_Defense", () => Ac.DefenseColor, v => Ac.DefenseColor = v);
+        AddSemantic("AcColor_Skill", () => Ac.SkillColor, v => Ac.SkillColor = v);
 
         foreach (var name in AutocompleteConfig.DefaultElementColors().Keys)
             ElementColors.Add(new AcColorViewModel(name, Ac.ElementColor(name),
                 hex => { Ac.ElementColors[name] = NormalizeHex(hex); _settings.Save(); RefreshPreview(); }));
 
-        foreach (var (key, defLabel) in AutocompleteConfig.LabelKeys)
+        foreach (var (key, _) in AutocompleteConfig.LabelKeys)
         {
             string current = Ac.Labels.TryGetValue(key, out var ov) ? ov : string.Empty;
-            FieldLabels.Add(new AcLabelViewModel(defLabel, current, v =>
+            FieldLabels.Add(new AcLabelViewModel(L("AcLabel_" + key), current, v =>
             {
                 if (string.IsNullOrWhiteSpace(v)) Ac.Labels.Remove(key);
                 else Ac.Labels[key] = v.Trim();

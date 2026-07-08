@@ -37,6 +37,15 @@ public sealed partial class CashShopManagerViewModel : ObservableObject
         SelectedTab = Tabs.FirstOrDefault();
         RefreshCounts();
         RebuildItems();
+
+        // Refresh the tab labels when the interface language changes at runtime.
+        Localization.LocalizationService.LanguageChanged += OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged()
+    {
+        // Re-raise Name so each tab's localized label refreshes in the rail.
+        foreach (var t in Tabs) t.RefreshName();
     }
 
     /// <summary>The nine fixed tabs (with live counts) shown in the rail.</summary>
@@ -283,7 +292,12 @@ public sealed partial class CashTabViewModel : ObservableObject
     public CashTabViewModel(CashShopTab tab) => Tab = tab;
 
     public CashShopTab Tab { get; }
-    public string Name => Tab.ToString();
+
+    /// <summary>The localized tab label (resolves <c>CashShopTab_&lt;Tab&gt;</c>; falls back to the enum name).</summary>
+    public string Name => Localization.LocalizationService.Get("CashShopTab_" + Tab);
+
+    /// <summary>Re-raises <see cref="Name"/> so the rail label refreshes after a language switch.</summary>
+    public void RefreshName() => OnPropertyChanged(nameof(Name));
 
     [ObservableProperty]
     private int _count;

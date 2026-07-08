@@ -188,6 +188,24 @@
     <s:String x:Key="Settings_Shortcuts_Desc">Click a field and press the keys you want — including combinations like Ctrl+Shift+F. Changes apply immediately. Backspace clears a shortcut; Esc cancels.</s:String>
     <s:String x:Key="Settings_Shortcuts_Placeholder">Press a shortcut…</s:String>
 
+    <!-- Shortcut action labels (drive the Shortcuts tab rows) -->
+    <s:String x:Key="Shortcut_Save">Save</s:String>
+    <s:String x:Key="Shortcut_Undo">Undo</s:String>
+    <s:String x:Key="Shortcut_Redo">Redo</s:String>
+    <s:String x:Key="Shortcut_NewEntry">New entry</s:String>
+    <s:String x:Key="Shortcut_Duplicate">Duplicate entry</s:String>
+    <s:String x:Key="Shortcut_CopyYaml">Copy entry as YAML</s:String>
+    <s:String x:Key="Shortcut_Forge">Forge new item</s:String>
+    <s:String x:Key="Shortcut_FindInList">Find in current list</s:String>
+    <s:String x:Key="Shortcut_FindEverywhere">Find in all databases</s:String>
+    <s:String x:Key="Shortcut_QuickOpen">Quick open</s:String>
+    <s:String x:Key="Shortcut_Reload">Reload database</s:String>
+    <s:String x:Key="Shortcut_Validate">Run validation</s:String>
+    <s:String x:Key="Shortcut_ToggleMode">Toggle Renewal / Pre-Renewal</s:String>
+    <s:String x:Key="Shortcut_BackupManager">Backup manager</s:String>
+    <s:String x:Key="Shortcut_Settings">Settings</s:String>
+    <s:String x:Key="Shortcut_Configuration">Profiles &amp; configuration</s:String>
+
     <s:String x:Key="Settings_About_Card_Desc">A native editor for Ragnarok server databases and client files — server YAML, client Lua, item combos, drops and sprites in one place.</s:String>
     <s:String x:Key="Settings_About_Author">Author</s:String>
     <s:String x:Key="Settings_About_Edition">Edition</s:String>
@@ -210,6 +228,50 @@
     <s:String x:Key="Settings_Ac_FieldLabels">Field labels</s:String>
     <s:String x:Key="Settings_Ac_FieldLabels_Desc">Rename the word shown before each value (e.g. “Weight” → “Item Weight”). Blank = default.</s:String>
     <s:String x:Key="Settings_Ac_HexPH">RRGGBB</s:String>
+
+    <!-- Autocomplete "What to include" toggle labels (mirror AutocompleteConfig.ToggleKeys) -->
+    <s:String x:Key="AcToggle_IncludeHeal">Healing / cure (from script)</s:String>
+    <s:String x:Key="AcToggle_IncludeScriptBonuses">Stat &amp; effect bonuses (from script)</s:String>
+    <s:String x:Key="AcToggle_IncludeElement">Weapon element (from script)</s:String>
+    <s:String x:Key="AcToggle_IncludeClass">Class line</s:String>
+    <s:String x:Key="AcToggle_IncludeAttack">Attack</s:String>
+    <s:String x:Key="AcToggle_IncludeMagicAttack">Magic Attack</s:String>
+    <s:String x:Key="AcToggle_IncludeDefense">Defense</s:String>
+    <s:String x:Key="AcToggle_IncludeWeaponLevel">Weapon / armor level</s:String>
+    <s:String x:Key="AcToggle_IncludeRequiredLevel">Required level</s:String>
+    <s:String x:Key="AcToggle_IncludeJobs">Applicable jobs</s:String>
+    <s:String x:Key="AcToggle_IncludePosition">Headgear position</s:String>
+    <s:String x:Key="AcToggle_IncludeWeight">Weight</s:String>
+    <s:String x:Key="AcToggle_IncludeSlots">Slots</s:String>
+    <s:String x:Key="AcToggle_IncludeRefineable">Unrefineable note</s:String>
+    <s:String x:Key="AcToggle_IncludeCompoundOn">Card “Compound on”</s:String>
+    <s:String x:Key="AcToggle_IncludeDividers">Divider lines</s:String>
+    <s:String x:Key="AcToggle_UseColors">Use color codes</s:String>
+
+    <!-- Autocomplete semantic color row labels -->
+    <s:String x:Key="AcColor_Values">Values (numbers)</s:String>
+    <s:String x:Key="AcColor_Labels">Labels (class / jobs)</s:String>
+    <s:String x:Key="AcColor_Attack">Attack</s:String>
+    <s:String x:Key="AcColor_Defense">Defense</s:String>
+    <s:String x:Key="AcColor_Skill">Skill names</s:String>
+
+    <!-- Autocomplete field-label default words (mirror AutocompleteConfig.LabelKeys) -->
+    <s:String x:Key="AcLabel_Class">Class</s:String>
+    <s:String x:Key="AcLabel_Heal">Heal</s:String>
+    <s:String x:Key="AcLabel_Restore">Restore</s:String>
+    <s:String x:Key="AcLabel_Cure">Cure</s:String>
+    <s:String x:Key="AcLabel_Attack">Attack</s:String>
+    <s:String x:Key="AcLabel_MagicAttack">Magic Attack</s:String>
+    <s:String x:Key="AcLabel_Defense">Defense</s:String>
+    <s:String x:Key="AcLabel_Element">Element</s:String>
+    <s:String x:Key="AcLabel_Position">Position</s:String>
+    <s:String x:Key="AcLabel_Weight">Weight</s:String>
+    <s:String x:Key="AcLabel_WeaponLevel">Weapon Level</s:String>
+    <s:String x:Key="AcLabel_ArmorLevel">Armor Level</s:String>
+    <s:String x:Key="AcLabel_RequiredLevel">Level Requirement</s:String>
+    <s:String x:Key="AcLabel_Slots">Slots</s:String>
+    <s:String x:Key="AcLabel_Jobs">Jobs</s:String>
+    <s:String x:Key="AcLabel_CompoundOn">Compound on</s:String>
 
     <!-- ===== Onboarding (first-run tour) ===== -->
     <s:String x:Key="Onboard_Skip">Skip tour</s:String>
@@ -277,6 +339,17 @@
     <s:String x:Key="CashShop_PriceTip">Price in cash points (#CASHPOINTS).</s:String>
     <s:String x:Key="CashShop_RemoveTip">Remove this item from the tab.</s:String>
     <s:String x:Key="CashShop_Base">base</s:String>
+
+    <!-- Cash shop tab labels (mirror CashShopTab enum) -->
+    <s:String x:Key="CashShopTab_New">New</s:String>
+    <s:String x:Key="CashShopTab_Hot">Hot</s:String>
+    <s:String x:Key="CashShopTab_Limited">Limited</s:String>
+    <s:String x:Key="CashShopTab_Rental">Rental</s:String>
+    <s:String x:Key="CashShopTab_Permanent">Permanent</s:String>
+    <s:String x:Key="CashShopTab_Scrolls">Scrolls</s:String>
+    <s:String x:Key="CashShopTab_Consumables">Consumables</s:String>
+    <s:String x:Key="CashShopTab_Other">Other</s:String>
+    <s:String x:Key="CashShopTab_Sale">Sale</s:String>
 
     <!-- ===== DbWorkspace ===== -->
     <s:String x:Key="Db_Loading">Loading database…</s:String>

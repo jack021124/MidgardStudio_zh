@@ -25,17 +25,17 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,0,8,0">
-                    <ui:Button Command="{Binding AddComboSetCommand}" Margin="0,0,4,0" ToolTip="Add a new custom combo">
+                    <ui:Button Command="{Binding AddComboSetCommand}" Margin="0,0,4,0" ToolTip="{DynamicResource Combo_AddTip}">
                         <ui:Button.Icon><ui:SymbolIcon Symbol="Add24" /></ui:Button.Icon>
                     </ui:Button>
-                    <ui:Button Command="{Binding CreateOverrideCommand}" Margin="0,0,4,0" ToolTip="Copy the selected base combo into your import layer to edit">
+                    <ui:Button Command="{Binding CreateOverrideCommand}" Margin="0,0,4,0" ToolTip="{DynamicResource Combo_OverrideTip}">
                         <ui:Button.Icon><ui:SymbolIcon Symbol="Edit24" /></ui:Button.Icon>
                     </ui:Button>
-                    <ui:Button Command="{Binding CopyComboYamlCommand}" Margin="0,0,4,0" ToolTip="Copy the selected combo as YAML">
+                    <ui:Button Command="{Binding CopyComboYamlCommand}" Margin="0,0,4,0" ToolTip="{DynamicResource Combo_CopyYamlTip}">
                         <ui:Button.Icon><ui:SymbolIcon Symbol="ClipboardLink24" /></ui:Button.Icon>
                     </ui:Button>
                 </StackPanel>
-                <ui:TextBox Grid.Column="1" Tag="ListSearch" PlaceholderText="Search by item or script…  (Ctrl+F)"
+                <ui:TextBox Grid.Column="1" Tag="ListSearch" PlaceholderText="{DynamicResource Combo_SearchPH}"
                             Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
 
@@ -55,22 +55,22 @@
                 </ListView.InputBindings>
                 <ListView.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="New combo" InputGestureText="Ctrl+N"
+                        <MenuItem Header="{DynamicResource Combo_Ctx_New}" InputGestureText="Ctrl+N"
                                   Command="{Binding PlacementTarget.DataContext.AddComboSetCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="Add24" /></MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Copy to Import to edit" InputGestureText="Ctrl+E"
+                        <MenuItem Header="{DynamicResource Combo_Ctx_CopyToImport}" InputGestureText="Ctrl+E"
                                   Visibility="{Binding PlacementTarget.DataContext.IsBaseSelected, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource BoolToVis}}"
                                   Command="{Binding PlacementTarget.DataContext.CreateOverrideCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                  ToolTip="Clone this read-only base combo into your import layer so you can edit it">
+                                  ToolTip="{DynamicResource Combo_Ctx_CopyToImportTip}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="Edit24" /></MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Copy YAML" InputGestureText="Ctrl+C"
+                        <MenuItem Header="{DynamicResource Combo_Ctx_CopyYaml}" InputGestureText="Ctrl+C"
                                   Command="{Binding PlacementTarget.DataContext.CopyComboYamlCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="ClipboardLink24" /></MenuItem.Icon>
                         </MenuItem>
                         <Separator Visibility="{Binding PlacementTarget.DataContext.IsEditable, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource BoolToVis}}" />
-                        <MenuItem Header="Delete" InputGestureText="Del"
+                        <MenuItem Header="{DynamicResource Combo_Ctx_Delete}" InputGestureText="Del"
                                   Visibility="{Binding PlacementTarget.DataContext.IsEditable, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource BoolToVis}}"
                                   Command="{Binding PlacementTarget.DataContext.DeleteComboSetCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                             <MenuItem.Icon><ui:SymbolIcon Symbol="Delete24" /></MenuItem.Icon>
@@ -90,7 +90,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Combo" Width="244" DisplayMemberBinding="{Binding PrimaryText}" />
+                        <GridViewColumn Header="{DynamicResource Combo_Col_Combo}" Width="244" DisplayMemberBinding="{Binding PrimaryText}" />
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -106,7 +106,7 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="320"
                         Visibility="{Binding HasSelection, Converter={StaticResource BoolToVis}, ConverterParameter=invert}">
                 <ui:SymbolIcon Symbol="Link24" FontSize="40" Opacity="0.3" HorizontalAlignment="Center" />
-                <TextBlock Text="Select a combo to view its item sets and bonus, or create a new one."
+                <TextBlock Text="{DynamicResource Combo_SelectPH}"
                            Opacity="0.5" TextWrapping="Wrap" TextAlignment="Center" Margin="0,12,0,0" />
             </StackPanel>
 
@@ -116,8 +116,8 @@
                 <StackPanel>
                     <!-- Header: title + origin pill + delete -->
                     <Grid Margin="0,0,0,12">
-                        <TextBlock Text="Combo" Style="{StaticResource TitleSection}" VerticalAlignment="Center" />
-                        <ui:Button Content="Delete" Appearance="Danger" HorizontalAlignment="Right" VerticalAlignment="Center"
+                        <TextBlock Text="{DynamicResource Combo_Title}" Style="{StaticResource TitleSection}" VerticalAlignment="Center" />
+                        <ui:Button Content="{DynamicResource Combo_Delete}" Appearance="Danger" HorizontalAlignment="Right" VerticalAlignment="Center"
                                    Command="{Binding DeleteComboSetCommand}"
                                    Visibility="{Binding IsEditable, Converter={StaticResource BoolToVis}}">
                             <ui:Button.Icon><ui:SymbolIcon Symbol="Delete24" /></ui:Button.Icon>
@@ -126,12 +126,12 @@
 
                     <!-- Base read-only notice -->
                     <ui:InfoBar Severity="Informational" IsClosable="False" IsOpen="True" Margin="0,0,0,12"
-                                Title="Read-only base combo"
-                                Message="Use “Copy to Import to edit” (top-right) to customise this combo's items or bonus."
+                                Title="{DynamicResource Combo_ReadOnlyTitle}"
+                                Message="{DynamicResource Combo_ReadOnlyMsg}"
                                 Visibility="{Binding IsBaseSelected, Converter={StaticResource BoolToVis}}" />
 
                     <!-- Item sets -->
-                    <TextBlock Text="ITEM SETS" Style="{StaticResource TitleMicro}" Margin="2,0,0,6" />
+                    <TextBlock Text="{DynamicResource Combo_ItemSets}" Style="{StaticResource TitleMicro}" Margin="2,0,0,6" />
                     <ItemsControl ItemsSource="{Binding Alternatives}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type vm:ComboAlternativeViewModel}">
@@ -151,7 +151,7 @@
                                                         <StackPanel Orientation="Horizontal">
                                                             <TextBlock Text="{Binding DisplayName}" ToolTip="{Binding Aegis}" VerticalAlignment="Center" />
                                                             <ui:Button Content="✕" Appearance="Transparent" FontSize="10" Padding="6,0" Margin="5,0,-5,0"
-                                                                       VerticalAlignment="Center" ToolTip="Remove item"
+                                                                       VerticalAlignment="Center" ToolTip="{DynamicResource Combo_RemoveItemTip}"
                                                                        Visibility="{Binding DataContext.IsEditable, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}}"
                                                                        Command="{Binding DataContext.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                        CommandParameter="{Binding}" />
@@ -162,12 +162,12 @@
                                         </ItemsControl>
                                         <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Margin="8,0,0,0"
                                                     Visibility="{Binding DataContext.IsEditable, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}}">
-                                            <ui:Button ToolTip="Add item to this set" Appearance="Secondary" Padding="8,4"
+                                            <ui:Button ToolTip="{DynamicResource Combo_AddItemTip}" Appearance="Secondary" Padding="8,4"
                                                        Command="{Binding DataContext.AddItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                        CommandParameter="{Binding}">
                                                 <ui:Button.Icon><ui:SymbolIcon Symbol="Add24" /></ui:Button.Icon>
                                             </ui:Button>
-                                            <ui:Button ToolTip="Remove this item set" Appearance="Transparent" Padding="8,4" Margin="4,0,0,0"
+                                            <ui:Button ToolTip="{DynamicResource Combo_RemoveSetTip}" Appearance="Transparent" Padding="8,4" Margin="4,0,0,0"
                                                        Command="{Binding DataContext.RemoveAlternativeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                        CommandParameter="{Binding}">
                                                 <ui:Button.Icon><ui:SymbolIcon Symbol="Delete24" /></ui:Button.Icon>
@@ -179,26 +179,26 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                    <ui:Button Content="Add item set" Appearance="Secondary" HorizontalAlignment="Left" Margin="0,2,0,16"
+                    <ui:Button Content="{DynamicResource Combo_AddSet}" Appearance="Secondary" HorizontalAlignment="Left" Margin="0,2,0,16"
                                Command="{Binding AddAlternativeCommand}"
                                Visibility="{Binding IsEditable, Converter={StaticResource BoolToVis}}"
-                               ToolTip="Add an alternative item set that triggers the same bonus (e.g. a refined variant)">
+                               ToolTip="{DynamicResource Combo_AddSetTip}">
                         <ui:Button.Icon><ui:SymbolIcon Symbol="Add24" /></ui:Button.Icon>
                     </ui:Button>
 
                     <!-- Shared bonus script -->
                     <Grid Margin="2,0,0,6">
-                        <TextBlock Text="BONUS SCRIPT" Style="{StaticResource TitleMicro}" VerticalAlignment="Center" />
+                        <TextBlock Text="{DynamicResource Combo_BonusScript}" Style="{StaticResource TitleMicro}" VerticalAlignment="Center" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
                                     Visibility="{Binding IsEditable, Converter={StaticResource BoolToVis}}">
-                            <ui:Button Content="Bonus builder" Appearance="Secondary"
+                            <ui:Button Content="{DynamicResource Combo_BonusBuilder}" Appearance="Secondary"
                                        Command="{Binding InsertBonusCommand}"
-                                       ToolTip="Build a bonus statement visually and append it">
+                                       ToolTip="{DynamicResource Combo_BonusBuilderTip}">
                                 <ui:Button.Icon><ui:SymbolIcon Symbol="Add24" /></ui:Button.Icon>
                             </ui:Button>
-                            <ui:Button Content="Refine / Grade bonuses" Appearance="Secondary" Margin="8,0,0,0"
+                            <ui:Button Content="{DynamicResource Combo_RefineGrade}" Appearance="Secondary" Margin="8,0,0,0"
                                        Command="{Binding ConditionalBonusesCommand}"
-                                       ToolTip="Add combo bonuses that unlock at a total-refine or enchant-grade milestone across the pieces (grade is Renewal-only)." />
+                                       ToolTip="{DynamicResource Combo_RefineGradeTip}" />
                         </StackPanel>
                     </Grid>
                     <Border BorderBrush="#5A8D2DF2" BorderThickness="1" CornerRadius="6" MinHeight="220">

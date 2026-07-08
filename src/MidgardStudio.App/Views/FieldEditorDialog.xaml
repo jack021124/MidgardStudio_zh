@@ -3,7 +3,7 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
                  xmlns:common="clr-namespace:MidgardStudio.App.Common"
-                 Title="Edit"
+                 Title="{DynamicResource FieldEditor_Title}"
                  Width="820" Height="620" MinWidth="520" MinHeight="340"
                  WindowStartupLocation="CenterOwner"
                  WindowBackdropType="Mica"
@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ui:TitleBar x:Name="TitleBarCtl" Grid.Row="0" Title="Edit" />
+        <ui:TitleBar x:Name="TitleBarCtl" Grid.Row="0" Title="{DynamicResource FieldEditor_Title}" />
 
         <!-- No outer ScrollViewer: each full template manages its own scrolling so list editors can
              virtualize (an enclosing ScrollViewer would give them infinite height and realize every row). -->
@@ -27,7 +27,7 @@
                         ContentTemplateSelector="{StaticResource FullEditorSelector}" />
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="14">
-            <ui:Button x:Name="CloseButton" Content="Done" Appearance="Primary" MinWidth="92" />
+            <ui:Button x:Name="CloseButton" Content="{DynamicResource Dlg_Done}" Appearance="Primary" MinWidth="92" />
         </StackPanel>
     </Grid>
 </ui:FluentWindow>

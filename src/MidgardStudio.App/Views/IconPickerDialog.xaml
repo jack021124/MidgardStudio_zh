@@ -6,7 +6,7 @@
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
                  xmlns:vm="clr-namespace:MidgardStudio.App.ViewModels"
                  mc:Ignorable="d" d:DataContext="{d:DesignInstance Type=vm:IconPickerViewModel}"
-                 Title="Choose an icon"
+                 Title="{DynamicResource IconPicker_Title}"
                  Width="660" Height="620"
                  WindowStartupLocation="CenterOwner"
                  WindowBackdropType="Mica"
@@ -73,20 +73,20 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ui:TitleBar Grid.Row="0" Title="Choose an icon" />
+        <ui:TitleBar Grid.Row="0" Title="{DynamicResource IconPicker_Title}" />
 
         <TabControl Grid.Row="1" Margin="14,0,14,8">
             <!-- Copy an existing item's icon -->
-            <TabItem Header="Copy from an item">
+            <TabItem Header="{DynamicResource IconPicker_CopyFromItem}">
                 <DockPanel Margin="0,8,0,0">
                     <ui:TextBox DockPanel.Dock="Top" Margin="0,0,0,8"
                                 Text="{Binding ItemSearch, UpdateSourceTrigger=PropertyChanged}"
-                                PlaceholderText="Search by item ID or name…">
+                                PlaceholderText="{DynamicResource IconPicker_ItemSearchPH}">
                         <ui:TextBox.Icon><ui:SymbolIcon Symbol="Search24" /></ui:TextBox.Icon>
                     </ui:TextBox>
                     <DockPanel DockPanel.Dock="Bottom" Margin="0,8,0,0">
                         <TextBlock Text="{Binding ItemCountText}" Opacity="0.55" FontSize="11" VerticalAlignment="Center" />
-                        <ui:Button Content="Use this icon" Appearance="Primary" HorizontalAlignment="Right"
+                        <ui:Button Content="{DynamicResource IconPicker_UseThis}" Appearance="Primary" HorizontalAlignment="Right"
                                    Command="{Binding PickItemCommand}" MinWidth="110" />
                     </DockPanel>
                     <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}"
@@ -117,7 +117,7 @@
             </TabItem>
 
             <!-- Browse the icons in one GRF / loose data source -->
-            <TabItem Header="Browse GRF icons">
+            <TabItem Header="{DynamicResource IconPicker_BrowseGrf}">
                 <DockPanel Margin="0,8,0,0">
                     <Grid DockPanel.Dock="Top" Margin="0,0,0,8">
                         <Grid.ColumnDefinitions>
@@ -129,13 +129,13 @@
                                   DisplayMemberPath="Name" IsEnabled="{Binding HasSources}"
                                   ToolTip="{Binding SelectedSource.Path}" />
                         <ui:TextBox Grid.Column="2" Text="{Binding GrfSearch, UpdateSourceTrigger=PropertyChanged}"
-                                    PlaceholderText="Search icon name…">
+                                    PlaceholderText="{DynamicResource IconPicker_SearchPH}">
                             <ui:TextBox.Icon><ui:SymbolIcon Symbol="Search24" /></ui:TextBox.Icon>
                         </ui:TextBox>
                     </Grid>
                     <DockPanel DockPanel.Dock="Bottom" Margin="0,8,0,0">
                         <TextBlock Text="{Binding GrfCountText}" Opacity="0.55" FontSize="11" VerticalAlignment="Center" />
-                        <ui:Button Content="Use this icon" Appearance="Primary" HorizontalAlignment="Right"
+                        <ui:Button Content="{DynamicResource IconPicker_UseThis}" Appearance="Primary" HorizontalAlignment="Right"
                                    Command="{Binding PickGrfCommand}" MinWidth="110" />
                     </DockPanel>
                     <Grid>
@@ -164,7 +164,7 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"
                                     Visibility="{Binding LoadingGrf, Converter={StaticResource BoolToVis}}">
                             <ui:ProgressRing IsIndeterminate="True" Width="28" Height="28" />
-                            <TextBlock Text="Loading icons…" Opacity="0.6" VerticalAlignment="Center" Margin="8,0,0,0" />
+                            <TextBlock Text="{DynamicResource IconPicker_Loading}" Opacity="0.6" VerticalAlignment="Center" Margin="8,0,0,0" />
                         </StackPanel>
                     </Grid>
                 </DockPanel>
@@ -172,7 +172,7 @@
         </TabControl>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="14">
-            <ui:Button Content="Cancel" Command="{Binding CancelCommand}" MinWidth="92" />
+            <ui:Button Content="{DynamicResource Dlg_Cancel}" Command="{Binding CancelCommand}" MinWidth="92" />
         </StackPanel>
     </Grid>
 </ui:FluentWindow>

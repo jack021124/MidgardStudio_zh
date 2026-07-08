@@ -48,7 +48,7 @@
                 <Border Grid.Column="1" Width="22" Height="22" CornerRadius="4" Margin="0,0,8,0"
                         BorderBrush="#55FFFFFF" BorderThickness="1" Background="{Binding Swatch}" />
                 <ui:TextBox Grid.Column="2" Text="{Binding Hex, UpdateSourceTrigger=LostFocus}" Width="110" FontFamily="Consolas"
-                            PlaceholderText="RRGGBB" />
+                            PlaceholderText="{DynamicResource Settings_Ac_HexPH}" />
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
@@ -247,13 +247,13 @@
                 </ScrollViewer.Style>
                 <StackPanel MaxWidth="720" HorizontalAlignment="Left">
                     <TextBlock Opacity="0.6" FontSize="12" TextWrapping="Wrap" Margin="0,0,0,12"
-                               Text="Controls how Autocomplete generates a client item's name and description from the server item — which lines to include, the colors, the wording, and the defaults." />
+                               Text="{DynamicResource Settings_Ac_Desc}" />
 
                     <!-- Live preview -->
                     <ui:Card Padding="16,14" Margin="0,0,0,12">
                         <StackPanel>
-                            <TextBlock Text="Live preview" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,2" />
-                            <TextBlock Text="A sample Fire sword rendered with your current settings — updates as you edit below." Opacity="0.6" FontSize="12" Margin="0,0,0,8" />
+                            <TextBlock Text="{DynamicResource Settings_Ac_Preview}" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,2" />
+                            <TextBlock Text="{DynamicResource Settings_Ac_Preview_Desc}" Opacity="0.6" FontSize="12" Margin="0,0,0,8" />
                             <Border Background="#EFEAD9" CornerRadius="4" Padding="10" MinHeight="80">
                                 <TextBlock x:Name="PreviewBox" TextWrapping="Wrap" FontSize="12" Foreground="Black" FontFamily="Segoe UI" />
                             </Border>
@@ -263,7 +263,7 @@
                     <!-- What to include -->
                     <ui:Card Padding="16,14">
                         <StackPanel>
-                            <TextBlock Text="What to include" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,8" />
+                            <TextBlock Text="{DynamicResource Settings_Ac_Include}" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,8" />
                             <ItemsControl ItemsSource="{Binding AutocompleteToggles}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
@@ -281,27 +281,27 @@
                     <!-- Behaviour -->
                     <ui:Card Padding="16,14" Margin="0,12,0,0">
                         <StackPanel>
-                            <TextBlock Text="Behaviour" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,8" />
-                            <ui:ToggleSwitch Content="Overwrite existing text when running Autocomplete"
+                            <TextBlock Text="{DynamicResource Settings_Ac_Behaviour}" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,8" />
+                            <ui:ToggleSwitch Content="{DynamicResource Settings_Ac_Overwrite}"
                                              IsChecked="{Binding OverwriteExisting, Mode=TwoWay}" Margin="0,2,0,10" />
-                            <TextBlock Text="Default unidentified description" Opacity="0.8" Margin="0,0,0,3" />
+                            <TextBlock Text="{DynamicResource Settings_Ac_DefaultUnid}" Opacity="0.8" Margin="0,0,0,3" />
                             <ui:TextBox Text="{Binding DefaultUnidentifiedDescription, UpdateSourceTrigger=LostFocus}"
                                         AcceptsReturn="True" MinHeight="58" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
-                                        PlaceholderText="Applied to the unidentified description on autocomplete (blank = leave it)" />
-                            <TextBlock Text="Fallback text for fields with no server value" Opacity="0.8" Margin="0,10,0,3" />
+                                        PlaceholderText="{DynamicResource Settings_Ac_DefaultUnid_PH}" />
+                            <TextBlock Text="{DynamicResource Settings_Ac_Fallback}" Opacity="0.8" Margin="0,10,0,3" />
                             <ui:TextBox Text="{Binding MissingValueText, UpdateSourceTrigger=LostFocus}" Width="220" HorizontalAlignment="Left"
-                                        PlaceholderText="blank = hide the line" />
+                                        PlaceholderText="{DynamicResource Settings_Ac_Fallback_PH}" />
                         </StackPanel>
                     </ui:Card>
 
                     <!-- Colors -->
                     <ui:Card Padding="16,14" Margin="0,12,0,0">
                         <StackPanel>
-                            <TextBlock Text="Colors" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,4" />
-                            <TextBlock Text="Hex (RRGGBB) colors applied to the generated lines." Opacity="0.6" FontSize="12" Margin="0,0,0,8" />
+                            <TextBlock Text="{DynamicResource Settings_Ac_Colors}" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,4" />
+                            <TextBlock Text="{DynamicResource Settings_Ac_Colors_Desc}" Opacity="0.6" FontSize="12" Margin="0,0,0,8" />
                             <ItemsControl ItemsSource="{Binding SemanticColors}" ItemTemplate="{StaticResource AcColorRow}" />
                             <Border Height="1" Background="#1FFFFFFF" Margin="0,12" />
-                            <TextBlock Text="Weapon element colors" Opacity="0.85" FontWeight="SemiBold" Margin="0,0,0,6" />
+                            <TextBlock Text="{DynamicResource Settings_Ac_WeaponColors}" Opacity="0.85" FontWeight="SemiBold" Margin="0,0,0,6" />
                             <ItemsControl ItemsSource="{Binding ElementColors}" ItemTemplate="{StaticResource AcColorRow}" />
                         </StackPanel>
                     </ui:Card>
@@ -309,8 +309,8 @@
                     <!-- Field labels -->
                     <ui:Card Padding="16,14" Margin="0,12,0,0">
                         <StackPanel>
-                            <TextBlock Text="Field labels" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,4" />
-                            <TextBlock Text="Rename the word shown before each value (e.g. “Weight” → “Item Weight”). Blank = default." Opacity="0.6" FontSize="12" Margin="0,0,0,8" />
+                            <TextBlock Text="{DynamicResource Settings_Ac_FieldLabels}" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,4" />
+                            <TextBlock Text="{DynamicResource Settings_Ac_FieldLabels_Desc}" Opacity="0.6" FontSize="12" Margin="0,0,0,8" />
                             <ItemsControl ItemsSource="{Binding FieldLabels}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>

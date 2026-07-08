@@ -41,7 +41,7 @@
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
                     Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}">
             <ui:ProgressRing IsIndeterminate="True" Width="48" Height="48" />
-            <TextBlock Text="Loading client skills…" Opacity="0.7" Margin="0,12,0,0" HorizontalAlignment="Center" />
+            <TextBlock Text="{DynamicResource ClientSkills_Loading}" Opacity="0.7" Margin="0,12,0,0" HorizontalAlignment="Center" />
         </StackPanel>
 
         <Grid Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}, ConverterParameter=invert}">
@@ -59,14 +59,14 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,0,8,0">
-                        <ui:Button Command="{Binding AddCustomCommand}" Margin="0,0,4,0" ToolTip="Add a new custom skill (Ctrl+N)">
+                        <ui:Button Command="{Binding AddCustomCommand}" Margin="0,0,4,0" ToolTip="{DynamicResource ClientSkills_AddTip}">
                             <ui:Button.Icon><ui:SymbolIcon Symbol="Add24" /></ui:Button.Icon>
                         </ui:Button>
-                        <ui:Button Command="{Binding CopyLuaCommand}" Margin="0,0,4,0" ToolTip="Copy this skill's Lua blocks (Ctrl+L)">
+                        <ui:Button Command="{Binding CopyLuaCommand}" Margin="0,0,4,0" ToolTip="{DynamicResource ClientSkills_CopyLuaTip}">
                             <ui:Button.Icon><ui:SymbolIcon Symbol="ClipboardLink24" /></ui:Button.Icon>
                         </ui:Button>
                     </StackPanel>
-                    <ui:TextBox Grid.Column="1" Tag="ListSearch" PlaceholderText="Search id / constant / name…  (Ctrl+F)"
+                    <ui:TextBox Grid.Column="1" Tag="ListSearch" PlaceholderText="{DynamicResource ClientSkills_SearchPH2}"
                                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Grid>
                 <TextBlock DockPanel.Dock="Bottom" Text="{Binding StatusText}" Opacity="0.6" Margin="2,6,0,0" FontSize="11" />
@@ -87,22 +87,22 @@
                     </ListView.InputBindings>
                     <ListView.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Add custom" InputGestureText="Ctrl+N"
+                            <MenuItem Header="{DynamicResource ClientSkills_Ctx_AddCustom}" InputGestureText="Ctrl+N"
                                       Command="{Binding PlacementTarget.DataContext.AddCustomCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                 <MenuItem.Icon><ui:SymbolIcon Symbol="Add24" /></MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Copy Lua" InputGestureText="Ctrl+L"
+                            <MenuItem Header="{DynamicResource ClientSkills_Ctx_CopyLua}" InputGestureText="Ctrl+L"
                                       Command="{Binding PlacementTarget.DataContext.CopyLuaCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                 <MenuItem.Icon><ui:SymbolIcon Symbol="ClipboardLink24" /></MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Delete (custom only)" InputGestureText="Del"
+                            <MenuItem Header="{DynamicResource ClientSkills_Ctx_Delete}" InputGestureText="Del"
                                       Command="{Binding PlacementTarget.DataContext.DeleteEntryCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                 <MenuItem.Icon><ui:SymbolIcon Symbol="Delete24" /></MenuItem.Icon>
                             </MenuItem>
                             <Separator />
-                            <MenuItem Header="Select in Skills" InputGestureText="Ctrl+E"
+                            <MenuItem Header="{DynamicResource ClientSkills_Ctx_SelectInSkills}" InputGestureText="Ctrl+E"
                                       Command="{Binding PlacementTarget.DataContext.SelectInSkillsCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                      ToolTip="Jump to this skill in the server Skills (skill_db) section">
+                                      ToolTip="{DynamicResource ClientSkills_Ctx_SelectInSkillsTip}">
                                 <MenuItem.Icon><ui:SymbolIcon Symbol="Open24" /></MenuItem.Icon>
                             </MenuItem>
                         </ContextMenu>
@@ -119,8 +119,8 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="ID" Width="60" DisplayMemberBinding="{Binding Id}" />
-                            <GridViewColumn Header="Name" Width="190" DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn Header="{DynamicResource ClientSkills_Col_ID}" Width="60" DisplayMemberBinding="{Binding Id}" />
+                            <GridViewColumn Header="{DynamicResource ClientSkills_Col_Name}" Width="190" DisplayMemberBinding="{Binding Name}" />
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -130,7 +130,7 @@
 
             <!-- Detail -->
             <Grid Grid.Column="2" Margin="8,0,0,0">
-                <TextBlock Text="Select a skill to edit its client info." Opacity="0.5"
+                <TextBlock Text="{DynamicResource ClientSkills_SelectEditPH}" Opacity="0.5"
                            HorizontalAlignment="Center" VerticalAlignment="Center"
                            Visibility="{Binding HasEditor, Converter={StaticResource BoolToVis}, ConverterParameter=invert}" />
 
@@ -139,8 +139,8 @@
                     <StackPanel DataContext="{Binding Editor}" TextElement.FontSize="12">
 
                         <DockPanel Margin="0,0,0,10">
-                            <ui:Button DockPanel.Dock="Right" Content="Copy Lua" Appearance="Transparent" Padding="10,4"
-                                       Command="{Binding CopyLuaCommand}" ToolTip="Copy this skill's Lua blocks to the clipboard">
+                            <ui:Button DockPanel.Dock="Right" Content="{DynamicResource ClientSkills_CopyLuaDetail}" Appearance="Transparent" Padding="10,4"
+                                       Command="{Binding CopyLuaCommand}" ToolTip="{DynamicResource ClientSkills_CopyLuaDetailTip}">
                                 <ui:Button.Icon><ui:SymbolIcon Symbol="ClipboardLink24" /></ui:Button.Icon>
                             </ui:Button>
                             <TextBlock Text="{Binding Header}" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" />
@@ -149,7 +149,7 @@
                         <!-- Info -->
                         <ui:Card Padding="12,10">
                             <StackPanel>
-                                <TextBlock Text="Skill info  (skillinfolist.lub)" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,8" />
+                                <TextBlock Text="{DynamicResource ClientSkills_InfoTitle}" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,8" />
                                 <Grid Margin="0,0,0,10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
@@ -157,13 +157,13 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0">
-                                        <TextBlock Text="Display name" Opacity="0.8" Margin="0,0,0,2" />
+                                        <TextBlock Text="{DynamicResource ClientSkills_DisplayName}" Opacity="0.8" Margin="0,0,0,2" />
                                         <ui:TextBox Text="{Binding SkillName, UpdateSourceTrigger=LostFocus}" />
                                     </StackPanel>
                                     <StackPanel Grid.Column="2">
-                                        <TextBlock Text="Max level" Opacity="0.8" Margin="0,0,0,2" />
+                                        <TextBlock Text="{DynamicResource ClientSkills_MaxLevel}" Opacity="0.8" Margin="0,0,0,2" />
                                         <ui:TextBox Text="{Binding MaxLv, UpdateSourceTrigger=LostFocus}" Width="72"
-                                                    ToolTip="Changing this resizes the per-level fields below" />
+                                                    ToolTip="{DynamicResource ClientSkills_MaxLevelTip}" />
                                     </StackPanel>
                                 </Grid>
 
@@ -172,19 +172,19 @@
 
                                 <Border Height="1" Background="#15FFFFFF" Margin="0,4,0,10" />
                                 <DockPanel Margin="0,0,0,4">
-                                    <TextBlock Text="Prerequisites" FontWeight="SemiBold" VerticalAlignment="Center" />
-                                    <TextBlock Text="skills the player must learn first" Opacity="0.45" FontSize="10.5" Margin="8,0,0,0" VerticalAlignment="Center" />
+                                    <TextBlock Text="{DynamicResource ClientSkills_Prereqs}" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                    <TextBlock Text="{DynamicResource ClientSkills_PrereqsHint}" Opacity="0.45" FontSize="10.5" Margin="8,0,0,0" VerticalAlignment="Center" />
                                 </DockPanel>
                                 <ItemsControl ItemsSource="{Binding Prereqs}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Border Background="#10FFFFFF" CornerRadius="5" Padding="8,3" Margin="0,2">
                                                 <DockPanel LastChildFill="True">
-                                                    <ui:Button DockPanel.Dock="Right" Appearance="Transparent" Padding="5,2" Command="{Binding RemoveCommand}" ToolTip="Remove prerequisite">
+                                                    <ui:Button DockPanel.Dock="Right" Appearance="Transparent" Padding="5,2" Command="{Binding RemoveCommand}" ToolTip="{DynamicResource ClientSkills_RemovePrereqTip}">
                                                         <ui:Button.Icon><ui:SymbolIcon Symbol="Dismiss24" FontSize="13" /></ui:Button.Icon>
                                                     </ui:Button>
                                                     <ui:TextBox DockPanel.Dock="Right" Text="{Binding Level, UpdateSourceTrigger=LostFocus}" Width="58"
-                                                                HorizontalContentAlignment="Center" ClearButtonEnabled="False" ToolTip="Required level" />
+                                                                HorizontalContentAlignment="Center" ClearButtonEnabled="False" ToolTip="{DynamicResource ClientSkills_ReqLevelTip}" />
                                                     <TextBlock DockPanel.Dock="Right" Text="Lv" VerticalAlignment="Center" Opacity="0.6" Margin="10,0,4,0" />
                                                     <TextBlock Text="{Binding Display}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
                                                 </DockPanel>
@@ -192,7 +192,7 @@
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
-                                <ui:Button Content="Add prerequisite" Command="{Binding AddPrereqCommand}" Appearance="Secondary" Margin="0,6,0,0">
+                                <ui:Button Content="{DynamicResource ClientSkills_AddPrereq}" Command="{Binding AddPrereqCommand}" Appearance="Secondary" Margin="0,6,0,0">
                                     <ui:Button.Icon><ui:SymbolIcon Symbol="Add24" /></ui:Button.Icon>
                                 </ui:Button>
                             </StackPanel>
@@ -201,8 +201,8 @@
                         <!-- Description -->
                         <ui:Card Padding="12,10" Margin="0,10,0,0">
                             <StackPanel>
-                                <TextBlock Text="Description  (skilldescript.lub)" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,8" />
-                                <TextBlock Text="One line per row. Color codes like ^777777…^000000 are supported." Opacity="0.55" FontSize="11" Margin="0,0,0,4" />
+                                <TextBlock Text="{DynamicResource ClientSkills_DescTitle}" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,8" />
+                                <TextBlock Text="{DynamicResource ClientSkills_DescHint}" Opacity="0.55" FontSize="11" Margin="0,0,0,4" />
                                 <ui:TextBox Text="{Binding Description, UpdateSourceTrigger=LostFocus}"
                                             AcceptsReturn="True" MinHeight="140" MaxHeight="260" FontFamily="Consolas"
                                             VerticalScrollBarVisibility="Auto" />
@@ -212,8 +212,8 @@
                         <!-- Delays -->
                         <ui:Card Padding="12,10" Margin="0,10,0,12">
                             <StackPanel>
-                                <TextBlock Text="Cast / delay  (skilldelaylist.lub)" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,4" />
-                                <TextBlock Text="Tick a timing to enable it, then set per-level milliseconds. Untouched timings are left out." Opacity="0.55" FontSize="11" Margin="0,0,0,8" />
+                                <TextBlock Text="{DynamicResource ClientSkills_DelayTitle}" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                <TextBlock Text="{DynamicResource ClientSkills_DelayHint}" Opacity="0.55" FontSize="11" Margin="0,0,0,8" />
                                 <ContentControl Content="{Binding CastFixedField}" />
                                 <ContentControl Content="{Binding CastVarField}" />
                                 <ContentControl Content="{Binding GlobalCdField}" />

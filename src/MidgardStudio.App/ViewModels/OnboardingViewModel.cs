@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MidgardStudio.App.Localization;
 using Wpf.Ui.Controls;
 
 namespace MidgardStudio.App.ViewModels;
@@ -35,16 +36,11 @@ public sealed partial class OnboardingViewModel : ObservableObject
     {
         Pages = new[]
         {
-            new OnboardingPage(SymbolRegular.Sparkle24, "Welcome to Midgard Studio",
-                "Edit your Ragnarok server's databases and client files from one native app — no scripts, no guesswork."),
-            new OnboardingPage(SymbolRegular.Database24, "Every database, in one place",
-                "Items, mobs, pets, skills, combos and groups. Your custom and overridden entries are written safely to the import files — the base data is never touched."),
-            new OnboardingPage(SymbolRegular.Image24, "Client items, sprites & GRF",
-                "Names, descriptions, icons and worn sprites with live previews, plus a built-in GRF browser — no separate tools to juggle."),
-            new OnboardingPage(SymbolRegular.Wand24, "Forge & Autocomplete",
-                "Create a complete custom item — server entry, client text and sprite — in a single flow, with rich descriptions generated for you."),
-            new OnboardingPage(SymbolRegular.ShieldCheckmark24, "A safety net, built in",
-                "A validation gatekeeper catches mistakes before they reach your server, with one-click fixes — and every manual save makes a dated backup."),
+            new OnboardingPage(SymbolRegular.Sparkle24, L("Onboard_P1_Title"), L("Onboard_P1_Body")),
+            new OnboardingPage(SymbolRegular.Database24, L("Onboard_P2_Title"), L("Onboard_P2_Body")),
+            new OnboardingPage(SymbolRegular.Image24, L("Onboard_P3_Title"), L("Onboard_P3_Body")),
+            new OnboardingPage(SymbolRegular.Wand24, L("Onboard_P4_Title"), L("Onboard_P4_Body")),
+            new OnboardingPage(SymbolRegular.ShieldCheckmark24, L("Onboard_P5_Title"), L("Onboard_P5_Body")),
         };
         Pages[0].IsActive = true;
     }
@@ -90,4 +86,7 @@ public sealed partial class OnboardingViewModel : ObservableObject
 
     [RelayCommand]
     private void Finish() => Completed?.Invoke();
+
+    /// <summary>Shorthand for a localized string read from the active language dictionary.</summary>
+    private static string L(string key) => LocalizationService.Get(key);
 }

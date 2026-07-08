@@ -54,7 +54,7 @@
         <!-- Step counter (top-left) + Skip (top-right) -->
         <TextBlock Text="{Binding StepLabel}" HorizontalAlignment="Left" VerticalAlignment="Top"
                    Margin="46,36,0,0" Foreground="#6E6788" FontSize="12.5" />
-        <ui:Button Content="Skip tour" Appearance="Transparent" HorizontalAlignment="Right" VerticalAlignment="Top"
+        <ui:Button Content="{DynamicResource Onboard_Skip}" Appearance="Transparent" HorizontalAlignment="Right" VerticalAlignment="Top"
                    Margin="0,28,42,0" Foreground="#9189A8" Command="{Binding SkipCommand}"
                    Visibility="{Binding IsLast, Converter={StaticResource BoolToVis}, ConverterParameter=invert}" />
 
@@ -113,7 +113,7 @@
 
         <!-- Bottom navigation: Back · dots · Next / Get started -->
         <Grid VerticalAlignment="Bottom" Margin="44,0,44,40">
-            <ui:Button HorizontalAlignment="Left" Appearance="Transparent" Content="Back" Command="{Binding BackCommand}"
+            <ui:Button HorizontalAlignment="Left" Appearance="Transparent" Content="{DynamicResource Onboard_Back}" Command="{Binding BackCommand}"
                        Visibility="{Binding IsFirst, Converter={StaticResource BoolToVis}, ConverterParameter=invert}">
                 <ui:Button.Icon><ui:SymbolIcon Symbol="ArrowLeft24" /></ui:Button.Icon>
             </ui:Button>
@@ -129,11 +129,11 @@
                 <ui:Button Appearance="Primary" Command="{Binding NextCommand}"
                            Visibility="{Binding IsLast, Converter={StaticResource BoolToVis}, ConverterParameter=invert}">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Next" VerticalAlignment="Center" />
+                        <TextBlock Text="{DynamicResource Onboard_Next}" VerticalAlignment="Center" />
                         <ui:SymbolIcon Symbol="ArrowRight24" FontSize="16" Margin="7,0,0,0" VerticalAlignment="Center" />
                     </StackPanel>
                 </ui:Button>
-                <ui:Button Content="Get started" Appearance="Primary" Command="{Binding FinishCommand}"
+                <ui:Button Content="{DynamicResource Onboard_GetStarted}" Appearance="Primary" Command="{Binding FinishCommand}"
                            Visibility="{Binding IsLast, Converter={StaticResource BoolToVis}}">
                     <ui:Button.Icon><ui:SymbolIcon Symbol="Rocket24" /></ui:Button.Icon>
                 </ui:Button>

@@ -13,7 +13,7 @@
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
                     Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}">
             <ui:ProgressRing IsIndeterminate="True" Width="48" Height="48" />
-            <TextBlock Text="Loading client items…" Opacity="0.7" Margin="0,12,0,0" HorizontalAlignment="Center" />
+            <TextBlock Text="{DynamicResource ClientItems_Loading}" Opacity="0.7" Margin="0,12,0,0" HorizontalAlignment="Center" />
         </StackPanel>
 
         <Grid Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}, ConverterParameter=invert}">
@@ -31,21 +31,21 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,0,8,0">
-                        <ui:Button Command="{Binding AddCustomCommand}" Margin="0,0,4,0" ToolTip="Add a new custom item">
+                        <ui:Button Command="{Binding AddCustomCommand}" Margin="0,0,4,0" ToolTip="{DynamicResource ClientItems_AddTip}">
                             <ui:Button.Icon><ui:SymbolIcon Symbol="Add24" /></ui:Button.Icon>
                         </ui:Button>
-                        <ui:Button Command="{Binding DuplicateCommand}" Margin="0,0,4,0" ToolTip="Duplicate the selected item as a new custom">
+                        <ui:Button Command="{Binding DuplicateCommand}" Margin="0,0,4,0" ToolTip="{DynamicResource ClientItems_DupTip}">
                             <ui:Button.Icon><ui:SymbolIcon Symbol="Copy24" /></ui:Button.Icon>
                         </ui:Button>
-                        <ui:Button Command="{Binding CopyEntryCommand}" Margin="0,0,4,0" ToolTip="Copy the selected item(s) as YAML — select several with Ctrl/Shift+click">
+                        <ui:Button Command="{Binding CopyEntryCommand}" Margin="0,0,4,0" ToolTip="{DynamicResource ClientItems_CopyTip}">
                             <ui:Button.Icon><ui:SymbolIcon Symbol="ClipboardLink24" /></ui:Button.Icon>
                         </ui:Button>
                         <ToggleButton IsChecked="{Binding List.OverriddenOnly, Mode=TwoWay}"
-                                      ToolTip="Show only your custom / overridden items">
+                                      ToolTip="{DynamicResource ClientItems_FilterTip}">
                             <ui:SymbolIcon Symbol="Filter24" />
                         </ToggleButton>
                     </StackPanel>
-                    <ui:TextBox Grid.Column="1" Tag="ListSearch" PlaceholderText="Search id / aegis / name…  (Ctrl+F)"
+                    <ui:TextBox Grid.Column="1" Tag="ListSearch" PlaceholderText="{DynamicResource ClientItems_SearchPH}"
                                 Text="{Binding List.SearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Grid>
                 <TextBlock DockPanel.Dock="Bottom" Text="{Binding List.StatusText}" Opacity="0.6"
@@ -77,46 +77,46 @@
                     </ListView.InputBindings>
                     <ListView.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Autocomplete from server" InputGestureText="Ctrl+Shift+A"
+                            <MenuItem Header="{DynamicResource ClientItems_Ctx_AutoFromServer}" InputGestureText="Ctrl+Shift+A"
                                       Command="{Binding PlacementTarget.DataContext.AutocompleteSelectedCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                      ToolTip="Generate the identified name + description (type-aware, from server stats + script) plus slots / ClassNum. Select several (Ctrl/Shift+click) to run it in bulk.">
+                                      ToolTip="{DynamicResource ClientItems_Ctx_AutoFromServerTip}">
                                 <MenuItem.Icon><ui:SymbolIcon Symbol="Sparkle24" /></MenuItem.Icon>
                             </MenuItem>
                             <Separator />
-                            <MenuItem Header="Add custom" InputGestureText="Ctrl+N"
+                            <MenuItem Header="{DynamicResource ClientItems_Ctx_AddCustom}" InputGestureText="Ctrl+N"
                                       Command="{Binding PlacementTarget.DataContext.AddCustomCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                 <MenuItem.Icon><ui:SymbolIcon Symbol="Add24" /></MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Duplicate" InputGestureText="Ctrl+D"
+                            <MenuItem Header="{DynamicResource ClientItems_Ctx_Duplicate}" InputGestureText="Ctrl+D"
                                       Command="{Binding PlacementTarget.DataContext.DuplicateCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                 <MenuItem.Icon><ui:SymbolIcon Symbol="Copy24" /></MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Copy YAML" InputGestureText="Ctrl+C"
+                            <MenuItem Header="{DynamicResource ClientItems_Ctx_CopyYaml}" InputGestureText="Ctrl+C"
                                       Command="{Binding PlacementTarget.DataContext.CopyEntryCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                      ToolTip="Copy the selected item(s) as server YAML">
+                                      ToolTip="{DynamicResource ClientItems_Ctx_CopyYamlTip}">
                                 <MenuItem.Icon><ui:SymbolIcon Symbol="ClipboardLink24" /></MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Copy client Lua" InputGestureText="Ctrl+L"
+                            <MenuItem Header="{DynamicResource ClientItems_Ctx_CopyLua}" InputGestureText="Ctrl+L"
                                       Command="{Binding PlacementTarget.DataContext.CopyClientLuaCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                      ToolTip="Copy this item's itemInfo Lua block to the clipboard" />
+                                      ToolTip="{DynamicResource ClientItems_Ctx_CopyLuaTip}" />
                             <Separator />
-                            <MenuItem Header="Change ID…" InputGestureText="F2"
+                            <MenuItem Header="{DynamicResource ClientItems_Ctx_ChangeId}" InputGestureText="F2"
                                       Command="{Binding PlacementTarget.DataContext.ChangeIdCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                            <MenuItem Header="Copy to ID…" InputGestureText="Ctrl+Shift+D"
+                            <MenuItem Header="{DynamicResource ClientItems_Ctx_CopyToId}" InputGestureText="Ctrl+Shift+D"
                                       Command="{Binding PlacementTarget.DataContext.CopyToIdCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                            <MenuItem Header="Restore to default" InputGestureText="Ctrl+Shift+R"
+                            <MenuItem Header="{DynamicResource ClientItems_Ctx_Restore}" InputGestureText="Ctrl+Shift+R"
                                       Visibility="{Binding PlacementTarget.DataContext.CanRestore, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource BoolToVis}}"
                                       Command="{Binding PlacementTarget.DataContext.RestoreToDefaultCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                 <MenuItem.Icon><ui:SymbolIcon Symbol="ArrowUndo24" /></MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Delete" InputGestureText="Del"
+                            <MenuItem Header="{DynamicResource ClientItems_Ctx_Delete}" InputGestureText="Del"
                                       Command="{Binding PlacementTarget.DataContext.DeleteEntryCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                 <MenuItem.Icon><ui:SymbolIcon Symbol="Delete24" /></MenuItem.Icon>
                             </MenuItem>
                             <Separator />
-                            <MenuItem Header="Select in Items" InputGestureText="Ctrl+E"
+                            <MenuItem Header="{DynamicResource ClientItems_Ctx_SelectInItems}" InputGestureText="Ctrl+E"
                                       Command="{Binding PlacementTarget.DataContext.SelectInItemsCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                      ToolTip="Jump to this item in the server Items section">
+                                      ToolTip="{DynamicResource ClientItems_Ctx_SelectInItemsTip}">
                                 <MenuItem.Icon><ui:SymbolIcon Symbol="Open24" /></MenuItem.Icon>
                             </MenuItem>
                         </ContextMenu>
@@ -142,8 +142,8 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn x:Name="IdColumn" Header="ID" Width="60" DisplayMemberBinding="{Binding KeyText}" />
-                            <GridViewColumn x:Name="NameColumn" Header="Name" Width="166" DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn x:Name="IdColumn" Header="{DynamicResource ClientItems_Col_ID}" Width="60" DisplayMemberBinding="{Binding KeyText}" />
+                            <GridViewColumn x:Name="NameColumn" Header="{DynamicResource ClientItems_Col_Name}" Width="166" DisplayMemberBinding="{Binding Name}" />
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -154,7 +154,7 @@
 
             <!-- Detail -->
             <Grid Grid.Column="2" Margin="8,0,0,0">
-                <TextBlock Text="Select an item to edit its client info." Opacity="0.5"
+                <TextBlock Text="{DynamicResource ClientItems_SelectPH}" Opacity="0.5"
                            HorizontalAlignment="Center" VerticalAlignment="Center"
                            Visibility="{Binding HasEditor, Converter={StaticResource BoolToVis}, ConverterParameter=invert}" />
 
@@ -165,14 +165,14 @@
                         <!-- Header: target label + autocomplete / copy actions -->
                         <DockPanel Margin="0,0,0,10">
                             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                                <ui:Button Content="Autocomplete" Appearance="Secondary" Padding="10,4"
+                                <ui:Button Content="{DynamicResource ClientItems_Autocomplete}" Appearance="Secondary" Padding="10,4"
                                            Command="{Binding AutocompleteCommand}"
-                                           ToolTip="Generate the identified name + description (type-aware, from the server item's stats and script) plus slots / ClassNum (Ctrl+Shift+A)">
+                                           ToolTip="{DynamicResource ClientItems_AutocompleteTip}">
                                     <ui:Button.Icon><ui:SymbolIcon Symbol="Sparkle24" /></ui:Button.Icon>
                                 </ui:Button>
-                                <ui:Button Content="Copy Lua" Appearance="Transparent" Padding="10,4" Margin="6,0,0,0"
+                                <ui:Button Content="{DynamicResource ClientItems_CopyLua}" Appearance="Transparent" Padding="10,4" Margin="6,0,0,0"
                                            Command="{Binding CopyLuaCommand}"
-                                           ToolTip="Copy this item's itemInfo Lua block to the clipboard (Ctrl+C)">
+                                           ToolTip="{DynamicResource ClientItems_CopyLuaTip}">
                                     <ui:Button.Icon><ui:SymbolIcon Symbol="ClipboardLink24" /></ui:Button.Icon>
                                 </ui:Button>
                             </StackPanel>
@@ -182,12 +182,12 @@
                         <!-- Description toolbar (acts on the focused description box) -->
                         <ui:Card Padding="10,8" Margin="0,0,0,10">
                             <DockPanel>
-                                <TextBlock Text="Color" Opacity="0.7" VerticalAlignment="Center" Margin="0,0,8,0" />
+                                <TextBlock Text="{DynamicResource ClientItems_Color}" Opacity="0.7" VerticalAlignment="Center" Margin="0,0,8,0" />
                                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                                    <ui:Button x:Name="NewLineButton" Content="↵ New line" Focusable="False" Margin="8,0,0,0"
-                                               ToolTip="Insert a blank line (^FFFFFF_^000000)" />
-                                    <ui:Button x:Name="ResetColorButton" Content="Reset Colors" Focusable="False" Margin="6,0,0,0"
-                                               ToolTip="Remove all ^RRGGBB color codes from this item's identified and unidentified descriptions" />
+                                    <ui:Button x:Name="NewLineButton" Content="{DynamicResource ClientItems_NewLine}" Focusable="False" Margin="8,0,0,0"
+                                               ToolTip="{DynamicResource ClientItems_NewLineTip}" />
+                                    <ui:Button x:Name="ResetColorButton" Content="{DynamicResource ClientItems_ResetColors}" Focusable="False" Margin="6,0,0,0"
+                                               ToolTip="{DynamicResource ClientItems_ResetColorsTip}" />
                                 </StackPanel>
                                 <WrapPanel x:Name="SwatchPanel">
                                     <Border Width="20" Height="20" Margin="2" CornerRadius="3" BorderThickness="1" BorderBrush="#55000000" Background="#000000" Tag="000000" Cursor="Hand" MouseLeftButtonDown="Swatch_Click" />
@@ -215,35 +215,35 @@
                             <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <ui:Button Content="→" MinWidth="0" Padding="8,4" Margin="0,0,0,8" FontSize="15"
                                            Command="{Binding CopyToUnidentifiedCommand}"
-                                           ToolTip="Copy identified name + description → unidentified" />
+                                           ToolTip="{DynamicResource ClientItems_CopyToUnidTip}" />
                                 <ui:Button Content="←" MinWidth="0" Padding="8,4" FontSize="15"
                                            Command="{Binding CopyToIdentifiedCommand}"
-                                           ToolTip="Copy unidentified name + description → identified" />
+                                           ToolTip="{DynamicResource ClientItems_CopyToIdTip}" />
                             </StackPanel>
 
                             <!-- Identified -->
                             <ui:Card Grid.Column="0" Padding="12,10">
                                 <StackPanel>
-                                    <TextBlock Text="Identified" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,8" />
-                                    <TextBlock Text="Display name" Opacity="0.8" Margin="0,0,0,2" />
+                                    <TextBlock Text="{DynamicResource ClientItems_Identified}" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,8" />
+                                    <TextBlock Text="{DynamicResource ClientItems_DisplayName}" Opacity="0.8" Margin="0,0,0,2" />
                                     <ui:TextBox Text="{Binding IdentifiedDisplayName, UpdateSourceTrigger=LostFocus}" Margin="0,0,0,8" />
-                                    <TextBlock Text="Resource name" Opacity="0.8" Margin="0,0,0,2" />
+                                    <TextBlock Text="{DynamicResource ClientItems_ResourceName}" Opacity="0.8" Margin="0,0,0,2" />
                                     <Grid Margin="0,0,0,8">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <ui:TextBox Grid.Column="0" Text="{Binding IdentifiedResourceName, UpdateSourceTrigger=LostFocus}" />
-                                        <ui:Button Grid.Column="1" Content="Browse…" Command="{Binding BrowseIconCommand}"
-                                                   Margin="6,0,0,0" ToolTip="Pick an icon from an item or a GRF/loose source" />
+                                        <ui:Button Grid.Column="1" Content="{DynamicResource ClientItems_Browse}" Command="{Binding BrowseIconCommand}"
+                                                   Margin="6,0,0,0" ToolTip="{DynamicResource ClientItems_BrowseIconTip}" />
                                     </Grid>
-                                    <TextBlock Text="Description" Opacity="0.8" Margin="0,0,0,2" />
+                                    <TextBlock Text="{DynamicResource ClientItems_Description}" Opacity="0.8" Margin="0,0,0,2" />
                                     <ui:TextBox x:Name="IdDescBox" Text="{Binding IdentifiedDescription, UpdateSourceTrigger=LostFocus}"
                                                 AcceptsReturn="True" MinHeight="120" MaxHeight="220" FontFamily="Consolas"
                                                 VerticalScrollBarVisibility="Auto" TextChanged="IdDesc_TextChanged"
                                                 GotKeyboardFocus="DescBox_GotFocus" />
 
-                                    <TextBlock Text="Preview" Opacity="0.55" FontSize="11" Margin="0,10,0,3" />
+                                    <TextBlock Text="{DynamicResource ClientItems_Preview}" Opacity="0.55" FontSize="11" Margin="0,10,0,3" />
                                     <Border Background="#EFEAD9" CornerRadius="4" Padding="8" MinHeight="70">
                                         <DockPanel>
                                             <Image DockPanel.Dock="Left" Source="{Binding IconPreview}" Width="40" Height="40"
@@ -260,18 +260,18 @@
                             <!-- Unidentified -->
                             <ui:Card Grid.Column="2" Padding="12,10">
                                 <StackPanel>
-                                    <TextBlock Text="Unidentified" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,8" />
-                                    <TextBlock Text="Display name" Opacity="0.8" Margin="0,0,0,2" />
+                                    <TextBlock Text="{DynamicResource ClientItems_Unidentified}" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,8" />
+                                    <TextBlock Text="{DynamicResource ClientItems_DisplayName}" Opacity="0.8" Margin="0,0,0,2" />
                                     <ui:TextBox Text="{Binding UnidentifiedDisplayName, UpdateSourceTrigger=LostFocus}" Margin="0,0,0,8" />
-                                    <TextBlock Text="Resource name" Opacity="0.8" Margin="0,0,0,2" />
+                                    <TextBlock Text="{DynamicResource ClientItems_ResourceName}" Opacity="0.8" Margin="0,0,0,2" />
                                     <ui:TextBox Text="{Binding UnidentifiedResourceName, UpdateSourceTrigger=LostFocus}" Margin="0,0,0,8" />
-                                    <TextBlock Text="Description" Opacity="0.8" Margin="0,0,0,2" />
+                                    <TextBlock Text="{DynamicResource ClientItems_Description}" Opacity="0.8" Margin="0,0,0,2" />
                                     <ui:TextBox x:Name="UnidDescBox" Text="{Binding UnidentifiedDescription, UpdateSourceTrigger=LostFocus}"
                                                 AcceptsReturn="True" MinHeight="120" MaxHeight="220" FontFamily="Consolas"
                                                 VerticalScrollBarVisibility="Auto" TextChanged="UnidDesc_TextChanged"
                                                 GotKeyboardFocus="DescBox_GotFocus" />
 
-                                    <TextBlock Text="Preview" Opacity="0.55" FontSize="11" Margin="0,10,0,3" />
+                                    <TextBlock Text="{DynamicResource ClientItems_Preview}" Opacity="0.55" FontSize="11" Margin="0,10,0,3" />
                                     <Border Background="#EFEAD9" CornerRadius="4" Padding="8" MinHeight="70">
                                         <DockPanel>
                                             <Image DockPanel.Dock="Left" Source="{Binding IconPreview}" Width="40" Height="40"
@@ -290,20 +290,20 @@
                         <ui:Card Padding="12,10" Margin="0,10,0,0">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                                    <TextBlock Text="Slots" VerticalAlignment="Center" Opacity="0.85" Width="60" />
+                                    <TextBlock Text="{DynamicResource ClientItems_Slots}" VerticalAlignment="Center" Opacity="0.85" Width="60" />
                                     <ui:TextBox Text="{Binding SlotCount, UpdateSourceTrigger=LostFocus}" Width="60" Margin="0,0,16,0" />
-                                    <TextBlock Text="ClassNum / View" VerticalAlignment="Center" Opacity="0.85" Width="110" />
+                                    <TextBlock Text="{DynamicResource ClientItems_ClassNum}" VerticalAlignment="Center" Opacity="0.85" Width="110" />
                                     <ui:TextBox Text="{Binding ClassNum, UpdateSourceTrigger=LostFocus}" Width="70" Margin="0,0,16,0" />
-                                    <ui:ToggleSwitch Content="Costume" IsChecked="{Binding Costume}" />
+                                    <ui:ToggleSwitch Content="{DynamicResource ClientItems_Costume}" IsChecked="{Binding Costume}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,6,0,0"
                                             Visibility="{Binding CanLinkSprite, Converter={StaticResource BoolToVis}}">
-                                    <TextBlock Text="Headgear sprite" VerticalAlignment="Center" Opacity="0.85" Width="100" />
+                                    <TextBlock Text="{DynamicResource ClientItems_HeadgearSprite}" VerticalAlignment="Center" Opacity="0.85" Width="100" />
                                     <ui:TextBox Text="{Binding SpriteName, UpdateSourceTrigger=PropertyChanged}"
-                                                PlaceholderText="sprite base name" Width="180" Margin="0,0,8,0" />
-                                    <ui:Button Content="Browse…" Command="{Binding BrowseSpriteCommand}" Margin="0,0,8,0"
-                                               ToolTip="Browse headgear sprites (animated preview)" />
-                                    <ui:Button Content="Link sprite" Command="{Binding LinkSpriteCommand}" />
+                                                PlaceholderText="{DynamicResource ClientItems_SpritePH}" Width="180" Margin="0,0,8,0" />
+                                    <ui:Button Content="{DynamicResource ClientItems_Browse}" Command="{Binding BrowseSpriteCommand}" Margin="0,0,8,0"
+                                               ToolTip="{DynamicResource ClientItems_BrowseSpriteTip}" />
+                                    <ui:Button Content="{DynamicResource ClientItems_LinkSprite}" Command="{Binding LinkSpriteCommand}" />
                                 </StackPanel>
                                 <TextBlock Text="{Binding SpriteLinkMessage}" Opacity="0.8" Foreground="#7FD0A0" TextWrapping="Wrap"
                                            Visibility="{Binding SpriteLinkMessage, Converter={StaticResource StringToVis}}" Margin="0,4,0,0" />

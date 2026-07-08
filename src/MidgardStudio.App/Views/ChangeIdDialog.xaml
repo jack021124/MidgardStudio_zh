@@ -6,7 +6,7 @@
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
                  xmlns:vm="clr-namespace:MidgardStudio.App.ViewModels"
                  mc:Ignorable="d" d:DataContext="{d:DesignInstance Type=vm:ChangeIdViewModel}"
-                 Title="Change Item ID"
+                 Title="{DynamicResource ChangeId_Title}"
                  Width="420" SizeToContent="Height"
                  WindowStartupLocation="CenterOwner"
                  WindowBackdropType="Mica"
@@ -20,18 +20,18 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ui:TitleBar Grid.Row="0" Title="Change Item ID" />
+        <ui:TitleBar Grid.Row="0" Title="{DynamicResource ChangeId_Title}" />
 
         <StackPanel Grid.Row="1" Margin="18,8,18,16">
-            <TextBlock Text="New Item ID" Opacity="0.85" Margin="0,0,0,4" />
+            <TextBlock Text="{DynamicResource ChangeId_NewId}" Opacity="0.85" Margin="0,0,0,4" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <ui:TextBox Grid.Column="0" Text="{Binding IdInput, UpdateSourceTrigger=PropertyChanged}" />
-                <ui:Button Grid.Column="1" Content="Next free" Command="{Binding NextFreeCommand}" Margin="6,0,0,0"
-                           ToolTip="Use the next unused id" />
+                <ui:Button Grid.Column="1" Content="{DynamicResource ChangeId_NextFree}" Command="{Binding NextFreeCommand}" Margin="6,0,0,0"
+                           ToolTip="{DynamicResource ChangeId_NextFreeTip}" />
             </Grid>
 
             <TextBlock Text="{Binding Status}" FontSize="11.5" Margin="0,8,0,0">
@@ -48,8 +48,8 @@
             </TextBlock>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,18,0,0">
-                <ui:Button Content="Cancel" Command="{Binding CancelCommand}" MinWidth="92" Margin="0,0,8,0" />
-                <ui:Button Content="Change ID" Appearance="Primary" Command="{Binding ConfirmCommand}" MinWidth="110" />
+                <ui:Button Content="{DynamicResource Dlg_Cancel}" Command="{Binding CancelCommand}" MinWidth="92" Margin="0,0,8,0" />
+                <ui:Button Content="{DynamicResource ChangeId_Confirm}" Appearance="Primary" Command="{Binding ConfirmCommand}" MinWidth="110" />
             </StackPanel>
         </StackPanel>
     </Grid>

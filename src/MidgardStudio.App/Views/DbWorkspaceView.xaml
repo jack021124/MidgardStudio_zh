@@ -28,7 +28,7 @@
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
                     Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}">
             <ui:ProgressRing IsIndeterminate="True" Width="48" Height="48" />
-            <TextBlock Text="Loading database…" Opacity="0.7" Margin="0,12,0,0" HorizontalAlignment="Center" />
+            <TextBlock Text="{DynamicResource Db_Loading}" Opacity="0.7" Margin="0,12,0,0" HorizontalAlignment="Center" />
         </StackPanel>
 
         <!-- Main content -->
@@ -47,21 +47,21 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,0,8,0">
-                        <ui:Button Command="{Binding AddCustomCommand}" Margin="0,0,4,0" ToolTip="Add a new custom entry">
+                        <ui:Button Command="{Binding AddCustomCommand}" Margin="0,0,4,0" ToolTip="{DynamicResource Db_AddTip}">
                             <ui:Button.Icon><ui:SymbolIcon Symbol="Add24" /></ui:Button.Icon>
                         </ui:Button>
-                        <ui:Button Command="{Binding DuplicateCommand}" Margin="0,0,4,0" ToolTip="Duplicate the selected entry as a new custom">
+                        <ui:Button Command="{Binding DuplicateCommand}" Margin="0,0,4,0" ToolTip="{DynamicResource Db_DupTip}">
                             <ui:Button.Icon><ui:SymbolIcon Symbol="Copy24" /></ui:Button.Icon>
                         </ui:Button>
-                        <ui:Button Command="{Binding CopyEntryCommand}" Margin="0,0,4,0" ToolTip="Copy the selected entry as YAML — select several (Ctrl/Shift+click) to copy them all">
+                        <ui:Button Command="{Binding CopyEntryCommand}" Margin="0,0,4,0" ToolTip="{DynamicResource Db_CopyTip}">
                             <ui:Button.Icon><ui:SymbolIcon Symbol="ClipboardLink24" /></ui:Button.Icon>
                         </ui:Button>
                         <ToggleButton IsChecked="{Binding List.OverriddenOnly, Mode=TwoWay}"
-                                      ToolTip="Show only your custom / overridden entries">
+                                      ToolTip="{DynamicResource Db_FilterTip}">
                             <ui:SymbolIcon Symbol="Filter24" />
                         </ToggleButton>
                     </StackPanel>
-                    <ui:TextBox Grid.Column="1" Tag="ListSearch" PlaceholderText="Search id / aegis / name / type…  (Ctrl+F)"
+                    <ui:TextBox Grid.Column="1" Tag="ListSearch" PlaceholderText="{DynamicResource Db_SearchPH}"
                                 Text="{Binding List.SearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Grid>
 
@@ -92,40 +92,40 @@
                     </ListView.InputBindings>
                     <ListView.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Duplicate" InputGestureText="Ctrl+D"
+                            <MenuItem Header="{DynamicResource Db_Ctx_Duplicate}" InputGestureText="Ctrl+D"
                                       Command="{Binding PlacementTarget.DataContext.DuplicateCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                      ToolTip="Duplicate the selected entry as a new custom">
+                                      ToolTip="{DynamicResource Db_DupTip}">
                                 <MenuItem.Icon><ui:SymbolIcon Symbol="Copy24" /></MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Copy YAML" InputGestureText="Ctrl+C"
+                            <MenuItem Header="{DynamicResource Db_Ctx_CopyYaml}" InputGestureText="Ctrl+C"
                                       Command="{Binding PlacementTarget.DataContext.CopyEntryCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                      ToolTip="Copy the selected entry — or every selected entry — as YAML to the clipboard">
+                                      ToolTip="{DynamicResource Db_CopyTip}">
                                 <MenuItem.Icon><ui:SymbolIcon Symbol="ClipboardLink24" /></MenuItem.Icon>
                             </MenuItem>
                             <Separator />
-                            <MenuItem Header="Change ID…" InputGestureText="F2"
+                            <MenuItem Header="{DynamicResource Db_Ctx_ChangeId}" InputGestureText="F2"
                                       Command="{Binding PlacementTarget.DataContext.ChangeIdCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                            <MenuItem Header="Copy to ID…" InputGestureText="Ctrl+Shift+D"
+                            <MenuItem Header="{DynamicResource Db_Ctx_CopyToId}" InputGestureText="Ctrl+Shift+D"
                                       Command="{Binding PlacementTarget.DataContext.CopyToIdCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                            <MenuItem Header="Restore to default" InputGestureText="Ctrl+Shift+R"
+                            <MenuItem Header="{DynamicResource Db_Ctx_Restore}" InputGestureText="Ctrl+Shift+R"
                                       Visibility="{Binding PlacementTarget.DataContext.CanRestore, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource BoolToVis}}"
                                       Command="{Binding PlacementTarget.DataContext.RestoreToDefaultCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                      ToolTip="Discard customizations and revert this entry to its base values">
+                                      ToolTip="{DynamicResource Db_Ctx_RestoreTip}">
                                 <MenuItem.Icon><ui:SymbolIcon Symbol="ArrowUndo24" /></MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Delete" InputGestureText="Del"
+                            <MenuItem Header="{DynamicResource Db_Ctx_Delete}" InputGestureText="Del"
                                       Command="{Binding PlacementTarget.DataContext.DeleteEntryCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                 <MenuItem.Icon><ui:SymbolIcon Symbol="Delete24" /></MenuItem.Icon>
                             </MenuItem>
                             <Separator Visibility="{Binding PlacementTarget.DataContext.IsItemDb, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource BoolToVis}}" />
-                            <MenuItem Header="Select in Client Items" InputGestureText="Ctrl+E"
+                            <MenuItem Header="{DynamicResource Db_Ctx_SelectInClientItems}" InputGestureText="Ctrl+E"
                                       Visibility="{Binding PlacementTarget.DataContext.IsItemDb, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource BoolToVis}}"
                                       Command="{Binding PlacementTarget.DataContext.SelectInClientItemsCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                            <MenuItem Header="Add in Client Items" InputGestureText="Ctrl+Shift+E"
+                            <MenuItem Header="{DynamicResource Db_Ctx_AddInClientItems}" InputGestureText="Ctrl+Shift+E"
                                       Visibility="{Binding PlacementTarget.DataContext.IsItemDb, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource BoolToVis}}"
                                       Command="{Binding PlacementTarget.DataContext.AddInClientItemsCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                             <Separator Visibility="{Binding PlacementTarget.DataContext.IsSkillDb, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource BoolToVis}}" />
-                            <MenuItem Header="Select in Client Skills" InputGestureText="Ctrl+E"
+                            <MenuItem Header="{DynamicResource Db_Ctx_SelectInClientSkills}" InputGestureText="Ctrl+E"
                                       Visibility="{Binding PlacementTarget.DataContext.IsSkillDb, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource BoolToVis}}"
                                       Command="{Binding PlacementTarget.DataContext.SelectInClientSkillsCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                         </ContextMenu>
@@ -142,7 +142,7 @@
 
             <!-- Detail editor -->
             <Grid Grid.Column="2" Margin="8,0,0,0">
-                <TextBlock Text="Select an entry to view or edit." Opacity="0.5"
+                <TextBlock Text="{DynamicResource Db_SelectEntry}" Opacity="0.5"
                            HorizontalAlignment="Center" VerticalAlignment="Center"
                            Visibility="{Binding Editor.HasRecord, Converter={StaticResource BoolToVis}, ConverterParameter=invert}" />
 
@@ -150,17 +150,17 @@
                     <!-- Record identity header removed: the list already shows the selected entry + its origin. -->
 
                     <ui:InfoBar DockPanel.Dock="Top" Severity="Informational" IsClosable="True" Margin="0,0,0,8"
-                                Title="Info" Message="{Binding PortReportText}"
+                                Title="{DynamicResource Db_Info}" Message="{Binding PortReportText}"
                                 IsOpen="{Binding PortReportText, Converter={StaticResource StringToBool}}" />
 
                     <!-- Live validation issues for the selected record that aren't pinned to a visible field. -->
                     <ui:InfoBar DockPanel.Dock="Top" Severity="Warning" IsClosable="False" Margin="0,0,0,8"
-                                Title="Validation" Message="{Binding Editor.RecordIssuesText}"
+                                Title="{DynamicResource Db_Validation}" Message="{Binding Editor.RecordIssuesText}"
                                 IsOpen="{Binding Editor.HasRecordIssues}" />
 
                     <!-- Client sprite registration (mobs only). Folded by default so it doesn't push the
                          drop table out of view; the user can expand it when they need to register a sprite. -->
-                    <ui:CardExpander DockPanel.Dock="Bottom" Header="Client sprite" IsExpanded="False"
+                    <ui:CardExpander DockPanel.Dock="Bottom" Header="{DynamicResource Db_ClientSprite}" IsExpanded="False"
                                      Margin="0,8,0,0"
                                      Visibility="{Binding SideEditor, Converter={StaticResource NotNullToVis}}">
                         <ContentControl Content="{Binding SideEditor}" />

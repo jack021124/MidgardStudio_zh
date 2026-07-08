@@ -12,22 +12,22 @@
         <!-- Toolbar -->
         <Grid DockPanel.Dock="Top" Margin="0,0,0,12">
             <StackPanel>
-                <TextBlock Text="Backup Manager" Style="{StaticResource TitleScreen}" />
+                <TextBlock Text="{DynamicResource Backup_Title}" Style="{StaticResource TitleScreen}" />
                 <TextBlock Opacity="0.65" FontSize="12" TextWrapping="Wrap"
-                           Text="A snapshot of your server + client data is taken after each manual save; unchanged files are de-duplicated to save space. Restore, pin, verify, or export any point in time below." />
+                           Text="{DynamicResource Backup_Desc}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                <ui:Button Content="Create backup now" Appearance="Primary" Command="{Binding CreateNowCommand}" Margin="0,0,8,0"
-                           ToolTip="Take a snapshot of the current server + client data right now.">
+                <ui:Button Content="{DynamicResource Backup_CreateNow}" Appearance="Primary" Command="{Binding CreateNowCommand}" Margin="0,0,8,0"
+                           ToolTip="{DynamicResource Backup_CreateNowTip}">
                     <ui:Button.Icon><ui:SymbolIcon Symbol="Save24" /></ui:Button.Icon>
                 </ui:Button>
-                <ui:Button Content="Import…" Command="{Binding ImportCommand}" Margin="0,0,8,0"
-                           ToolTip="Import a backup from a .zip exported on this or another machine." />
-                <ui:Button Content="Open folder" Command="{Binding OpenFolderCommand}" Margin="0,0,8,0"
-                           ToolTip="Open the backups folder on disk.">
+                <ui:Button Content="{DynamicResource Backup_Import}" Command="{Binding ImportCommand}" Margin="0,0,8,0"
+                           ToolTip="{DynamicResource Backup_ImportTip}" />
+                <ui:Button Content="{DynamicResource Backup_OpenFolder}" Command="{Binding OpenFolderCommand}" Margin="0,0,8,0"
+                           ToolTip="{DynamicResource Backup_OpenFolderTip}">
                     <ui:Button.Icon><ui:SymbolIcon Symbol="Folder24" /></ui:Button.Icon>
                 </ui:Button>
-                <ui:Button Content="Refresh" Command="{Binding RefreshCommand}" ToolTip="Reload the list of backups." />
+                <ui:Button Content="{DynamicResource Backup_Refresh}" Command="{Binding RefreshCommand}" ToolTip="{DynamicResource Backup_RefreshTip}" />
             </StackPanel>
         </Grid>
 
@@ -39,10 +39,10 @@
         <Border Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVis}}">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="420">
                 <ui:SymbolIcon Symbol="Folder24" FontSize="52" HorizontalAlignment="Center" Opacity="0.4" />
-                <TextBlock Text="No backups yet" FontSize="18" FontWeight="SemiBold"
+                <TextBlock Text="{DynamicResource Backup_EmptyTitle}" FontSize="18" FontWeight="SemiBold"
                            HorizontalAlignment="Center" Margin="0,12,0,4" />
                 <TextBlock TextAlignment="Center" Opacity="0.65" TextWrapping="Wrap"
-                           Text="Backups are created automatically each time you save. You can also create one now with the button above." />
+                           Text="{DynamicResource Backup_EmptyDesc}" />
             </StackPanel>
         </Border>
 
@@ -64,7 +64,7 @@
                             <GridViewColumn Header="" Width="26">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ui:SymbolIcon Symbol="Pin28" FontSize="16" ToolTip="Pinned — kept regardless of retention"
+                                        <ui:SymbolIcon Symbol="Pin28" FontSize="16" ToolTip="{DynamicResource Backup_PinnedTip}"
                                                        Visibility="{Binding Pinned, Converter={StaticResource BoolToVis}}">
                                             <ui:SymbolIcon.Style>
                                                 <Style TargetType="{x:Type ui:SymbolIcon}">
@@ -80,10 +80,10 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="When" Width="120" DisplayMemberBinding="{Binding RelativeText}" />
-                            <GridViewColumn Header="Label" Width="170" DisplayMemberBinding="{Binding Label}" />
-                            <GridViewColumn Header="Files" Width="50" DisplayMemberBinding="{Binding FileCount}" />
-                            <GridViewColumn Header="Size" Width="74" DisplayMemberBinding="{Binding SizeText}" />
+                            <GridViewColumn Header="{DynamicResource Backup_Col_When}" Width="120" DisplayMemberBinding="{Binding RelativeText}" />
+                            <GridViewColumn Header="{DynamicResource Backup_Col_Label}" Width="170" DisplayMemberBinding="{Binding Label}" />
+                            <GridViewColumn Header="{DynamicResource Backup_Col_Files}" Width="50" DisplayMemberBinding="{Binding FileCount}" />
+                            <GridViewColumn Header="{DynamicResource Backup_Col_Size}" Width="74" DisplayMemberBinding="{Binding SizeText}" />
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -101,7 +101,7 @@
                             </Border>
                             <Border Background="#1FFFFFFF" CornerRadius="3" Padding="8,3" Margin="0,0,8,0">
                                 <TextBlock FontSize="11.5">
-                                    <Run Text="{Binding FileCount, Mode=OneWay}" /><Run Text=" files" />
+                                    <Run Text="{Binding FileCount, Mode=OneWay}" /><Run Text="{DynamicResource Backup_FilesSuffix}" />
                                 </TextBlock>
                             </Border>
                             <Border Background="#1FFFFFFF" CornerRadius="3" Padding="8,3" Margin="0,0,8,0">
@@ -115,37 +115,37 @@
                         </StackPanel>
                         <TextBlock Text="{Binding Note}" Opacity="0.7" TextWrapping="Wrap" Margin="0,10,0,0"
                                    Visibility="{Binding Note, Converter={StaticResource StringToVis}}" />
-                        <TextBlock Text="Files in this backup" Opacity="0.55" FontSize="11" Margin="0,14,0,4" />
+                        <TextBlock Text="{DynamicResource Backup_FilesIn}" Opacity="0.55" FontSize="11" Margin="0,14,0,4" />
                     </StackPanel>
 
                     <!-- Actions pinned to the bottom -->
                     <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,12,0,0">
-                        <ui:Button Content="Restore this backup" Appearance="Primary" Margin="0,0,8,0"
-                                   ToolTip="Replace your current data with this snapshot. A safety backup is taken first."
+                        <ui:Button Content="{DynamicResource Backup_Restore}" Appearance="Primary" Margin="0,0,8,0"
+                                   ToolTip="{DynamicResource Backup_RestoreTip}"
                                    Command="{Binding DataContext.RestoreCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                    CommandParameter="{Binding}">
                             <ui:Button.Icon><ui:SymbolIcon Symbol="ArrowUndo24" /></ui:Button.Icon>
                         </ui:Button>
                         <ui:Button Content="{Binding DataContext.PinButtonText, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0,0,8,0"
-                                   ToolTip="Pin keeps this backup regardless of retention; unpin lets it age out normally."
+                                   ToolTip="{DynamicResource Backup_PinTip}"
                                    Command="{Binding DataContext.TogglePinCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                    CommandParameter="{Binding}" />
-                        <ui:Button Content="Verify" Margin="0,0,8,0"
-                                   ToolTip="Re-check this backup's files against their stored checksums."
+                        <ui:Button Content="{DynamicResource Backup_Verify}" Margin="0,0,8,0"
+                                   ToolTip="{DynamicResource Backup_VerifyTip}"
                                    Command="{Binding DataContext.VerifyCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                    CommandParameter="{Binding}" />
-                        <ui:Button Content="Export…" Margin="0,0,8,0"
-                                   ToolTip="Save this backup as a .zip you can copy to another machine."
+                        <ui:Button Content="{DynamicResource Backup_Export}" Margin="0,0,8,0"
+                                   ToolTip="{DynamicResource Backup_ExportTip}"
                                    Command="{Binding DataContext.ExportCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                    CommandParameter="{Binding}" />
-                        <ui:Button Content="Open" Margin="0,0,8,0"
-                                   ToolTip="Open this backup's folder on disk."
+                        <ui:Button Content="{DynamicResource Backup_Open}" Margin="0,0,8,0"
+                                   ToolTip="{DynamicResource Backup_OpenTip}"
                                    Command="{Binding DataContext.OpenFolderCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                    CommandParameter="{Binding}">
                             <ui:Button.Icon><ui:SymbolIcon Symbol="Folder24" /></ui:Button.Icon>
                         </ui:Button>
-                        <ui:Button Content="Delete"
-                                   ToolTip="Delete this backup permanently."
+                        <ui:Button Content="{DynamicResource Backup_Delete}"
+                                   ToolTip="{DynamicResource Backup_DeleteTip}"
                                    Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                    CommandParameter="{Binding}">
                             <ui:Button.Icon><ui:SymbolIcon Symbol="Delete24" /></ui:Button.Icon>
@@ -190,11 +190,11 @@
                                             <TextBlock FontFamily="Segoe UI" FontSize="9.5" FontWeight="SemiBold">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
-                                                        <Setter Property="Text" Value="UNCHANGED" />
+                                                        <Setter Property="Text" Value="{DynamicResource Backup_Unchanged}" />
                                                         <Setter Property="Foreground" Value="#7FE0A0" />
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding Changed}" Value="True">
-                                                                <Setter Property="Text" Value="CHANGED" />
+                                                                <Setter Property="Text" Value="{DynamicResource Backup_Changed}" />
                                                                 <Setter Property="Foreground" Value="#E8C06A" />
                                                             </DataTrigger>
                                                         </Style.Triggers>

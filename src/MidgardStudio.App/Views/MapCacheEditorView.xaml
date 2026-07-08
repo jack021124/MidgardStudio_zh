@@ -13,24 +13,24 @@
         <!-- Header + toolbar -->
         <Grid DockPanel.Dock="Top" Margin="0,0,0,10">
             <StackPanel>
-                <TextBlock Text="Map Cache Editor" Style="{StaticResource TitleScreen}" />
+                <TextBlock Text="{DynamicResource MapCache_Title}" Style="{StaticResource TitleScreen}" />
                 <TextBlock Opacity="0.65" FontSize="12" TextWrapping="Wrap"
-                           Text="Read-only base from re + pre-re. Add maps from .gat, merge another map_cache.dat, then Save — edits are written only to db/import/map_cache.dat." />
+                           Text="{DynamicResource MapCache_Desc}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                <ui:Button Content="Add .gat maps…" Command="{Binding AddGatCommand}" Margin="0,0,8,0">
+                <ui:Button Content="{DynamicResource MapCache_AddGat}" Command="{Binding AddGatCommand}" Margin="0,0,8,0">
                     <ui:Button.Icon><ui:SymbolIcon Symbol="Add24" /></ui:Button.Icon>
                 </ui:Button>
-                <ui:Button Content="Merge .dat…" Command="{Binding MergeDatCommand}" Margin="0,0,8,0">
+                <ui:Button Content="{DynamicResource MapCache_MergeDat}" Command="{Binding MergeDatCommand}" Margin="0,0,8,0">
                     <ui:Button.Icon><ui:SymbolIcon Symbol="FolderZip24" /></ui:Button.Icon>
                 </ui:Button>
-                <ui:Button Content="Reload" Command="{Binding ReloadCommand}" Margin="0,0,8,0">
+                <ui:Button Content="{DynamicResource MapCache_Reload}" Command="{Binding ReloadCommand}" Margin="0,0,8,0">
                     <ui:Button.Icon><ui:SymbolIcon Symbol="ArrowClockwise24" /></ui:Button.Icon>
                 </ui:Button>
-                <ui:Button Content="Open folder" Command="{Binding OpenFolderCommand}" Margin="0,0,8,0">
+                <ui:Button Content="{DynamicResource MapCache_OpenFolder}" Command="{Binding OpenFolderCommand}" Margin="0,0,8,0">
                     <ui:Button.Icon><ui:SymbolIcon Symbol="Folder24" /></ui:Button.Icon>
                 </ui:Button>
-                <ui:Button Content="Save to import" Appearance="Primary" Command="{Binding SaveCommand}">
+                <ui:Button Content="{DynamicResource MapCache_Save}" Appearance="Primary" Command="{Binding SaveCommand}">
                     <ui:Button.Icon><ui:SymbolIcon Symbol="Save24" /></ui:Button.Icon>
                 </ui:Button>
             </StackPanel>
@@ -40,11 +40,11 @@
         <Grid DockPanel.Dock="Bottom" Margin="0,10,0,0">
             <TextBlock Text="{Binding StatusMessage}" Opacity="0.75" FontSize="12" TextWrapping="Wrap" />
             <TextBlock HorizontalAlignment="Right" Foreground="#E0A030" FontSize="12"
-                       Text="● Unsaved map-cache changes"
+                       Text="{DynamicResource MapCache_Unsaved}"
                        Visibility="{Binding IsDirty, Converter={StaticResource BoolToVis}}" />
         </Grid>
 
-        <ui:TextBox DockPanel.Dock="Top" Margin="0,0,0,8" PlaceholderText="Search maps…"
+        <ui:TextBox DockPanel.Dock="Top" Margin="0,0,0,8" PlaceholderText="{DynamicResource MapCache_SearchPH}"
                     Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" />
 
         <Border BorderBrush="#1FFFFFFF" BorderThickness="1" CornerRadius="6" Background="#0AFFFFFF">
@@ -54,17 +54,17 @@
                       ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListView.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Remove from import"
+                        <MenuItem Header="{DynamicResource MapCache_Ctx_Remove}"
                                   Command="{Binding PlacementTarget.DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                   CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                     </ContextMenu>
                 </ListView.ContextMenu>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn x:Name="MapColumn" Header="Map" Width="200" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="Size" Width="110" DisplayMemberBinding="{Binding SizeText}" />
-                        <GridViewColumn Header="Cells" Width="90" DisplayMemberBinding="{Binding CellsText}" />
-                        <GridViewColumn x:Name="OriginColumn" Header="Origin" Width="100">
+                        <GridViewColumn x:Name="MapColumn" Header="{DynamicResource MapCache_Col_Map}" Width="200" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="{DynamicResource MapCache_Col_Size}" Width="110" DisplayMemberBinding="{Binding SizeText}" />
+                        <GridViewColumn Header="{DynamicResource MapCache_Col_Cells}" Width="90" DisplayMemberBinding="{Binding CellsText}" />
+                        <GridViewColumn x:Name="OriginColumn" Header="{DynamicResource MapCache_Col_Origin}" Width="100">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Border CornerRadius="3" Padding="6,1" HorizontalAlignment="Left">

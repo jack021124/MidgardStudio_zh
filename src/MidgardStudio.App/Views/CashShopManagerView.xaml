@@ -11,9 +11,9 @@
     <DockPanel>
         <!-- Header -->
         <StackPanel DockPanel.Dock="Top" Margin="0,18,0,14">
-            <TextBlock Text="Cash Shop Manager" Style="{StaticResource TitleScreen}" />
+            <TextBlock Text="{DynamicResource CashShop_Title}" Style="{StaticResource TitleScreen}" />
             <TextBlock Opacity="0.65" FontSize="12" TextWrapping="Wrap"
-                       Text="Add items to each tab by name, Aegis name, or ID and set a cash-point price. Drag cards to reorder, or drop one on another tab to move it." />
+                       Text="{DynamicResource CashShop_Desc}" />
         </StackPanel>
 
         <Grid>
@@ -69,7 +69,7 @@
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0" Margin="0,0,8,0">
                             <ui:TextBox x:Name="AddBox"
-                                        PlaceholderText="Item name, Aegis name, or ID — type to search (comma-separate to bulk-add)"
+                                        PlaceholderText="{DynamicResource CashShop_AddPH}"
                                         Text="{Binding NewItemName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         PreviewKeyDown="AddBox_PreviewKeyDown"
                                         LostKeyboardFocus="AddBox_LostKeyboardFocus" />
@@ -115,14 +115,14 @@
                                 </Border>
                             </Popup>
                         </Grid>
-                        <ui:TextBox Grid.Column="1" Margin="0,0,8,0" PlaceholderText="Price"
+                        <ui:TextBox Grid.Column="1" Margin="0,0,8,0" PlaceholderText="{DynamicResource CashShop_PricePH}"
                                     Text="{Binding NewItemPriceText, UpdateSourceTrigger=PropertyChanged}">
                             <ui:TextBox.InputBindings>
                                 <KeyBinding Key="Enter" Command="{Binding AddItemCommand}" />
                             </ui:TextBox.InputBindings>
                         </ui:TextBox>
-                        <ui:Button Grid.Column="2" Content="Add" Appearance="Primary" Command="{Binding AddItemCommand}"
-                                   ToolTip="Add to the selected tab (undoable; written to import on Save). Paste several names separated by commas to bulk-add.">
+                        <ui:Button Grid.Column="2" Content="{DynamicResource CashShop_Add}" Appearance="Primary" Command="{Binding AddItemCommand}"
+                                   ToolTip="{DynamicResource CashShop_AddTip}">
                             <ui:Button.Icon><ui:SymbolIcon Symbol="Add24" /></ui:Button.Icon>
                         </ui:Button>
                     </Grid>
@@ -141,10 +141,10 @@
                             <ui:SymbolIcon Symbol="Cart24" FontSize="42" HorizontalAlignment="Center"
                                            VerticalAlignment="Center" Foreground="#BBA9E6" />
                         </Border>
-                        <TextBlock Text="This tab is empty" HorizontalAlignment="Center" Margin="0,14,0,4"
+                        <TextBlock Text="{DynamicResource CashShop_EmptyTitle}" HorizontalAlignment="Center" Margin="0,14,0,4"
                                    FontSize="15" FontWeight="SemiBold" />
                         <TextBlock Opacity="0.6" TextAlignment="Center" TextWrapping="Wrap"
-                                   Text="Add an item by its Aegis name above to put it on sale here — or drag a card in from another tab." />
+                                   Text="{DynamicResource CashShop_EmptyDesc}" />
                     </StackPanel>
 
                     <!-- Virtualized card grid -->
@@ -230,7 +230,7 @@
                                                              IsEnabled="{Binding IsEditable}" MinWidth="52"
                                                              Background="Transparent" BorderThickness="0" Padding="0"
                                                              Foreground="#E8DEFF" FontSize="13" VerticalContentAlignment="Center"
-                                                             ToolTip="Price in cash points (#CASHPOINTS)." />
+                                                             ToolTip="{DynamicResource CashShop_PriceTip}" />
                                                 </StackPanel>
                                             </Border>
                                             <ui:Button x:Name="RemoveBtn" Grid.Column="1" Appearance="Secondary" Padding="6"
@@ -238,7 +238,7 @@
                                                        Command="{Binding DataContext.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
                                                        CommandParameter="{Binding}"
                                                        Visibility="{Binding IsEditable, Converter={StaticResource BoolToVis}}"
-                                                       ToolTip="Remove this item from the tab.">
+                                                       ToolTip="{DynamicResource CashShop_RemoveTip}">
                                                 <ui:Button.Icon><ui:SymbolIcon Symbol="Delete24" FontSize="14" /></ui:Button.Icon>
                                             </ui:Button>
                                         </Grid>
@@ -249,7 +249,7 @@
                                             <Border CornerRadius="5" Padding="5,0" Background="#22000000" Margin="0,0,6,0"
                                                     VerticalAlignment="Center"
                                                     Visibility="{Binding IsBase, Converter={StaticResource BoolToVis}}">
-                                                <TextBlock Text="base" FontSize="9" Opacity="0.6" />
+                                                <TextBlock Text="{DynamicResource CashShop_Base}" FontSize="9" Opacity="0.6" />
                                             </Border>
                                             <ui:SymbolIcon Symbol="Warning24" FontSize="16" VerticalAlignment="Center"
                                                            ToolTip="{Binding IssueTooltip}">

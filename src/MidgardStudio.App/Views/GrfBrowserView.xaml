@@ -214,13 +214,13 @@
 
                 <DockPanel Grid.Row="0" Margin="2,0,2,10">
                     <ui:Button DockPanel.Dock="Right" Appearance="Transparent" Padding="4" MinWidth="0"
-                               Command="{Binding ReloadCommand}" ToolTip="Reload sources from the profile">
+                               Command="{Binding ReloadCommand}" ToolTip="{DynamicResource Grf_ReloadTip}">
                         <ui:Button.Icon><ui:SymbolIcon Symbol="ArrowSync24" FontSize="14" /></ui:Button.Icon>
                     </ui:Button>
-                    <TextBlock Text="GRF Browser" Style="{StaticResource TitleSection}" VerticalAlignment="Center" />
+                    <TextBlock Text="{DynamicResource Grf_Title}" Style="{StaticResource TitleSection}" VerticalAlignment="Center" />
                 </DockPanel>
 
-                <TextBlock Grid.Row="1" Text="ARCHIVES" Style="{StaticResource TitleMicro}"
+                <TextBlock Grid.Row="1" Text="{DynamicResource Grf_Archives}" Style="{StaticResource TitleMicro}"
                            Margin="2,0,0,4" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
                 <ListBox Grid.Row="2" ItemsSource="{Binding Sources}" SelectedItem="{Binding SelectedSource, Mode=TwoWay}"
                          ItemContainerStyle="{StaticResource GrfRowItem}" Background="Transparent" BorderThickness="0"
@@ -266,18 +266,18 @@
 
             <!-- View encoding (above the file list) -->
             <DockPanel Grid.Row="0" Margin="2,0,2,8">
-                <TextBlock Text="Encoding" DockPanel.Dock="Left" VerticalAlignment="Center" Opacity="0.55" Margin="0,0,8,0" FontSize="12"
+                <TextBlock Text="{DynamicResource Grf_Encoding}" DockPanel.Dock="Left" VerticalAlignment="Center" Opacity="0.55" Margin="0,0,8,0" FontSize="12"
                            Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
-                <ui:Button DockPanel.Dock="Right" Content="Go" Padding="8,4" Margin="6,0,0,0" Command="{Binding ApplyCustomEncodingCommand}"
+                <ui:Button DockPanel.Dock="Right" Content="{DynamicResource Grf_Go}" Padding="8,4" Margin="6,0,0,0" Command="{Binding ApplyCustomEncodingCommand}"
                            Visibility="{Binding CustomEncodingVisible, Converter={StaticResource BoolToVis}}" />
                 <TextBox DockPanel.Dock="Right" Text="{Binding CustomEncodingText, UpdateSourceTrigger=PropertyChanged}" Width="64"
-                         VerticalContentAlignment="Center" ToolTip="Codepage number, then Enter"
+                         VerticalContentAlignment="Center" ToolTip="{DynamicResource Grf_CodepageTip}"
                          Visibility="{Binding CustomEncodingVisible, Converter={StaticResource BoolToVis}}">
                     <TextBox.InputBindings><KeyBinding Key="Enter" Command="{Binding ApplyCustomEncodingCommand}" /></TextBox.InputBindings>
                 </TextBox>
                 <ComboBox ItemsSource="{Binding EncodingChoices}" SelectedItem="{Binding SelectedEncoding}"
                           DisplayMemberPath="Display" HorizontalAlignment="Stretch"
-                          ToolTip="Re-decode names + contents for viewing only — never written to the GRF or data folder" />
+                          ToolTip="{DynamicResource Grf_EncodingComboTip}" />
             </DockPanel>
 
             <!-- Up · live filter (auto, no button) · content search -->
@@ -288,13 +288,13 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <ui:Button Grid.Column="0" Appearance="Transparent" Padding="6" MinWidth="0"
-                           Command="{Binding UpCommand}" ToolTip="Up one folder">
+                           Command="{Binding UpCommand}" ToolTip="{DynamicResource Grf_UpTip}">
                     <ui:SymbolIcon Symbol="ArrowUp24" FontSize="14" />
                 </ui:Button>
-                <ui:TextBox Grid.Column="1" Margin="6,0,0,0" PlaceholderText="Filter this folder…"
+                <ui:TextBox Grid.Column="1" Margin="6,0,0,0" PlaceholderText="{DynamicResource Grf_FilterPH}"
                             Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
                 <ui:Button Grid.Column="2" Margin="6,0,0,0" Appearance="Transparent" Padding="6" MinWidth="0"
-                           Command="{Binding OpenSearchCommand}" ToolTip="Search file contents across the archive">
+                           Command="{Binding OpenSearchCommand}" ToolTip="{DynamicResource Grf_SearchTip}">
                     <ui:SymbolIcon Symbol="Search24" FontSize="14" />
                 </ui:Button>
             </Grid>
@@ -305,7 +305,7 @@
                           VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Name" Width="178">
+                            <GridViewColumn Header="{DynamicResource Grf_Col_Name}" Width="178">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
@@ -338,8 +338,8 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="Type" Width="58" DisplayMemberBinding="{Binding TypeText}" />
-                            <GridViewColumn Header="Size" Width="64" DisplayMemberBinding="{Binding SizeText}" />
+                            <GridViewColumn Header="{DynamicResource Grf_Col_Type}" Width="58" DisplayMemberBinding="{Binding TypeText}" />
+                            <GridViewColumn Header="{DynamicResource Grf_Col_Size}" Width="64" DisplayMemberBinding="{Binding SizeText}" />
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -357,7 +357,7 @@
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
                             Visibility="{Binding HasPreview, Converter={StaticResource BoolToVis}, ConverterParameter=invert}">
                     <ui:SymbolIcon Symbol="Document24" FontSize="36" Opacity="0.22" HorizontalAlignment="Center" />
-                    <TextBlock Text="Select a file to preview" Opacity="0.4" Margin="0,10,0,0"
+                    <TextBlock Text="{DynamicResource Grf_SelectFile}" Opacity="0.4" Margin="0,10,0,0"
                                Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
                 </StackPanel>
 
@@ -374,15 +374,15 @@
                             <!-- Image tools: zoom + background swatch -->
                             <StackPanel Orientation="Horizontal" Margin="0,0,10,0" VerticalAlignment="Center"
                                         Visibility="{Binding IsImageKind, Converter={StaticResource BoolToVis}}">
-                                <ui:Button Appearance="Transparent" Padding="6,4" MinWidth="0" Content="−" FontSize="14" Command="{Binding ZoomOutCommand}" ToolTip="Zoom out" />
-                                <ui:Button Appearance="Transparent" Padding="6,4" MinWidth="0" Content="1:1" FontSize="11" Command="{Binding ZoomResetCommand}" ToolTip="Actual size" />
-                                <ui:Button Appearance="Transparent" Padding="6,4" MinWidth="0" Content="+" FontSize="14" Command="{Binding ZoomInCommand}" ToolTip="Zoom in" />
+                                <ui:Button Appearance="Transparent" Padding="6,4" MinWidth="0" Content="−" FontSize="14" Command="{Binding ZoomOutCommand}" ToolTip="{DynamicResource Grf_ZoomOutTip}" />
+                                <ui:Button Appearance="Transparent" Padding="6,4" MinWidth="0" Content="1:1" FontSize="11" Command="{Binding ZoomResetCommand}" ToolTip="{DynamicResource Grf_ZoomResetTip}" />
+                                <ui:Button Appearance="Transparent" Padding="6,4" MinWidth="0" Content="+" FontSize="14" Command="{Binding ZoomInCommand}" ToolTip="{DynamicResource Grf_ZoomInTip}" />
                                 <Border Width="1" Background="#22FFFFFF" Margin="8,3" />
-                                <Button Style="{StaticResource SwatchButton}" Background="{StaticResource Checkerboard}" Command="{Binding SetPreviewBackgroundCommand}" CommandParameter="checker" ToolTip="Checkerboard (transparency)" />
-                                <Button Style="{StaticResource SwatchButton}" Background="Black" Command="{Binding SetPreviewBackgroundCommand}" CommandParameter="black" ToolTip="Black" />
-                                <Button Style="{StaticResource SwatchButton}" Background="White" Command="{Binding SetPreviewBackgroundCommand}" CommandParameter="white" ToolTip="White" />
-                                <Button Style="{StaticResource SwatchButton}" Background="Magenta" Command="{Binding SetPreviewBackgroundCommand}" CommandParameter="magenta" ToolTip="Magenta" />
-                                <ToggleButton x:Name="CustomSwatchToggle" Width="22" Height="22" Margin="3,0,0,0" Cursor="Hand" ToolTip="Custom color">
+                                <Button Style="{StaticResource SwatchButton}" Background="{StaticResource Checkerboard}" Command="{Binding SetPreviewBackgroundCommand}" CommandParameter="checker" ToolTip="{DynamicResource Grf_BgCheckerTip}" />
+                                <Button Style="{StaticResource SwatchButton}" Background="Black" Command="{Binding SetPreviewBackgroundCommand}" CommandParameter="black" ToolTip="{DynamicResource Grf_BgBlackTip}" />
+                                <Button Style="{StaticResource SwatchButton}" Background="White" Command="{Binding SetPreviewBackgroundCommand}" CommandParameter="white" ToolTip="{DynamicResource Grf_BgWhiteTip}" />
+                                <Button Style="{StaticResource SwatchButton}" Background="Magenta" Command="{Binding SetPreviewBackgroundCommand}" CommandParameter="magenta" ToolTip="{DynamicResource Grf_BgMagentaTip}" />
+                                <ToggleButton x:Name="CustomSwatchToggle" Width="22" Height="22" Margin="3,0,0,0" Cursor="Hand" ToolTip="{DynamicResource Grf_CustomColorTip}">
                                     <ToggleButton.Template>
                                         <ControlTemplate TargetType="ToggleButton">
                                             <Border CornerRadius="4" BorderBrush="#40FFFFFF" BorderThickness="1">
@@ -409,23 +409,23 @@
                                                                 CommandParameter="{Binding Text, RelativeSource={RelativeSource AncestorType=TextBox}}" />
                                                 </TextBox.InputBindings>
                                             </TextBox>
-                                            <ui:Button Content="Apply" Margin="6,0,0,0" Padding="8,4" Command="{Binding SetPreviewBackgroundCommand}"
+                                            <ui:Button Content="{DynamicResource Grf_Apply}" Margin="6,0,0,0" Padding="8,4" Command="{Binding SetPreviewBackgroundCommand}"
                                                        CommandParameter="{Binding Text, ElementName=HexBox}" />
                                         </StackPanel>
                                     </Border>
                                 </Popup>
                             </StackPanel>
-                            <ToggleButton Style="{StaticResource GrfToggle}" Margin="0,0,8,0" IsChecked="{Binding WrapText}" ToolTip="Wrap lines"
+                            <ToggleButton Style="{StaticResource GrfToggle}" Margin="0,0,8,0" IsChecked="{Binding WrapText}" ToolTip="{DynamicResource Grf_WrapTip}"
                                           Visibility="{Binding ShowText, Converter={StaticResource BoolToVis}}">
-                                <TextBlock Text="Wrap" FontSize="11.5" />
+                                <TextBlock Text="{DynamicResource Grf_Wrap}" FontSize="11.5" />
                             </ToggleButton>
-                            <ToggleButton Style="{StaticResource GrfToggle}" Margin="0,0,8,0" IsChecked="{Binding ShowDetails}" ToolTip="File details, properties + hashes">
-                                <TextBlock Text="Details" FontSize="11.5" />
+                            <ToggleButton Style="{StaticResource GrfToggle}" Margin="0,0,8,0" IsChecked="{Binding ShowDetails}" ToolTip="{DynamicResource Grf_DetailsTip}">
+                                <TextBlock Text="{DynamicResource Grf_Details}" FontSize="11.5" />
                             </ToggleButton>
-                            <ui:Button Appearance="Transparent" Padding="8,4" Command="{Binding ExportCommand}" IsEnabled="{Binding CanExport}" ToolTip="Export this file to disk">
+                            <ui:Button Appearance="Transparent" Padding="8,4" Command="{Binding ExportCommand}" IsEnabled="{Binding CanExport}" ToolTip="{DynamicResource Grf_ExportTip}">
                                 <StackPanel Orientation="Horizontal">
                                     <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="14" Margin="0,0,5,0" />
-                                    <TextBlock Text="Export" VerticalAlignment="Center" />
+                                    <TextBlock Text="{DynamicResource Grf_Export}" VerticalAlignment="Center" />
                                 </StackPanel>
                             </ui:Button>
                         </StackPanel>
@@ -462,7 +462,7 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="CRC32 / MD5" Opacity="0.5" VerticalAlignment="Center"
+                                <TextBlock Text="{DynamicResource Grf_Hashes}" Opacity="0.5" VerticalAlignment="Center"
                                            Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
                                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding Crc32}" FontFamily="Consolas" Margin="0,0,12,0"
@@ -470,7 +470,7 @@
                                     <TextBlock Text="{Binding Md5}" FontFamily="Consolas" TextTrimming="CharacterEllipsis" MaxWidth="240"
                                                Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
                                 </StackPanel>
-                                <ui:Button Grid.Column="2" Content="Compute" Padding="8,3" Command="{Binding ComputeHashesCommand}" />
+                                <ui:Button Grid.Column="2" Content="{DynamicResource Grf_Compute}" Padding="8,3" Command="{Binding ComputeHashesCommand}" />
                             </Grid>
                         </StackPanel>
                     </Border>
@@ -531,7 +531,7 @@
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
 
-                                    <TextBlock Text="RESOURCES" Style="{StaticResource TitleMicro}" Margin="0,14,0,4"
+                                    <TextBlock Text="{DynamicResource Grf_Resources}" Style="{StaticResource TitleMicro}" Margin="0,14,0,4"
                                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                                Visibility="{Binding InfoItems.Count, Converter={StaticResource CountToVis}}" />
                                     <ItemsControl ItemsSource="{Binding InfoItems}">
@@ -543,7 +543,7 @@
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
 
-                                    <TextBlock Text="TEXTURES" Style="{StaticResource TitleMicro}" Margin="0,14,0,6"
+                                    <TextBlock Text="{DynamicResource Grf_Textures}" Style="{StaticResource TitleMicro}" Margin="0,14,0,6"
                                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                                Visibility="{Binding Thumbs.Count, Converter={StaticResource CountToVis}}" />
                                     <ItemsControl ItemsSource="{Binding Thumbs}">
@@ -585,17 +585,17 @@
                     Visibility="{Binding ShowSearch, Converter={StaticResource BoolToVis}}">
                 <DockPanel Margin="14">
                     <DockPanel DockPanel.Dock="Top" Margin="0,0,0,10">
-                        <ui:Button DockPanel.Dock="Right" Content="Close" Padding="8,4" Command="{Binding CloseSearchCommand}" />
-                        <ui:Button DockPanel.Dock="Right" Content="Cancel" Padding="8,4" Margin="0,0,8,0" Command="{Binding CancelSearchCommand}"
+                        <ui:Button DockPanel.Dock="Right" Content="{DynamicResource Grf_Close}" Padding="8,4" Command="{Binding CloseSearchCommand}" />
+                        <ui:Button DockPanel.Dock="Right" Content="{DynamicResource Grf_Cancel}" Padding="8,4" Margin="0,0,8,0" Command="{Binding CancelSearchCommand}"
                                    Visibility="{Binding IsSearching, Converter={StaticResource BoolToVis}}" />
                         <ui:ProgressRing DockPanel.Dock="Right" IsIndeterminate="True" Width="18" Height="18" Margin="0,0,10,0"
                                          Visibility="{Binding IsSearching, Converter={StaticResource BoolToVis}}" />
-                        <TextBlock Text="Search results" FontWeight="SemiBold" VerticalAlignment="Center"
+                        <TextBlock Text="{DynamicResource Grf_SearchResults}" FontWeight="SemiBold" VerticalAlignment="Center"
                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
                     </DockPanel>
                     <DockPanel DockPanel.Dock="Top" Margin="0,0,0,10">
-                        <ui:Button DockPanel.Dock="Right" Content="Search" Padding="10,5" Margin="6,0,0,0" Command="{Binding SearchCommand}" />
-                        <ui:TextBox PlaceholderText="Search file contents across the archive…"
+                        <ui:Button DockPanel.Dock="Right" Content="{DynamicResource Grf_Search}" Padding="10,5" Margin="6,0,0,0" Command="{Binding SearchCommand}" />
+                        <ui:TextBox PlaceholderText="{DynamicResource Grf_SearchPH}"
                                     Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}">
                             <ui:TextBox.InputBindings><KeyBinding Key="Enter" Command="{Binding SearchCommand}" /></ui:TextBox.InputBindings>
                         </ui:TextBox>

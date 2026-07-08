@@ -193,8 +193,537 @@
     <s:String x:Key="Settings_About_Edition">Edition</s:String>
     <s:String x:Key="Settings_About_EditionValue">Desktop (Windows)</s:String>
 
-    <!-- ===== Common error / dialog messages (used from C#) ===== -->
-    <s:String x:Key="Msg_UnexpectedError_Title">Unexpected error</s:String>
+    <!-- ===== SettingsView: Autocomplete tab ===== -->
+    <s:String x:Key="Settings_Ac_Desc">Controls how Autocomplete generates a client item's name and description from the server item — which lines to include, the colors, the wording, and the defaults.</s:String>
+    <s:String x:Key="Settings_Ac_Preview">Live preview</s:String>
+    <s:String x:Key="Settings_Ac_Preview_Desc">A sample Fire sword rendered with your current settings — updates as you edit below.</s:String>
+    <s:String x:Key="Settings_Ac_Include">What to include</s:String>
+    <s:String x:Key="Settings_Ac_Behaviour">Behaviour</s:String>
+    <s:String x:Key="Settings_Ac_Overwrite">Overwrite existing text when running Autocomplete</s:String>
+    <s:String x:Key="Settings_Ac_DefaultUnid">Default unidentified description</s:String>
+    <s:String x:Key="Settings_Ac_DefaultUnid_PH">Applied to the unidentified description on autocomplete (blank = leave it)</s:String>
+    <s:String x:Key="Settings_Ac_Fallback">Fallback text for fields with no server value</s:String>
+    <s:String x:Key="Settings_Ac_Fallback_PH">blank = hide the line</s:String>
+    <s:String x:Key="Settings_Ac_Colors">Colors</s:String>
+    <s:String x:Key="Settings_Ac_Colors_Desc">Hex (RRGGBB) colors applied to the generated lines.</s:String>
+    <s:String x:Key="Settings_Ac_WeaponColors">Weapon element colors</s:String>
+    <s:String x:Key="Settings_Ac_FieldLabels">Field labels</s:String>
+    <s:String x:Key="Settings_Ac_FieldLabels_Desc">Rename the word shown before each value (e.g. “Weight” → “Item Weight”). Blank = default.</s:String>
+    <s:String x:Key="Settings_Ac_HexPH">RRGGBB</s:String>
+
+    <!-- ===== Onboarding (first-run tour) ===== -->
+    <s:String x:Key="Onboard_Skip">Skip tour</s:String>
+    <s:String x:Key="Onboard_Back">Back</s:String>
+    <s:String x:Key="Onboard_Next">Next</s:String>
+    <s:String x:Key="Onboard_GetStarted">Get started</s:String>
+    <s:String x:Key="Onboard_P1_Title">Welcome to Midgard Studio</s:String>
+    <s:String x:Key="Onboard_P1_Body">Edit your Ragnarok server's databases and client files from one native app — no scripts, no guesswork.</s:String>
+    <s:String x:Key="Onboard_P2_Title">Every database, in one place</s:String>
+    <s:String x:Key="Onboard_P2_Body">Items, mobs, pets, skills, combos and groups. Your custom and overridden entries are written safely to the import files — the base data is never touched.</s:String>
+    <s:String x:Key="Onboard_P3_Title">Client items, sprites &amp; GRF</s:String>
+    <s:String x:Key="Onboard_P3_Body">Names, descriptions, icons and worn sprites with live previews, plus a built-in GRF browser — no separate tools to juggle.</s:String>
+    <s:String x:Key="Onboard_P4_Title">Forge &amp; Autocomplete</s:String>
+    <s:String x:Key="Onboard_P4_Body">Create a complete custom item — server entry, client text and sprite — in a single flow, with rich descriptions generated for you.</s:String>
+    <s:String x:Key="Onboard_P5_Title">A safety net, built in</s:String>
+    <s:String x:Key="Onboard_P5_Body">A validation gatekeeper catches mistakes before they reach your server, with one-click fixes — and every manual save makes a dated backup.</s:String>
+
+    <!-- ===== Configuration Wizard ===== -->
+    <s:String x:Key="Wizard_Title">Workspace configuration</s:String>
+    <s:String x:Key="Wizard_Subtitle">Manage the servers you edit. Pick a profile on the left, set its files on the right, then Open.</s:String>
+    <s:String x:Key="Wizard_CloseTip">Close configuration (Esc)</s:String>
+    <s:String x:Key="Wizard_Profiles">Profiles</s:String>
+    <s:String x:Key="Wizard_NewProfile">New profile</s:String>
+    <s:String x:Key="Wizard_DeleteProfileTip">Delete this profile</s:String>
+    <s:String x:Key="Wizard_ServerDb">Server DB</s:String>
+    <s:String x:Key="Wizard_ClientLua">Client lua-files</s:String>
+    <s:String x:Key="Wizard_BaseItemInfo">Base item info</s:String>
+    <s:String x:Key="Wizard_CustomItemInfo">Custom item info</s:String>
+    <s:String x:Key="Wizard_GrfCount">{0} GRF / data path(s)</s:String>
+    <s:String x:Key="Wizard_GrfUnit">GRF / data path(s)</s:String>
+    <s:String x:Key="Wizard_Profile">Profile</s:String>
+    <s:String x:Key="Wizard_ProfileName">Profile name</s:String>
+    <s:String x:Key="Wizard_System">System (ruleset)</s:String>
+    <s:String x:Key="Wizard_DisplayEncoding">Display Encoding</s:String>
+    <s:String x:Key="Wizard_EncodingDesc">Fallback used to read legacy, non-UTF-8 names in your server database files (e.g. a Latin-1 “Poção” or an EUC-KR item_db). Server files are saved as UTF-8; client text and icon / sprite resource names always use the standard Windows-1252.</s:String>
+    <s:String x:Key="Wizard_FilesTitle">Server &amp; client files</s:String>
+    <s:String x:Key="Wizard_FilesDesc">Point the app at this server's files. The GRF archives below are what the GRF Browser reads — you don't set them again there.</s:String>
+    <s:String x:Key="Wizard_ServerDbFolder">Server DB Folder  ( ../rAthena/db )</s:String>
+    <s:String x:Key="Wizard_ClientLuaFolder">Client Lua files  ( data/luafiles514/lua files )</s:String>
+    <s:String x:Key="Wizard_BaseItemInfoPath">Base iteminfo.lua  ( SystemEN/LuaFiles514/itemInfo.lua )</s:String>
+    <s:String x:Key="Wizard_CustomItemInfoPath">Custom Iteminfo.lua  ( SystemEN/itemInfo_C.lua )</s:String>
+    <s:String x:Key="Wizard_Browse">Browse…</s:String>
+    <s:String x:Key="Wizard_ItemInfoPH">…\System\itemInfo.lua (optional)</s:String>
+    <s:String x:Key="Wizard_ItemInfoCustomPH">…\System\itemInfo_C.lua (leave empty to write into the base file)</s:String>
+    <s:String x:Key="Wizard_GrfTitle">GRF archives &amp; data folders</s:String>
+    <s:String x:Key="Wizard_AddGrf">Add GRF…</s:String>
+    <s:String x:Key="Wizard_AddData">Add data folder…</s:String>
+    <s:String x:Key="Wizard_GrfReorderTip">Drag to reorder priority</s:String>
+    <s:String x:Key="Wizard_GrfPriorityTip">Layer priority (the bottom entry wins)</s:String>
+    <s:String x:Key="Wizard_Remove">Remove</s:String>
+    <s:String x:Key="Wizard_GrfDesc">Drag the handle to reorder. Layers load top → bottom — an entry overrides everything above it (the bottom wins). Optional — leave empty to skip GRF previews.</s:String>
+    <s:String x:Key="Wizard_SaveProfile">Save profile</s:String>
+    <s:String x:Key="Wizard_Open">Open</s:String>
+    <s:String x:Key="Wizard_Close">Close</s:String>
+
+    <!-- ===== Cash Shop Manager ===== -->
+    <s:String x:Key="CashShop_Title">Cash Shop Manager</s:String>
+    <s:String x:Key="CashShop_Desc">Add items to each tab by name, Aegis name, or ID and set a cash-point price. Drag cards to reorder, or drop one on another tab to move it.</s:String>
+    <s:String x:Key="CashShop_AddPH">Item name, Aegis name, or ID — type to search (comma-separate to bulk-add)</s:String>
+    <s:String x:Key="CashShop_PricePH">Price</s:String>
+    <s:String x:Key="CashShop_Add">Add</s:String>
+    <s:String x:Key="CashShop_AddTip">Add to the selected tab (undoable; written to import on Save). Paste several names separated by commas to bulk-add.</s:String>
+    <s:String x:Key="CashShop_EmptyTitle">This tab is empty</s:String>
+    <s:String x:Key="CashShop_EmptyDesc">Add an item by its Aegis name above to put it on sale here — or drag a card in from another tab.</s:String>
+    <s:String x:Key="CashShop_PriceTip">Price in cash points (#CASHPOINTS).</s:String>
+    <s:String x:Key="CashShop_RemoveTip">Remove this item from the tab.</s:String>
+    <s:String x:Key="CashShop_Base">base</s:String>
+
+    <!-- ===== DbWorkspace ===== -->
+    <s:String x:Key="Db_Loading">Loading database…</s:String>
+    <s:String x:Key="Db_AddTip">Add a new custom entry</s:String>
+    <s:String x:Key="Db_DupTip">Duplicate the selected entry as a new custom</s:String>
+    <s:String x:Key="Db_CopyTip">Copy the selected entry as YAML — select several (Ctrl/Shift+click) to copy them all</s:String>
+    <s:String x:Key="Db_FilterTip">Show only your custom / overridden entries</s:String>
+    <s:String x:Key="Db_SearchPH">Search id / aegis / name / type…  (Ctrl+F)</s:String>
+    <s:String x:Key="Db_Ctx_Duplicate">Duplicate</s:String>
+    <s:String x:Key="Db_Ctx_CopyYaml">Copy YAML</s:String>
+    <s:String x:Key="Db_Ctx_ChangeId">Change ID…</s:String>
+    <s:String x:Key="Db_Ctx_CopyToId">Copy to ID…</s:String>
+    <s:String x:Key="Db_Ctx_Restore">Restore to default</s:String>
+    <s:String x:Key="Db_Ctx_RestoreTip">Discard customizations and revert this entry to its base values</s:String>
+    <s:String x:Key="Db_Ctx_Delete">Delete</s:String>
+    <s:String x:Key="Db_Ctx_SelectInClientItems">Select in Client Items</s:String>
+    <s:String x:Key="Db_Ctx_AddInClientItems">Add in Client Items</s:String>
+    <s:String x:Key="Db_Ctx_SelectInClientSkills">Select in Client Skills</s:String>
+    <s:String x:Key="Db_SelectEntry">Select an entry to view or edit.</s:String>
+    <s:String x:Key="Db_Info">Info</s:String>
+    <s:String x:Key="Db_Validation">Validation</s:String>
+    <s:String x:Key="Db_ClientSprite">Client sprite</s:String>
+
+    <!-- ===== Backup Manager ===== -->
+    <s:String x:Key="Backup_Title">Backup Manager</s:String>
+    <s:String x:Key="Backup_Desc">A snapshot of your server + client data is taken after each manual save; unchanged files are de-duplicated to save space. Restore, pin, verify, or export any point in time below.</s:String>
+    <s:String x:Key="Backup_CreateNow">Create backup now</s:String>
+    <s:String x:Key="Backup_CreateNowTip">Take a snapshot of the current server + client data right now.</s:String>
+    <s:String x:Key="Backup_Import">Import…</s:String>
+    <s:String x:Key="Backup_ImportTip">Import a backup from a .zip exported on this or another machine.</s:String>
+    <s:String x:Key="Backup_OpenFolder">Open folder</s:String>
+    <s:String x:Key="Backup_OpenFolderTip">Open the backups folder on disk.</s:String>
+    <s:String x:Key="Backup_Refresh">Refresh</s:String>
+    <s:String x:Key="Backup_RefreshTip">Reload the list of backups.</s:String>
+    <s:String x:Key="Backup_EmptyTitle">No backups yet</s:String>
+    <s:String x:Key="Backup_EmptyDesc">Backups are created automatically each time you save. You can also create one now with the button above.</s:String>
+    <s:String x:Key="Backup_Col_When">When</s:String>
+    <s:String x:Key="Backup_Col_Label">Label</s:String>
+    <s:String x:Key="Backup_Col_Files">Files</s:String>
+    <s:String x:Key="Backup_Col_Size">Size</s:String>
+    <s:String x:Key="Backup_FilesSuffix"> files</s:String>
+    <s:String x:Key="Backup_FilesIn">Files in this backup</s:String>
+    <s:String x:Key="Backup_Restore">Restore this backup</s:String>
+    <s:String x:Key="Backup_RestoreTip">Replace your current data with this snapshot. A safety backup is taken first.</s:String>
+    <s:String x:Key="Backup_PinTip">Pin keeps this backup regardless of retention; unpin lets it age out normally.</s:String>
+    <s:String x:Key="Backup_Verify">Verify</s:String>
+    <s:String x:Key="Backup_VerifyTip">Re-check this backup's files against their stored checksums.</s:String>
+    <s:String x:Key="Backup_Export">Export…</s:String>
+    <s:String x:Key="Backup_ExportTip">Save this backup as a .zip you can copy to another machine.</s:String>
+    <s:String x:Key="Backup_Open">Open</s:String>
+    <s:String x:Key="Backup_OpenTip">Open this backup's folder on disk.</s:String>
+    <s:String x:Key="Backup_Delete">Delete</s:String>
+    <s:String x:Key="Backup_DeleteTip">Delete this backup permanently.</s:String>
+    <s:String x:Key="Backup_PinnedTip">Pinned — kept regardless of retention</s:String>
+    <s:String x:Key="Backup_Unchanged">UNCHANGED</s:String>
+    <s:String x:Key="Backup_Changed">CHANGED</s:String>
+
+    <!-- ===== Forge ===== -->
+    <s:String x:Key="Forge_Title">Item Forge</s:String>
+    <s:String x:Key="Forge_Desc">Craft a complete custom item — server data, client look, and sprite, all in one place.</s:String>
+    <s:String x:Key="Forge_Reset">Reset</s:String>
+    <s:String x:Key="Forge_ForgeItem">Forge item</s:String>
+    <s:String x:Key="Forge_Sections">SECTIONS</s:String>
+    <s:String x:Key="Forge_ItemId">Item ID</s:String>
+    <s:String x:Key="Forge_ChangeId">Change ID</s:String>
+    <s:String x:Key="Forge_Appearance">Appearance</s:String>
+    <s:String x:Key="Forge_AppearanceDesc">How the item looks in the client (written to itemInfo_C.lua).</s:String>
+    <s:String x:Key="Forge_IconName">Icon resource name (the .bmp base name)</s:String>
+    <s:String x:Key="Forge_Browse">Browse…</s:String>
+    <s:String x:Key="Forge_Description">Description</s:String>
+    <s:String x:Key="Forge_Costume">Costume</s:String>
+    <s:String x:Key="Forge_HeadgearName">Headgear sprite name (auto-allocates the View id)</s:String>
+    <s:String x:Key="Forge_HeadgearDesc">Registers an ACCESSORY_ID in accessoryid.lub / accname.lub (loose files) and sets the item's View.</s:String>
+    <s:String x:Key="Forge_ForgedPrefix">Forged item #{0}</s:String>
+    <s:String x:Key="Forge_ForgedPrefix1">Forged item #</s:String>
+    <s:String x:Key="Forge_ForgedDesc">Added to your import layer + client file. Review it, then Save to write the files (a backup is taken).</s:String>
+    <s:String x:Key="Forge_OpenInServer">Open in Server Items</s:String>
+    <s:String x:Key="Forge_Dismiss">Dismiss</s:String>
+    <s:String x:Key="Forge_Preview">Preview</s:String>
+    <s:String x:Key="Forge_Collection">Collection</s:String>
+    <s:String x:Key="Forge_ItemIdLabel">Item ID: {0}</s:String>
+    <s:String x:Key="Forge_ItemIdPrefix">Item ID: </s:String>
+    <s:String x:Key="Forge_Readiness">Readiness</s:String>
+    <s:String x:Key="Forge_SafeByDesign">Safe by design</s:String>
+    <s:String x:Key="Forge_SafetyTip">Your base files stay untouched. A dated backup is taken before any save. Only the entry you create is written, spliced into your existing files — comments, field order and line endings are preserved.</s:String>
+    <s:String x:Key="Forge_WhatWritten">What will be written</s:String>
+    <s:String x:Key="Forge_Live">live</s:String>
+    <s:String x:Key="Forge_ServerYaml">server · item_db.yml</s:String>
+    <s:String x:Key="Forge_ClientLua">client · itemInfo_C.lua</s:String>
+
+    <!-- ===== Shared dialog labels ===== -->
+    <s:String x:Key="Dlg_Done">Done</s:String>
+    <s:String x:Key="Dlg_Select">Select</s:String>
+    <s:String x:Key="Dlg_Enter">Enter</s:String>
+    <s:String x:Key="Dlg_Edit">Edit</s:String>
+    <s:String x:Key="Dlg_Browse">Browse…</s:String>
+    <s:String x:Key="Dlg_Confirm2">Confirm</s:String>
+    <s:String x:Key="Dlg_Close2">Close</s:String>
+    <s:String x:Key="Dlg_Apply">Apply</s:String>
+    <s:String x:Key="Dlg_Add">Add</s:String>
+    <s:String x:Key="Dlg_Remove">Remove</s:String>
+    <s:String x:Key="Dlg_New">New</s:String>
+    <s:String x:Key="Dlg_SearchIdAegisName">Search id / aegis / name…</s:String>
+    <s:String x:Key="Col_ID">ID</s:String>
+    <s:String x:Key="Col_Name">Name</s:String>
+    <s:String x:Key="Col_Aegis">Aegis</s:String>
+
+    <!-- ===== Change ID dialog ===== -->
+    <s:String x:Key="ChangeId_Title">Change Item ID</s:String>
+    <s:String x:Key="ChangeId_NewId">New Item ID</s:String>
+    <s:String x:Key="ChangeId_NextFree">Next free</s:String>
+    <s:String x:Key="ChangeId_NextFreeTip">Use the next unused id</s:String>
+    <s:String x:Key="ChangeId_Confirm">Change ID</s:String>
+
+    <!-- ===== ID input dialog ===== -->
+    <s:String x:Key="IdInput_Title">Enter ID</s:String>
+    <s:String x:Key="IdInput_NewId">New ID</s:String>
+
+    <!-- ===== Record picker dialog ===== -->
+    <s:String x:Key="RecordPicker_Title">Select</s:String>
+
+    <!-- ===== Reference input dialog ===== -->
+    <s:String x:Key="RefInput_Title">Enter reference</s:String>
+
+    <!-- ===== Field editor dialog ===== -->
+    <s:String x:Key="FieldEditor_Title">Edit</s:String>
+
+    <!-- ===== Drop edit dialog ===== -->
+    <s:String x:Key="DropEdit_Title">Drop edit</s:String>
+    <s:String x:Key="DropEdit_ItemId">Item ID</s:String>
+    <s:String x:Key="DropEdit_Chance">Drop chance</s:String>
+    <s:String x:Key="DropEdit_ChanceTip">Per 10000 — 2000 = 20.00%</s:String>
+    <s:String x:Key="DropEdit_StealProtected">Steal protected</s:String>
+    <s:String x:Key="DropEdit_RandGroup">Rand group</s:String>
+    <s:String x:Key="DropEdit_Ok">Ok</s:String>
+    <s:String x:Key="DropEdit_Item">Item</s:String>
+    <s:String x:Key="DropEdit_Rate">Rate (%)</s:String>
+    <s:String x:Key="DropEdit_Unrecognized">Unrecognized / no drop</s:String>
+    <s:String x:Key="DropEdit_Index">Index</s:String>
+
+    <!-- ===== Save summary dialog ===== -->
+    <s:String x:Key="SaveSummary_Title">Saved</s:String>
+    <s:String x:Key="SaveSummary_ChangesSaved">Changes saved</s:String>
+    <s:String x:Key="SaveSummary_FilesWritten">Files written</s:String>
+    <s:String x:Key="SaveSummary_File">File</s:String>
+    <s:String x:Key="SaveSummary_Status">Status</s:String>
+
+    <!-- ===== YAML preview dialog ===== -->
+    <s:String x:Key="YamlPreview_Title">YAML preview</s:String>
+    <s:String x:Key="YamlPreview_Copy">Copy</s:String>
+
+    <!-- ===== Reference input dialog ===== -->
+    <s:String x:Key="RefInput_Choose">Choose</s:String>
+    <s:String x:Key="RefInput_TypeSearch">Type to search…</s:String>
+
+    <!-- ===== Sprite picker dialog ===== -->
+    <s:String x:Key="SpritePicker_Title">Choose a headgear sprite</s:String>
+    <s:String x:Key="SpritePicker_TitleGeneric">Pick a sprite</s:String>
+    <s:String x:Key="SpritePicker_Desc">Type a sprite name to preview, or browse the GRF / data folders for a sprite.</s:String>
+    <s:String x:Key="SpritePicker_SourceLabel">Source</s:String>
+    <s:String x:Key="SpritePicker_ResourceLabel">Sprite name</s:String>
+    <s:String x:Key="SpritePicker_SearchPH">Search sprite name…</s:String>
+    <s:String x:Key="SpritePicker_ItemSearchPH">Search by item ID or name…</s:String>
+    <s:String x:Key="SpritePicker_Previewing">Previewing</s:String>
+    <s:String x:Key="SpritePicker_CopyFromItem">Copy from an item</s:String>
+    <s:String x:Key="SpritePicker_BrowseGrf">Browse GRF sprites</s:String>
+    <s:String x:Key="SpritePicker_UseThis">Use this sprite</s:String>
+    <s:String x:Key="SpritePicker_Loading">Loading sprites…</s:String>
+    <s:String x:Key="SpritePicker_Act">Act</s:String>
+    <s:String x:Key="SpritePicker_Frame">Frame</s:String>
+
+    <!-- ===== Skill picker dialog ===== -->
+    <s:String x:Key="SkillPicker_Title">Pick a skill</s:String>
+    <s:String x:Key="SkillPicker_SearchPH">Search skills by name or id…</s:String>
+    <s:String x:Key="SkillPicker_IncludeMonster">Include monster skills</s:String>
+    <s:String x:Key="SkillPicker_MonsterHint">(NPC_* — not normally usable by players)</s:String>
+    <s:String x:Key="SkillPicker_MonsterTag">MONSTER</s:String>
+    <s:String x:Key="SkillPicker_UseSkill">Use skill</s:String>
+    <s:String x:Key="SkillPicker_Constant">Constant</s:String>
+
+    <!-- ===== Icon picker dialog ===== -->
+    <s:String x:Key="IconPicker_Title">Choose an icon</s:String>
+    <s:String x:Key="IconPicker_Desc">Type a resource name to preview, or browse the GRF / data folders for an icon.</s:String>
+    <s:String x:Key="IconPicker_SourceLabel">Source</s:String>
+    <s:String x:Key="IconPicker_ResourceLabel">Resource name</s:String>
+    <s:String x:Key="IconPicker_SearchPH">Search icon name…</s:String>
+    <s:String x:Key="IconPicker_ItemSearchPH">Search by item ID or name…</s:String>
+    <s:String x:Key="IconPicker_Previewing">Previewing</s:String>
+    <s:String x:Key="IconPicker_CopyFromItem">Copy from an item</s:String>
+    <s:String x:Key="IconPicker_BrowseGrf">Browse GRF icons</s:String>
+    <s:String x:Key="IconPicker_UseThis">Use this icon</s:String>
+    <s:String x:Key="IconPicker_Loading">Loading icons…</s:String>
+
+    <!-- ===== Bonus builder dialog ===== -->
+    <s:String x:Key="BonusBuilder_Title">Script Generator</s:String>
+    <s:String x:Key="BonusBuilder_Category">CATEGORY</s:String>
+    <s:String x:Key="BonusBuilder_SearchEffects">Search effects…</s:String>
+    <s:String x:Key="BonusBuilder_ThisEffect">THIS EFFECT</s:String>
+    <s:String x:Key="BonusBuilder_AddToScript">Add to script</s:String>
+    <s:String x:Key="BonusBuilder_AddToScriptTip">Append this effect to the script you're building (below)</s:String>
+    <s:String x:Key="BonusBuilder_PickSkillPH">pick or type a skill</s:String>
+    <s:String x:Key="BonusBuilder_Pick">Pick…</s:String>
+    <s:String x:Key="BonusBuilder_YourScript">YOUR SCRIPT</s:String>
+    <s:String x:Key="BonusBuilder_ClearAll">Clear all</s:String>
+    <s:String x:Key="BonusBuilder_RemoveTip">Remove this effect</s:String>
+    <s:String x:Key="BonusBuilder_FinalScript">FINAL SCRIPT (inserted on OK)</s:String>
+    <s:String x:Key="BonusBuilder_Insert">Insert into script</s:String>
+    <s:String x:Key="BonusBuilder_Desc">Build a bonus statement visually, then insert it into the script.</s:String>
+    <s:String x:Key="BonusBuilder_Bonus">Bonus</s:String>
+    <s:String x:Key="BonusBuilder_Args">Arguments</s:String>
+    <s:String x:Key="BonusBuilder_SearchPH">Search bonus…</s:String>
+    <s:String x:Key="BonusBuilder_Preview">Preview</s:String>
+
+    <!-- ===== Conditional bonus builder dialog ===== -->
+    <s:String x:Key="CondBonus_Title">Refine / Grade Bonuses</s:String>
+    <s:String x:Key="CondBonus_Desc">Bonuses that unlock as the item is refined or graded. Higher tiers stack on top.</s:String>
+    <s:String x:Key="CondBonus_Refinement">REFINEMENT</s:String>
+    <s:String x:Key="CondBonus_AddRefineTier">Add refine tier</s:String>
+    <s:String x:Key="CondBonus_EnchantGrade">ENCHANT GRADE</s:String>
+    <s:String x:Key="CondBonus_AddGradeTier">Add grade tier</s:String>
+    <s:String x:Key="CondBonus_GeneratedScript">GENERATED SCRIPT</s:String>
+    <s:String x:Key="CondBonus_ClientDesc">CLIENT DESCRIPTION</s:String>
+    <s:String x:Key="CondBonus_SaveToScript">Save to script</s:String>
+    <s:String x:Key="CondBonus_RefinePlus">Refine +</s:String>
+    <s:String x:Key="CondBonus_GradeLabel">Grade</s:String>
+    <s:String x:Key="CondBonus_RemoveTier">Remove tier</s:String>
+    <s:String x:Key="CondBonus_RemoveBonusTip">Remove this bonus</s:String>
+    <s:String x:Key="CondBonus_AddBonus">Add bonus…</s:String>
+    <s:String x:Key="CondBonus_Mode">Mode</s:String>
+    <s:String x:Key="CondBonus_Refine">Total refine</s:String>
+    <s:String x:Key="CondBonus_Grade">Total grade</s:String>
+    <s:String x:Key="CondBonus_Op">Operator</s:String>
+    <s:String x:Key="CondBonus_Threshold">Threshold</s:String>
+    <s:String x:Key="CondBonus_Bonus">Bonus</s:String>
+    <s:String x:Key="CondBonus_Preview">Preview</s:String>
+    <s:String x:Key="CondBonus_Insert">Insert</s:String>
+
+    <!-- ===== Combo conditional bonus builder ===== -->
+    <s:String x:Key="ComboCond_Title">Combo refine / grade bonus</s:String>
+    <s:String x:Key="ComboCond_WinTitle">Combo Refine / Grade Bonuses</s:String>
+    <s:String x:Key="ComboCond_Pieces">Combo pieces (refine + grade are checked across these slots):</s:String>
+    <s:String x:Key="ComboCond_Always">ALWAYS (worn as a set)</s:String>
+    <s:String x:Key="ComboCond_AddBonus">Add bonus</s:String>
+    <s:String x:Key="ComboCond_CondTiers">CONDITION TIERS</s:String>
+    <s:String x:Key="ComboCond_AddTier">Add tier</s:String>
+    <s:String x:Key="ComboCond_GeneratedScript">GENERATED SCRIPT</s:String>
+    <s:String x:Key="ComboCond_Preview">PREVIEW</s:String>
+    <s:String x:Key="ComboCond_SaveToCombo">Save to combo script</s:String>
+    <s:String x:Key="ComboCond_RemoveGate">Remove gate</s:String>
+    <s:String x:Key="ComboCond_IfSkill">If skill</s:String>
+    <s:String x:Key="ComboCond_SkillPH">e.g. MG_FIREBOLT</s:String>
+    <s:String x:Key="ComboCond_Pick">Pick…</s:String>
+    <s:String x:Key="ComboCond_LvGe">Lv ≥</s:String>
+    <s:String x:Key="ComboCond_AddBonusDots">Add bonus…</s:String>
+    <s:String x:Key="ComboCond_AddSkillGate">Add skill gate…</s:String>
+    <s:String x:Key="ComboCond_RemoveTier">Remove tier</s:String>
+    <s:String x:Key="ComboCond_TotalRefineGe">Total refine ≥</s:String>
+    <s:String x:Key="ComboCond_EveryPieceGradeGe">Every piece Grade ≥</s:String>
+    <s:String x:Key="ComboCond_Desc">Add a combo bonus that unlocks at a total-refine or enchant-grade milestone across the pieces (grade is Renewal-only).</s:String>
+
+    <!-- ===== Update dialog ===== -->
+    <s:String x:Key="UpdateDlg_Checking">Checking for updates…</s:String>
+    <s:String x:Key="UpdateDlg_UpToDate">You're up to date!</s:String>
+    <s:String x:Key="UpdateDlg_UpToDateBody">Midgard Studio is already the latest version ({0}).</s:String>
+    <s:String x:Key="UpdateDlg_Available">Update available</s:String>
+    <s:String x:Key="UpdateDlg_AvailableBody">Version {0} is available — you're on {1}.</s:String>
+    <s:String x:Key="UpdateDlg_ViewRelease">View release</s:String>
+    <s:String x:Key="UpdateDlg_CheckAgain">Check again</s:String>
+    <s:String x:Key="UpdateDlg_Failed">Couldn't check for updates.</s:String>
+    <s:String x:Key="UpdateDlg_FailedBody">Make sure you're online, then try again.</s:String>
+    <s:String x:Key="UpdateDlg_ReadyBody">Version {0} is ready to download.\nYou're on {1}.</s:String>
+    <s:String x:Key="UpdateDlg_Download">Download</s:String>
+    <s:String x:Key="UpdateDlg_Later">Later</s:String>
+    <s:String x:Key="UpdateDlg_Retry">Retry</s:String>
+    <s:String x:Key="UpdateDlg_CouldntCheck">Couldn't check for updates</s:String>
+    <s:String x:Key="UpdateDlg_CouldntCheckBody">We couldn't reach the update server. Check your connection and try again.</s:String>
+    <s:String x:Key="UpdateDlg_LatestBody">Midgard Studio {0} is the latest version.</s:String>
+
+    <!-- ===== Client Items ===== -->
+    <s:String x:Key="ClientItems_Loading">Loading client items…</s:String>
+    <s:String x:Key="ClientItems_AddTip">Add a new custom item</s:String>
+    <s:String x:Key="ClientItems_DupTip">Duplicate the selected item as a new custom</s:String>
+    <s:String x:Key="ClientItems_CopyTip">Copy the selected item(s) as YAML — select several with Ctrl/Shift+click</s:String>
+    <s:String x:Key="ClientItems_FilterTip">Show only your custom / overridden items</s:String>
+    <s:String x:Key="ClientItems_SearchPH">Search id / aegis / name…  (Ctrl+F)</s:String>
+    <s:String x:Key="ClientItems_Ctx_AutoFromServer">Autocomplete from server</s:String>
+    <s:String x:Key="ClientItems_Ctx_AutoFromServerTip">Generate the identified name + description (type-aware, from server stats + script) plus slots / ClassNum. Select several (Ctrl/Shift+click) to run it in bulk.</s:String>
+    <s:String x:Key="ClientItems_Ctx_AddCustom">Add custom</s:String>
+    <s:String x:Key="ClientItems_Ctx_Duplicate">Duplicate</s:String>
+    <s:String x:Key="ClientItems_Ctx_CopyYaml">Copy YAML</s:String>
+    <s:String x:Key="ClientItems_Ctx_CopyYamlTip">Copy the selected item(s) as server YAML</s:String>
+    <s:String x:Key="ClientItems_Ctx_CopyLua">Copy client Lua</s:String>
+    <s:String x:Key="ClientItems_Ctx_CopyLuaTip">Copy this item's itemInfo Lua block to the clipboard</s:String>
+    <s:String x:Key="ClientItems_Ctx_ChangeId">Change ID…</s:String>
+    <s:String x:Key="ClientItems_Ctx_CopyToId">Copy to ID…</s:String>
+    <s:String x:Key="ClientItems_Ctx_Restore">Restore to default</s:String>
+    <s:String x:Key="ClientItems_Ctx_Delete">Delete</s:String>
+    <s:String x:Key="ClientItems_Ctx_SelectInItems">Select in Items</s:String>
+    <s:String x:Key="ClientItems_Ctx_SelectInItemsTip">Jump to this item in the server Items section</s:String>
+    <s:String x:Key="ClientItems_Col_ID">ID</s:String>
+    <s:String x:Key="ClientItems_Col_Name">Name</s:String>
+    <s:String x:Key="ClientItems_SelectPH">Select an item to edit its client info.</s:String>
+    <s:String x:Key="ClientItems_Autocomplete">Autocomplete</s:String>
+    <s:String x:Key="ClientItems_AutocompleteTip">Generate the identified name + description (type-aware, from the server item's stats and script) plus slots / ClassNum (Ctrl+Shift+A)</s:String>
+    <s:String x:Key="ClientItems_CopyLua">Copy Lua</s:String>
+    <s:String x:Key="ClientItems_CopyLuaTip">Copy this item's itemInfo Lua block to the clipboard (Ctrl+C)</s:String>
+    <s:String x:Key="ClientItems_Color">Color</s:String>
+    <s:String x:Key="ClientItems_NewLine">↵ New line</s:String>
+    <s:String x:Key="ClientItems_NewLineTip">Insert a blank line (^FFFFFF_^000000)</s:String>
+    <s:String x:Key="ClientItems_ResetColors">Reset Colors</s:String>
+    <s:String x:Key="ClientItems_ResetColorsTip">Remove all ^RRGGBB color codes from this item's identified and unidentified descriptions</s:String>
+    <s:String x:Key="ClientItems_CopyToUnidTip">Copy identified name + description → unidentified</s:String>
+    <s:String x:Key="ClientItems_CopyToIdTip">Copy unidentified name + description → identified</s:String>
+    <s:String x:Key="ClientItems_Identified">Identified</s:String>
+    <s:String x:Key="ClientItems_Unidentified">Unidentified</s:String>
+    <s:String x:Key="ClientItems_DisplayName">Display name</s:String>
+    <s:String x:Key="ClientItems_ResourceName">Resource name</s:String>
+    <s:String x:Key="ClientItems_Description">Description</s:String>
+    <s:String x:Key="ClientItems_Preview">Preview</s:String>
+    <s:String x:Key="ClientItems_BrowseIconTip">Pick an icon from an item or a GRF/loose source</s:String>
+    <s:String x:Key="ClientItems_Browse">Browse…</s:String>
+    <s:String x:Key="ClientItems_Slots">Slots</s:String>
+    <s:String x:Key="ClientItems_ClassNum">ClassNum / View</s:String>
+    <s:String x:Key="ClientItems_Costume">Costume</s:String>
+    <s:String x:Key="ClientItems_HeadgearSprite">Headgear sprite</s:String>
+    <s:String x:Key="ClientItems_SpritePH">sprite base name</s:String>
+    <s:String x:Key="ClientItems_BrowseSpriteTip">Browse headgear sprites (animated preview)</s:String>
+    <s:String x:Key="ClientItems_LinkSprite">Link sprite</s:String>
+
+    <!-- ===== Client Skills ===== -->
+    <s:String x:Key="ClientSkills_Loading">Loading client skills…</s:String>
+    <s:String x:Key="ClientSkills_SelectPH">Select a skill to view its client info.</s:String>
+    <s:String x:Key="ClientSkills_SelectEditPH">Select a skill to edit its client info.</s:String>
+    <s:String x:Key="ClientSkills_NoMatch">No matching skills.</s:String>
+    <s:String x:Key="ClientSkills_Col_ID">ID</s:String>
+    <s:String x:Key="ClientSkills_Col_Name">Name</s:String>
+    <s:String x:Key="ClientSkills_SearchPH">Search name / SKID / desc…  (Ctrl+F)</s:String>
+    <s:String x:Key="ClientSkills_SearchPH2">Search id / constant / name…  (Ctrl+F)</s:String>
+    <s:String x:Key="ClientSkills_AddTip">Add a new custom skill (Ctrl+N)</s:String>
+    <s:String x:Key="ClientSkills_CopyLuaTip">Copy this skill's Lua blocks (Ctrl+L)</s:String>
+    <s:String x:Key="ClientSkills_Ctx_AddCustom">Add custom</s:String>
+    <s:String x:Key="ClientSkills_Ctx_CopyLua">Copy Lua</s:String>
+    <s:String x:Key="ClientSkills_Ctx_Delete">Delete (custom only)</s:String>
+    <s:String x:Key="ClientSkills_Ctx_SelectInSkills">Select in Skills</s:String>
+    <s:String x:Key="ClientSkills_Ctx_SelectInSkillsTip">Jump to this skill in the server Skills (skill_db) section</s:String>
+    <s:String x:Key="ClientSkills_CopyLuaDetail">Copy Lua</s:String>
+    <s:String x:Key="ClientSkills_CopyLuaDetailTip">Copy this skill's Lua blocks to the clipboard</s:String>
+    <s:String x:Key="ClientSkills_InfoTitle">Skill info  (skillinfolist.lub)</s:String>
+    <s:String x:Key="ClientSkills_DisplayName">Display name</s:String>
+    <s:String x:Key="ClientSkills_MaxLevel">Max level</s:String>
+    <s:String x:Key="ClientSkills_MaxLevelTip">Changing this resizes the per-level fields below</s:String>
+    <s:String x:Key="ClientSkills_Prereqs">Prerequisites</s:String>
+    <s:String x:Key="ClientSkills_PrereqsHint">skills the player must learn first</s:String>
+    <s:String x:Key="ClientSkills_RemovePrereqTip">Remove prerequisite</s:String>
+    <s:String x:Key="ClientSkills_ReqLevelTip">Required level</s:String>
+    <s:String x:Key="ClientSkills_AddPrereq">Add prerequisite</s:String>
+    <s:String x:Key="ClientSkills_DescTitle">Description  (skilldescript.lub)</s:String>
+    <s:String x:Key="ClientSkills_DescHint">One line per row. Color codes like ^777777…^000000 are supported.</s:String>
+    <s:String x:Key="ClientSkills_DelayTitle">Cast / delay  (skilldelaylist.lub)</s:String>
+    <s:String x:Key="ClientSkills_DelayHint">Tick a timing to enable it, then set per-level milliseconds. Untouched timings are left out.</s:String>
+    <s:String x:Key="ClientSkills_FillTip">Copy level 1 to every level</s:String>
+
+    <!-- ===== GRF Browser ===== -->
+    <s:String x:Key="Grf_Title">GRF Browser</s:String>
+    <s:String x:Key="Grf_ReloadTip">Reload sources from the profile</s:String>
+    <s:String x:Key="Grf_Archives">ARCHIVES</s:String>
+    <s:String x:Key="Grf_Encoding">Encoding</s:String>
+    <s:String x:Key="Grf_Go">Go</s:String>
+    <s:String x:Key="Grf_CodepageTip">Codepage number, then Enter</s:String>
+    <s:String x:Key="Grf_EncodingComboTip">Re-decode names + contents for viewing only — never written to the GRF or data folder</s:String>
+    <s:String x:Key="Grf_UpTip">Up one folder</s:String>
+    <s:String x:Key="Grf_FilterPH">Filter this folder…</s:String>
+    <s:String x:Key="Grf_SearchTip">Search file contents across the archive</s:String>
+    <s:String x:Key="Grf_Col_Name">Name</s:String>
+    <s:String x:Key="Grf_Col_Type">Type</s:String>
+    <s:String x:Key="Grf_Col_Size">Size</s:String>
+    <s:String x:Key="Grf_SelectFile">Select a file to preview</s:String>
+    <s:String x:Key="Grf_ZoomOutTip">Zoom out</s:String>
+    <s:String x:Key="Grf_ZoomResetTip">Actual size</s:String>
+    <s:String x:Key="Grf_ZoomInTip">Zoom in</s:String>
+    <s:String x:Key="Grf_BgCheckerTip">Checkerboard (transparency)</s:String>
+    <s:String x:Key="Grf_BgBlackTip">Black</s:String>
+    <s:String x:Key="Grf_BgWhiteTip">White</s:String>
+    <s:String x:Key="Grf_BgMagentaTip">Magenta</s:String>
+    <s:String x:Key="Grf_CustomColorTip">Custom color</s:String>
+    <s:String x:Key="Grf_Apply">Apply</s:String>
+    <s:String x:Key="Grf_WrapTip">Wrap lines</s:String>
+    <s:String x:Key="Grf_Wrap">Wrap</s:String>
+    <s:String x:Key="Grf_DetailsTip">File details, properties + hashes</s:String>
+    <s:String x:Key="Grf_Details">Details</s:String>
+    <s:String x:Key="Grf_ExportTip">Export this file to disk</s:String>
+    <s:String x:Key="Grf_Export">Export</s:String>
+    <s:String x:Key="Grf_Hashes">CRC32 / MD5</s:String>
+    <s:String x:Key="Grf_Compute">Compute</s:String>
+    <s:String x:Key="Grf_Resources">RESOURCES</s:String>
+    <s:String x:Key="Grf_Textures">TEXTURES</s:String>
+    <s:String x:Key="Grf_SearchResults">Search results</s:String>
+    <s:String x:Key="Grf_SearchPH">Search file contents across the archive…</s:String>
+    <s:String x:Key="Grf_Search">Search</s:String>
+    <s:String x:Key="Grf_Close">Close</s:String>
+    <s:String x:Key="Grf_Cancel">Cancel</s:String>
+
+    <!-- ===== Map Cache Editor ===== -->
+    <s:String x:Key="MapCache_Title">Map Cache Editor</s:String>
+    <s:String x:Key="MapCache_Desc">Read-only base from re + pre-re. Add maps from .gat, merge another map_cache.dat, then Save — edits are written only to db/import/map_cache.dat.</s:String>
+    <s:String x:Key="MapCache_AddGat">Add .gat maps…</s:String>
+    <s:String x:Key="MapCache_MergeDat">Merge .dat…</s:String>
+    <s:String x:Key="MapCache_Reload">Reload</s:String>
+    <s:String x:Key="MapCache_OpenFolder">Open folder</s:String>
+    <s:String x:Key="MapCache_Save">Save to import</s:String>
+    <s:String x:Key="MapCache_Unsaved">● Unsaved map-cache changes</s:String>
+    <s:String x:Key="MapCache_SearchPH">Search maps…</s:String>
+    <s:String x:Key="MapCache_Ctx_Remove">Remove from import</s:String>
+    <s:String x:Key="MapCache_Col_Map">Map</s:String>
+    <s:String x:Key="MapCache_Col_Size">Size</s:String>
+    <s:String x:Key="MapCache_Col_Cells">Cells</s:String>
+    <s:String x:Key="MapCache_Col_Origin">Origin</s:String>
+
+    <!-- ===== Combo Editor ===== -->
+    <s:String x:Key="Combo_AddTip">Add a new custom combo</s:String>
+    <s:String x:Key="Combo_OverrideTip">Copy the selected base combo into your import layer to edit</s:String>
+    <s:String x:Key="Combo_CopyYamlTip">Copy the selected combo as YAML</s:String>
+    <s:String x:Key="Combo_SearchPH">Search by item or script…  (Ctrl+F)</s:String>
+    <s:String x:Key="Combo_Ctx_New">New combo</s:String>
+    <s:String x:Key="Combo_Ctx_CopyToImport">Copy to Import to edit</s:String>
+    <s:String x:Key="Combo_Ctx_CopyToImportTip">Clone this read-only base combo into your import layer so you can edit it</s:String>
+    <s:String x:Key="Combo_Ctx_CopyYaml">Copy YAML</s:String>
+    <s:String x:Key="Combo_Ctx_Delete">Delete</s:String>
+    <s:String x:Key="Combo_Col_Combo">Combo</s:String>
+    <s:String x:Key="Combo_SelectPH">Select a combo to view its item sets and bonus, or create a new one.</s:String>
+    <s:String x:Key="Combo_Title">Combo</s:String>
+    <s:String x:Key="Combo_Delete">Delete</s:String>
+    <s:String x:Key="Combo_ReadOnlyTitle">Read-only base combo</s:String>
+    <s:String x:Key="Combo_ReadOnlyMsg">Use “Copy to Import to edit” (top-right) to customise this combo's items or bonus.</s:String>
+    <s:String x:Key="Combo_ItemSets">ITEM SETS</s:String>
+    <s:String x:Key="Combo_RemoveItemTip">Remove item</s:String>
+    <s:String x:Key="Combo_AddItemTip">Add item to this set</s:String>
+    <s:String x:Key="Combo_RemoveSetTip">Remove this item set</s:String>
+    <s:String x:Key="Combo_AddSet">Add item set</s:String>
+    <s:String x:Key="Combo_AddSetTip">Add an alternative item set that triggers the same bonus (e.g. a refined variant)</s:String>
+    <s:String x:Key="Combo_BonusScript">BONUS SCRIPT</s:String>
+    <s:String x:Key="Combo_BonusBuilder">Bonus builder</s:String>
+    <s:String x:Key="Combo_BonusBuilderTip">Build a bonus statement visually and append it</s:String>
+    <s:String x:Key="Combo_RefineGrade">Refine / Grade bonuses</s:String>
+    <s:String x:Key="Combo_RefineGradeTip">Add combo bonuses that unlock at a total-refine or enchant-grade milestone across the pieces (grade is Renewal-only).</s:String>
+
+    <!-- ===== Common error / dialog messages (used from C#) ===== -->    <s:String x:Key="Msg_UnexpectedError_Title">Unexpected error</s:String>
     <s:String x:Key="Msg_UnexpectedError_Body">Something went wrong, but Midgard Studio will keep running so you don't lose your work:</s:String>
     <s:String x:Key="Msg_Quit_Title">Quit Midgard Studio?</s:String>
     <s:String x:Key="Msg_Quit_Body">No workspace is configured yet, so closing setup will exit Midgard Studio.</s:String>

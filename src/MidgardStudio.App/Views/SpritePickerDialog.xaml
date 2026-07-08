@@ -7,7 +7,7 @@
                  xmlns:controls="clr-namespace:MidgardStudio.App.Controls"
                  xmlns:vm="clr-namespace:MidgardStudio.App.ViewModels"
                  mc:Ignorable="d" d:DataContext="{d:DesignInstance Type=vm:SpritePickerViewModel}"
-                 Title="Choose a headgear sprite"
+                 Title="{DynamicResource SpritePicker_Title}"
                  Width="540" Height="560"
                  WindowStartupLocation="CenterOwner"
                  WindowBackdropType="Mica"
@@ -21,7 +21,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ui:TitleBar Grid.Row="0" Title="Choose a headgear sprite" />
+        <ui:TitleBar Grid.Row="0" Title="{DynamicResource SpritePicker_Title}" />
 
         <DockPanel Grid.Row="1" Margin="14,4,14,8">
             <Grid DockPanel.Dock="Top" Margin="0,0,0,8">
@@ -34,14 +34,14 @@
                           DisplayMemberPath="Name" IsEnabled="{Binding HasSources}"
                           ToolTip="{Binding SelectedSource.Path}" />
                 <ui:TextBox Grid.Column="2" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
-                            PlaceholderText="Search sprite name…">
+                            PlaceholderText="{DynamicResource SpritePicker_SearchPH}">
                     <ui:TextBox.Icon><ui:SymbolIcon Symbol="Search24" /></ui:TextBox.Icon>
                 </ui:TextBox>
             </Grid>
 
             <DockPanel DockPanel.Dock="Bottom" Margin="0,8,0,0">
                 <TextBlock Text="{Binding CountText}" Opacity="0.55" FontSize="11" VerticalAlignment="Center" />
-                <ui:Button Content="Use this sprite" Appearance="Primary" HorizontalAlignment="Right"
+                <ui:Button Content="{DynamicResource SpritePicker_UseThis}" Appearance="Primary" HorizontalAlignment="Right"
                            Command="{Binding PickCommand}" MinWidth="120" />
             </DockPanel>
 
@@ -73,13 +73,13 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"
                             Visibility="{Binding Loading, Converter={StaticResource BoolToVis}}">
                     <ui:ProgressRing IsIndeterminate="True" Width="28" Height="28" />
-                    <TextBlock Text="Loading sprites…" Opacity="0.6" VerticalAlignment="Center" Margin="8,0,0,0" />
+                    <TextBlock Text="{DynamicResource SpritePicker_Loading}" Opacity="0.6" VerticalAlignment="Center" Margin="8,0,0,0" />
                 </StackPanel>
             </Grid>
         </DockPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="14">
-            <ui:Button Content="Cancel" Command="{Binding CancelCommand}" MinWidth="92" />
+            <ui:Button Content="{DynamicResource Dlg_Cancel}" Command="{Binding CancelCommand}" MinWidth="92" />
         </StackPanel>
     </Grid>
 </ui:FluentWindow>

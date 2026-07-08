@@ -2,7 +2,7 @@
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-                 Title="Choose"
+                 Title="{DynamicResource RefInput_Choose}"
                  Width="380" Height="440"
                  WindowStartupLocation="CenterOwner"
                  WindowBackdropType="Mica"
@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <ui:TitleBar x:Name="TitleBarCtl" Grid.Row="0" Title="Choose" />
+        <ui:TitleBar x:Name="TitleBarCtl" Grid.Row="0" Title="{DynamicResource RefInput_Choose}" />
         <Grid Grid.Row="1" Margin="16,8,16,16">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -23,8 +23,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" x:Name="PromptText" Text="Mob" Opacity="0.85" Margin="0,0,0,4" />
-            <ui:TextBox Grid.Row="1" x:Name="NameBox" PlaceholderText="Type to search…" />
+            <TextBlock Grid.Row="0" x:Name="PromptText" Text="{DynamicResource RefInput_Title}" Opacity="0.85" Margin="0,0,0,4" />
+            <ui:TextBox Grid.Row="1" x:Name="NameBox" PlaceholderText="{DynamicResource RefInput_TypeSearch}" />
             <Border Grid.Row="2" Margin="0,8,0,0" CornerRadius="6" Background="#16FFFFFF" BorderBrush="#26FFFFFF" BorderThickness="1">
                 <ListBox x:Name="SuggestList" Background="Transparent" BorderThickness="0"
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
@@ -37,8 +37,8 @@
             </Border>
             <TextBlock Grid.Row="3" x:Name="ErrorText" Foreground="#E0746A" Margin="0,8,0,0" TextWrapping="Wrap" Visibility="Collapsed" />
             <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
-                <ui:Button x:Name="OkButton" Content="OK" Appearance="Primary" MinWidth="84" Margin="0,0,8,0" />
-                <ui:Button x:Name="CancelButton" Content="Cancel" MinWidth="84" />
+                <ui:Button x:Name="OkButton" Content="{DynamicResource Dlg_OK}" Appearance="Primary" MinWidth="84" Margin="0,0,8,0" />
+                <ui:Button x:Name="CancelButton" Content="{DynamicResource Dlg_Cancel}" MinWidth="84" />
             </StackPanel>
         </Grid>
     </Grid>

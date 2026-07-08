@@ -41,7 +41,7 @@
                     </Border>
                 </StackPanel>
                 <ui:Button x:Name="CloseX" HorizontalAlignment="Right" VerticalAlignment="Top" Appearance="Transparent" Padding="6"
-                           ToolTip="Close">
+                           ToolTip="{DynamicResource Dlg_Close2}">
                     <ui:Button.Icon><ui:SymbolIcon Symbol="Dismiss24" FontSize="15" /></ui:Button.Icon>
                 </ui:Button>
             </Grid>
@@ -67,7 +67,7 @@
                            RenderTransformOrigin="0.5,0.5" RenderOptions.BitmapScalingMode="HighQuality">
                         <Image.RenderTransform><TranslateTransform x:Name="LogoFloat" Y="0" /></Image.RenderTransform>
                     </Image>
-                    <TextBlock Text="Checking for updates…" FontSize="14" Foreground="#D8D2EC" HorizontalAlignment="Center" Margin="0,22,0,0" />
+                    <TextBlock Text="{DynamicResource UpdateDlg_Checking}" FontSize="14" Foreground="#D8D2EC" HorizontalAlignment="Center" Margin="0,22,0,0" />
                     <Border Width="240" Height="4" CornerRadius="2" Background="#1AFFFFFF" Margin="0,16,0,0" ClipToBounds="True">
                         <Border x:Name="Shimmer" Width="90" Height="4" CornerRadius="2" HorizontalAlignment="Left">
                             <Border.Background>
@@ -96,7 +96,7 @@
                                TextAlignment="Center" TextWrapping="Wrap" MaxWidth="330" Margin="0,7,0,0" LineHeight="18" />
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,22,0,0">
                         <ui:Button x:Name="PrimaryBtn" Appearance="Primary" MinWidth="132" Margin="0,0,8,0" Visibility="Collapsed" />
-                        <ui:Button x:Name="SecondaryBtn" Appearance="Secondary" MinWidth="100" Content="Close" />
+                        <ui:Button x:Name="SecondaryBtn" Appearance="Secondary" MinWidth="100" Content="{DynamicResource Dlg_Close2}" />
                     </StackPanel>
                 </StackPanel>
             </Grid>

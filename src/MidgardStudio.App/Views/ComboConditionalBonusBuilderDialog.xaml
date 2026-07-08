@@ -3,7 +3,7 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
                  xmlns:vm="clr-namespace:MidgardStudio.App.ViewModels"
-                 Title="Combo Refine / Grade Bonuses"
+                 Title="{DynamicResource ComboCond_WinTitle}"
                  Width="1000" Height="720" MinWidth="820" MinHeight="560"
                  WindowStartupLocation="CenterOwner"
                  WindowBackdropType="Mica"
@@ -20,7 +20,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ui:TitleBar Grid.Row="0" Title="Combo Refine / Grade Bonuses" />
+        <ui:TitleBar Grid.Row="0" Title="{DynamicResource ComboCond_WinTitle}" />
 
         <Grid Grid.Row="1" Margin="16,4,16,0">
             <Grid.ColumnDefinitions>
@@ -34,15 +34,15 @@
                 <StackPanel>
                     <Border BorderBrush="#1FFFFFFF" BorderThickness="1" CornerRadius="6" Background="#0AFFFFFF" Padding="10,7" Margin="0,0,0,12">
                         <StackPanel>
-                            <TextBlock Text="Combo pieces (refine + grade are checked across these slots):" Opacity="0.6" FontSize="11.5" />
+                            <TextBlock Text="{DynamicResource ComboCond_Pieces}" Opacity="0.6" FontSize="11.5" />
                             <TextBlock Text="{Binding EqiSummary}" FontFamily="Consolas" FontSize="12" Foreground="#9FE0A0" Margin="0,3,0,0" TextWrapping="Wrap" />
                         </StackPanel>
                     </Border>
 
                     <!-- Unconditional -->
                     <DockPanel Margin="0,0,0,4">
-                        <TextBlock Text="ALWAYS (worn as a set)" FontSize="10.5" FontWeight="SemiBold" Opacity="0.55" VerticalAlignment="Center" />
-                        <ui:Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Add bonus" Appearance="Secondary" Padding="8,2" FontSize="11.5"
+                        <TextBlock Text="{DynamicResource ComboCond_Always}" FontSize="10.5" FontWeight="SemiBold" Opacity="0.55" VerticalAlignment="Center" />
+                        <ui:Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="{DynamicResource ComboCond_AddBonus}" Appearance="Secondary" Padding="8,2" FontSize="11.5"
                                    Command="{Binding AddUnconditionalBonusCommand}" />
                     </DockPanel>
                     <ItemsControl ItemsSource="{Binding Unconditional}" Margin="0,0,0,14">
@@ -61,8 +61,8 @@
 
                     <!-- Tiers -->
                     <DockPanel Margin="0,0,0,4">
-                        <TextBlock Text="CONDITION TIERS" FontSize="10.5" FontWeight="SemiBold" Opacity="0.55" VerticalAlignment="Center" />
-                        <ui:Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Add tier" Appearance="Secondary" Padding="8,2" FontSize="11.5"
+                        <TextBlock Text="{DynamicResource ComboCond_CondTiers}" FontSize="10.5" FontWeight="SemiBold" Opacity="0.55" VerticalAlignment="Center" />
+                        <ui:Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="{DynamicResource ComboCond_AddTier}" Appearance="Secondary" Padding="8,2" FontSize="11.5"
                                    Command="{Binding AddTierCommand}" />
                     </DockPanel>
                     <ItemsControl ItemsSource="{Binding Tiers}" />
@@ -71,13 +71,13 @@
 
             <!-- ===== Preview ===== -->
             <DockPanel Grid.Column="2">
-                <TextBlock DockPanel.Dock="Top" Text="GENERATED SCRIPT" FontSize="10.5" FontWeight="SemiBold" Opacity="0.5" Margin="0,0,0,6" />
+                <TextBlock DockPanel.Dock="Top" Text="{DynamicResource ComboCond_GeneratedScript}" FontSize="10.5" FontWeight="SemiBold" Opacity="0.5" Margin="0,0,0,6" />
                 <Border DockPanel.Dock="Top" Height="260" BorderBrush="#22FFFFFF" BorderThickness="1" CornerRadius="4" Background="#16000000" Margin="0,0,0,12">
                     <TextBox Text="{Binding ScriptPreview, Mode=OneWay}" IsReadOnly="True" BorderThickness="0"
                              Background="Transparent" FontFamily="Consolas" FontSize="12" Foreground="#9FE0A0"
                              Padding="8,6" TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />
                 </Border>
-                <TextBlock DockPanel.Dock="Top" Text="PREVIEW" FontSize="10.5" FontWeight="SemiBold" Opacity="0.5" Margin="0,0,0,6" />
+                <TextBlock DockPanel.Dock="Top" Text="{DynamicResource ComboCond_Preview}" FontSize="10.5" FontWeight="SemiBold" Opacity="0.5" Margin="0,0,0,6" />
                 <Border BorderBrush="#22FFFFFF" BorderThickness="1" CornerRadius="4" Background="#16000000">
                     <TextBox Text="{Binding DescriptionPreview, Mode=OneWay}" IsReadOnly="True" BorderThickness="0"
                              Background="Transparent" FontFamily="Consolas" FontSize="12" Foreground="#C9A6FF"
@@ -87,8 +87,8 @@
         </Grid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="16,12,16,16">
-            <ui:Button x:Name="InsertButton" Content="Save to combo script" Appearance="Primary" MinWidth="160" Margin="0,0,8,0" />
-            <ui:Button x:Name="CancelButton" Content="Cancel" MinWidth="84" />
+            <ui:Button x:Name="InsertButton" Content="{DynamicResource ComboCond_SaveToCombo}" Appearance="Primary" MinWidth="160" Margin="0,0,8,0" />
+            <ui:Button x:Name="CancelButton" Content="{DynamicResource Dlg_Cancel}" MinWidth="84" />
         </StackPanel>
 
         <Grid.Resources>
@@ -97,14 +97,14 @@
                 <Border BorderBrush="#18FFFFFF" BorderThickness="1" CornerRadius="4" Background="#08FFFFFF" Padding="8,6" Margin="0,3">
                     <StackPanel>
                         <DockPanel>
-                            <ui:Button DockPanel.Dock="Right" Content="Remove gate" Appearance="Transparent" FontSize="10.5" Padding="6,1"
+                            <ui:Button DockPanel.Dock="Right" Content="{DynamicResource ComboCond_RemoveGate}" Appearance="Transparent" FontSize="10.5" Padding="6,1"
                                        VerticalAlignment="Center" Command="{Binding RemoveCommand}" />
                             <WrapPanel>
-                                <TextBlock Text="If skill" VerticalAlignment="Center" Opacity="0.85" />
-                                <ui:TextBox Width="160" Margin="6,0,0,0" Text="{Binding Skill, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="e.g. MG_FIREBOLT" />
-                                <ui:Button Content="Pick…" Margin="4,0,0,0" Padding="6,1" FontSize="10.5" Command="{Binding PickSkillCommand}"
+                                <TextBlock Text="{DynamicResource ComboCond_IfSkill}" VerticalAlignment="Center" Opacity="0.85" />
+                                <ui:TextBox Width="160" Margin="6,0,0,0" Text="{Binding Skill, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="{DynamicResource ComboCond_SkillPH}" />
+                                <ui:Button Content="{DynamicResource ComboCond_Pick}" Margin="4,0,0,0" Padding="6,1" FontSize="10.5" Command="{Binding PickSkillCommand}"
                                            Visibility="{Binding CanPickSkill, Converter={StaticResource BoolToVis}}" />
-                                <TextBlock Text="Lv ≥" VerticalAlignment="Center" Opacity="0.85" Margin="12,0,0,0" />
+                                <TextBlock Text="{DynamicResource ComboCond_LvGe}" VerticalAlignment="Center" Opacity="0.85" Margin="12,0,0,0" />
                                 <ui:TextBox Width="46" Margin="6,0,0,0" Text="{Binding Level, UpdateSourceTrigger=PropertyChanged}" />
                             </WrapPanel>
                         </DockPanel>
@@ -121,7 +121,7 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <ui:Button Content="Add bonus…" Appearance="Transparent" HorizontalAlignment="Left" FontSize="11" Padding="6,1" Command="{Binding AddBonusCommand}" />
+                        <ui:Button Content="{DynamicResource ComboCond_AddBonusDots}" Appearance="Transparent" HorizontalAlignment="Left" FontSize="11" Padding="6,1" Command="{Binding AddBonusCommand}" />
                     </StackPanel>
                 </Border>
             </DataTemplate>
@@ -131,13 +131,13 @@
                 <Border BorderBrush="#1FFFFFFF" BorderThickness="1" CornerRadius="6" Background="#0AFFFFFF" Padding="10,8" Margin="0,3">
                     <StackPanel>
                         <DockPanel>
-                            <ui:Button DockPanel.Dock="Right" Content="Remove tier" Appearance="Transparent" FontSize="11" Padding="6,2"
+                            <ui:Button DockPanel.Dock="Right" Content="{DynamicResource ComboCond_RemoveTier}" Appearance="Transparent" FontSize="11" Padding="6,2"
                                        VerticalAlignment="Center" Command="{Binding RemoveCommand}" />
                             <WrapPanel>
-                                <CheckBox Content="Total refine ≥" IsChecked="{Binding UseRefine}" VerticalAlignment="Center" />
+                                <CheckBox Content="{DynamicResource ComboCond_TotalRefineGe}" IsChecked="{Binding UseRefine}" VerticalAlignment="Center" />
                                 <ui:TextBox Width="52" Margin="4,0,16,0" Text="{Binding RefineTotal, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding UseRefine}" />
                                 <StackPanel Orientation="Horizontal" Visibility="{Binding CanUseGrade, Converter={StaticResource BoolToVis}}">
-                                    <CheckBox Content="Every piece Grade ≥" IsChecked="{Binding UseGrade}" VerticalAlignment="Center" />
+                                    <CheckBox Content="{DynamicResource ComboCond_EveryPieceGradeGe}" IsChecked="{Binding UseGrade}" VerticalAlignment="Center" />
                                     <ComboBox Width="60" Margin="4,0,0,0" ItemsSource="{Binding GradeOptions}" DisplayMemberPath="Label"
                                               SelectedValuePath="Value" SelectedValue="{Binding Grade, Mode=TwoWay}" IsEnabled="{Binding UseGrade}" />
                                 </StackPanel>
@@ -157,10 +157,10 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <ui:Button Content="Add bonus…" Appearance="Transparent" HorizontalAlignment="Left" FontSize="11.5" Padding="6,2" Command="{Binding AddBonusCommand}" />
+                        <ui:Button Content="{DynamicResource ComboCond_AddBonusDots}" Appearance="Transparent" HorizontalAlignment="Left" FontSize="11.5" Padding="6,2" Command="{Binding AddBonusCommand}" />
 
                         <ItemsControl ItemsSource="{Binding SkillGates}" Margin="14,4,0,0" />
-                        <ui:Button Content="Add skill gate…" Appearance="Transparent" HorizontalAlignment="Left" FontSize="11.5" Padding="6,2" Margin="14,0,0,0"
+                        <ui:Button Content="{DynamicResource ComboCond_AddSkillGate}" Appearance="Transparent" HorizontalAlignment="Left" FontSize="11.5" Padding="6,2" Margin="14,0,0,0"
                                    Command="{Binding AddSkillGateCommand}" />
                     </StackPanel>
                 </Border>

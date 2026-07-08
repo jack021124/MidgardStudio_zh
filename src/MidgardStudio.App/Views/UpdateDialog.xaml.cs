@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using MidgardStudio.App.Localization;
 using MidgardStudio.Core.Updates;
 using Wpf.Ui.Controls;
 
@@ -59,28 +60,28 @@ public partial class UpdateDialog : Window
         {
             case UpdateStatus.UpdateAvailable:
                 Configure("#332DA0F2", "#C9A6FF", SymbolRegular.ArrowDownload48,
-                    "Update available",
-                    $"Version {r.Update!.Version} is ready to download.\nYou're on {_currentVersion}.");
+                    L("UpdateDlg_Available"),
+                    string.Format(L("UpdateDlg_ReadyBody"), r.Update!.Version, _currentVersion));
                 string url = string.IsNullOrEmpty(r.Update.Url) ? _fallbackUrl : r.Update.Url;
-                SetPrimary("Download", () => { OpenUrl(url); Close(); });
-                SecondaryBtn.Content = "Later";
+                SetPrimary(L("UpdateDlg_Download"), () => { OpenUrl(url); Close(); });
+                SecondaryBtn.Content = L("UpdateDlg_Later");
                 break;
 
             case UpdateStatus.CheckFailed:
                 Configure("#33E0A23C", "#F2C879", SymbolRegular.Warning48,
-                    "Couldn't check for updates",
-                    "We couldn't reach the update server. Check your connection and try again.");
-                SetPrimary("Retry", () => _ = RunCheckAsync());
-                SecondaryBtn.Content = "Close";
+                    L("UpdateDlg_CouldntCheck"),
+                    L("UpdateDlg_CouldntCheckBody"));
+                SetPrimary(L("UpdateDlg_Retry"), () => _ = RunCheckAsync());
+                SecondaryBtn.Content = L("Dlg_Close2");
                 break;
 
             default: // UpToDate
                 Configure("#2249C97A", "#5AE0A0", SymbolRegular.CheckmarkCircle48,
-                    "You're up to date",
-                    $"Midgard Studio {_currentVersion} is the latest version.");
+                    L("UpdateDlg_UpToDate"),
+                    string.Format(L("UpdateDlg_LatestBody"), _currentVersion));
                 PrimaryBtn.Visibility = Visibility.Collapsed;
                 _primaryAction = null;
-                SecondaryBtn.Content = "Close";
+                SecondaryBtn.Content = L("Dlg_Close2");
                 break;
         }
 
@@ -131,4 +132,7 @@ public partial class UpdateDialog : Window
         var dialog = new UpdateDialog(checker, currentVersion, fallbackUrl) { Owner = Application.Current.MainWindow };
         dialog.ShowDialog();
     }
+
+    /// <summary>Shorthand for a localized string read from the active language dictionary.</summary>
+    private static string L(string key) => LocalizationService.Get(key);
 }

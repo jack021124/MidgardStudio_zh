@@ -75,13 +75,13 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                <TextBlock Text="Item Forge" Style="{StaticResource TitleScreen}" />
+                <TextBlock Text="{DynamicResource Forge_Title}" Style="{StaticResource TitleScreen}" />
                 <TextBlock Opacity="0.6" FontSize="12" TextWrapping="Wrap" MaxWidth="640" HorizontalAlignment="Left"
-                           Text="Craft a complete custom item — server data, client look, and sprite, all in one place." />
+                           Text="{DynamicResource Forge_Desc}" />
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                <ui:Button Content="Reset" Command="{Binding ResetCommand}" Margin="0,0,6,0" />
-                <ui:Button Content="Forge item" Appearance="Primary" Command="{Binding ForgeCommand}" MinWidth="130" Height="34" FontSize="13">
+                <ui:Button Content="{DynamicResource Forge_Reset}" Command="{Binding ResetCommand}" Margin="0,0,6,0" />
+                <ui:Button Content="{DynamicResource Forge_ForgeItem}" Appearance="Primary" Command="{Binding ForgeCommand}" MinWidth="130" Height="34" FontSize="13">
                     <ui:Button.Icon><ui:SymbolIcon Symbol="Add24" /></ui:Button.Icon>
                 </ui:Button>
             </StackPanel>
@@ -102,7 +102,7 @@
             <!-- Left: section nav -->
             <ui:Card Grid.Column="0" Padding="6,10" Margin="0,0,12,0" VerticalAlignment="Stretch">
                 <StackPanel>
-                    <TextBlock Text="SECTIONS" Opacity="0.45" FontSize="10.5" FontWeight="SemiBold" Margin="12,2,0,6" />
+                    <TextBlock Text="{DynamicResource Forge_Sections}" Opacity="0.45" FontSize="10.5" FontWeight="SemiBold" Margin="12,2,0,6" />
                     <ItemsControl ItemsSource="{Binding Sections}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -119,14 +119,14 @@
                     <!-- Item ID: auto-allocated; the "Change ID" button opens the validating dialog. -->
                     <ui:Card Margin="0,0,0,6" Padding="10,7">
                         <StackPanel TextElement.FontSize="11.5">
-                            <TextBlock Text="Item ID" Opacity="0.85" Margin="0,0,0,2" />
+                            <TextBlock Text="{DynamicResource Forge_ItemId}" Opacity="0.85" Margin="0,0,0,2" />
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <ui:TextBox Grid.Column="0" Text="{Binding ItemIdInput, Mode=OneWay}" IsReadOnly="True" />
-                                <ui:Button Grid.Column="1" Content="Change ID" Command="{Binding ChangeIdCommand}" Margin="6,0,0,0" />
+                                <ui:Button Grid.Column="1" Content="{DynamicResource Forge_ChangeId}" Command="{Binding ChangeIdCommand}" Margin="6,0,0,0" />
                             </Grid>
                         </StackPanel>
                     </ui:Card>
@@ -140,42 +140,42 @@
                     <!-- Client / Appearance section (the itemInfo side) -->
                     <ui:Card x:Name="AppearanceCard" Margin="0,0,0,6" Padding="10,5">
                         <StackPanel TextElement.FontSize="11.5">
-                            <TextBlock Text="Appearance" Style="{StaticResource TitleSection}" Margin="0,0,0,3" />
-                            <TextBlock Text="How the item looks in the client (written to itemInfo_C.lua)." Opacity="0.55" FontSize="11" Margin="0,0,0,8" />
+                            <TextBlock Text="{DynamicResource Forge_Appearance}" Style="{StaticResource TitleSection}" Margin="0,0,0,3" />
+                            <TextBlock Text="{DynamicResource Forge_AppearanceDesc}" Opacity="0.55" FontSize="11" Margin="0,0,0,8" />
 
-                            <TextBlock Text="Icon resource name (the .bmp base name)" Opacity="0.85" Margin="0,0,0,2" />
+                            <TextBlock Text="{DynamicResource Forge_IconName}" Opacity="0.85" Margin="0,0,0,2" />
                             <Grid Margin="0,0,0,8">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <ui:TextBox Grid.Column="0" Text="{Binding IconResource, UpdateSourceTrigger=PropertyChanged}" />
-                                <ui:Button Grid.Column="1" Content="Browse…" Command="{Binding BrowseIconCommand}" Margin="6,0,0,0">
+                                <ui:Button Grid.Column="1" Content="{DynamicResource Forge_Browse}" Command="{Binding BrowseIconCommand}" Margin="6,0,0,0">
                                     <ui:Button.Icon><ui:SymbolIcon Symbol="Search24" /></ui:Button.Icon>
                                 </ui:Button>
                             </Grid>
 
-                            <TextBlock Text="Description" Opacity="0.85" Margin="0,0,0,2" />
+                            <TextBlock Text="{DynamicResource Forge_Description}" Opacity="0.85" Margin="0,0,0,2" />
                             <ui:TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True"
                                         MinHeight="90" MaxHeight="180" FontFamily="Consolas"
                                         VerticalScrollBarVisibility="Auto" Margin="0,0,0,8" />
 
-                            <ui:ToggleSwitch Content="Costume" IsChecked="{Binding Costume}" Margin="0,0,0,4" />
+                            <ui:ToggleSwitch Content="{DynamicResource Forge_Costume}" IsChecked="{Binding Costume}" Margin="0,0,0,4" />
 
                             <StackPanel Visibility="{Binding IsHeadgear, Converter={StaticResource BoolToVis}}" Margin="0,6,0,0">
-                                <TextBlock Text="Headgear sprite name (auto-allocates the View id)" Opacity="0.85" Margin="0,0,0,2" />
+                                <TextBlock Text="{DynamicResource Forge_HeadgearName}" Opacity="0.85" Margin="0,0,0,2" />
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <ui:TextBox Grid.Column="0" Text="{Binding SpriteName, UpdateSourceTrigger=PropertyChanged}" />
-                                    <ui:Button Grid.Column="1" Content="Browse…" Command="{Binding BrowseSpriteCommand}" Margin="6,0,0,0">
+                                    <ui:Button Grid.Column="1" Content="{DynamicResource Forge_Browse}" Command="{Binding BrowseSpriteCommand}" Margin="6,0,0,0">
                                         <ui:Button.Icon><ui:SymbolIcon Symbol="Search24" /></ui:Button.Icon>
                                     </ui:Button>
                                 </Grid>
                                 <TextBlock Opacity="0.5" FontSize="11" TextWrapping="Wrap" Margin="0,4,0,0"
-                                           Text="Registers an ACCESSORY_ID in accessoryid.lub / accname.lub (loose files) and sets the item's View." />
+                                           Text="{DynamicResource Forge_HeadgearDesc}" />
                             </StackPanel>
                         </StackPanel>
                     </ui:Card>
@@ -191,14 +191,15 @@
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                                 <TextBlock Text="✓" Foreground="#7DD89B" FontSize="16" FontWeight="Bold" Margin="0,0,8,0" />
-                                <TextBlock FontWeight="SemiBold" Foreground="#CFEDD7"
-                                           Text="{Binding ForgedId, StringFormat='Forged item #{0}'}" VerticalAlignment="Center" />
+                                <TextBlock FontWeight="SemiBold" Foreground="#CFEDD7" VerticalAlignment="Center">
+                                    <Run Text="{DynamicResource Forge_ForgedPrefix1}" /><Run Text="{Binding ForgedId, Mode=OneWay}" />
+                                </TextBlock>
                             </StackPanel>
                             <TextBlock Opacity="0.75" FontSize="11.5" TextWrapping="Wrap" Margin="0,0,0,8"
-                                       Text="Added to your import layer + client file. Review it, then Save to write the files (a backup is taken)." />
+                                       Text="{DynamicResource Forge_ForgedDesc}" />
                             <StackPanel Orientation="Horizontal">
-                                <ui:Button Content="Open in Server Items" Appearance="Primary" Command="{Binding OpenForgedCommand}" Margin="0,0,6,0" />
-                                <ui:Button Content="Dismiss" Command="{Binding DismissCommand}" />
+                                <ui:Button Content="{DynamicResource Forge_OpenInServer}" Appearance="Primary" Command="{Binding OpenForgedCommand}" Margin="0,0,6,0" />
+                                <ui:Button Content="{DynamicResource Forge_Dismiss}" Command="{Binding DismissCommand}" />
                             </StackPanel>
                         </StackPanel>
                     </Border>
@@ -206,7 +207,7 @@
                     <!-- Preview (in-game item window) -->
                     <ui:Card Padding="14,12" Margin="0,0,0,10">
                         <StackPanel>
-                            <TextBlock Text="Preview" Style="{StaticResource TitleSection}" Margin="0,0,0,10" />
+                            <TextBlock Text="{DynamicResource Forge_Preview}" Style="{StaticResource TitleSection}" Margin="0,0,0,10" />
 
                             <!-- RO-style item window: icon + collection on the left, tooltip text on the right -->
                             <Border CornerRadius="6" Background="#1A1622" BorderBrush="#33FFFFFF" BorderThickness="1" Padding="10">
@@ -224,7 +225,7 @@
                                         <Border Width="64" Height="44" CornerRadius="4" Background="#22000000" BorderBrush="#22FFFFFF" BorderThickness="1" Margin="0,8,0,0">
                                             <Image Source="{Binding CollectionImage}" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor" Margin="2" />
                                         </Border>
-                                        <TextBlock Text="Collection" Opacity="0.4" FontSize="10" HorizontalAlignment="Center" Margin="0,3,0,0" />
+                                                        <TextBlock Text="{DynamicResource Forge_Collection}" Opacity="0.4" FontSize="10" HorizontalAlignment="Center" Margin="0,3,0,0" />
                                     </StackPanel>
 
                                     <!-- Parchment tooltip — the real in-game item window text, rendered exactly as it
@@ -237,7 +238,9 @@
                                             <TextBlock x:Name="DescPreview" Foreground="Black" FontSize="11.5" TextWrapping="Wrap" Margin="0,5,0,0"
                                                        Visibility="{Binding HasDescription, Converter={StaticResource BoolToVis}}" />
                                             <Border Height="1" Background="#33000000" Margin="0,8" />
-                                            <TextBlock Foreground="#6B6657" FontSize="11" Text="{Binding PreviewId, StringFormat='Item ID: {0}'}" />
+                                            <TextBlock Foreground="#6B6657" FontSize="11">
+                                                <Run Text="{DynamicResource Forge_ItemIdPrefix}" /><Run Text="{Binding PreviewId, Mode=OneWay}" />
+                                            </TextBlock>
                                         </StackPanel>
                                     </Border>
                                 </Grid>
@@ -249,14 +252,14 @@
                     <ui:Card Padding="14,12" Margin="0,0,0,10">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                <TextBlock Text="Readiness" Style="{StaticResource TitleSection}" VerticalAlignment="Center" />
+                                <TextBlock Text="{DynamicResource Forge_Readiness}" Style="{StaticResource TitleSection}" VerticalAlignment="Center" />
                                 <ui:SymbolIcon Symbol="ShieldCheckmark24" FontSize="14" Foreground="#7DD89B" Margin="10,0,4,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Safe by design" FontSize="11.5" Opacity="0.85" VerticalAlignment="Center" />
+                                <TextBlock Text="{DynamicResource Forge_SafeByDesign}" FontSize="11.5" Opacity="0.85" VerticalAlignment="Center" />
                                 <ui:SymbolIcon Symbol="Info24" FontSize="13" Opacity="0.6" Margin="4,0,0,0" VerticalAlignment="Center" Cursor="Help">
                                     <ui:SymbolIcon.ToolTip>
                                         <ToolTip MaxWidth="280">
                                             <TextBlock TextWrapping="Wrap"
-                                                       Text="Your base files stay untouched. A dated backup is taken before any save. Only the entry you create is written, spliced into your existing files — comments, field order and line endings are preserved." />
+                                                       Text="{DynamicResource Forge_SafetyTip}" />
                                         </ToolTip>
                                     </ui:SymbolIcon.ToolTip>
                                 </ui:SymbolIcon>
@@ -305,21 +308,21 @@
                         </Border.Triggers>
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
-                                <TextBlock Text="What will be written" Style="{StaticResource TitleSection}" VerticalAlignment="Center" />
+                                <TextBlock Text="{DynamicResource Forge_WhatWritten}" Style="{StaticResource TitleSection}" VerticalAlignment="Center" />
                                 <Ellipse Width="7" Height="7" Fill="#7DD89B" Margin="8,1,0,0" VerticalAlignment="Center" />
-                                <TextBlock Text="live" FontSize="10" Opacity="0.5" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                <TextBlock Text="{DynamicResource Forge_Live}" FontSize="10" Opacity="0.5" Margin="4,0,0,0" VerticalAlignment="Center" />
                             </StackPanel>
                             <TextBlock FontSize="11" Opacity="0.85" Margin="0,0,0,8">
                                 <Run Text="→ " Foreground="#9B7BE0" /><Run Text="{Binding WriteTargets, Mode=OneWay}" FontFamily="Consolas" />
                             </TextBlock>
 
-                            <TextBlock Text="server · item_db.yml" Opacity="0.5" FontSize="10.5" Margin="0,0,0,2" />
+                            <TextBlock Text="{DynamicResource Forge_ServerYaml}" Opacity="0.5" FontSize="10.5" Margin="0,0,0,2" />
                             <Border CornerRadius="4" Background="#1209121A" BorderBrush="#22FFFFFF" BorderThickness="1" Padding="6">
                                 <TextBox Text="{Binding ServerYamlPreview, Mode=OneWay}" IsReadOnly="True" BorderThickness="0"
                                          Background="Transparent" FontFamily="Consolas" FontSize="10.5" TextWrapping="NoWrap"
                                          HorizontalScrollBarVisibility="Auto" MaxHeight="200" VerticalScrollBarVisibility="Auto" />
                             </Border>
-                            <TextBlock Text="client · itemInfo_C.lua" Opacity="0.5" FontSize="10.5" Margin="0,8,0,2" />
+                            <TextBlock Text="{DynamicResource Forge_ClientLua}" Opacity="0.5" FontSize="10.5" Margin="0,8,0,2" />
                             <Border CornerRadius="4" Background="#12091A12" BorderBrush="#22FFFFFF" BorderThickness="1" Padding="6">
                                 <TextBox Text="{Binding ClientLuaPreview, Mode=OneWay}" IsReadOnly="True" BorderThickness="0"
                                          Background="Transparent" FontFamily="Consolas" FontSize="10.5" TextWrapping="NoWrap"

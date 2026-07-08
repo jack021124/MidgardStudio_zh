@@ -187,6 +187,536 @@
     <s:String x:Key="Settings_About_Edition">版本</s:String>
     <s:String x:Key="Settings_About_EditionValue">桌面版 (Windows)</s:String>
 
+    <!-- ===== SettingsView：自动补全标签页 ===== -->
+    <s:String x:Key="Settings_Ac_Desc">控制自动补全如何从服务端物品生成客户端物品的名称和描述——包含哪些行、颜色、措辞和默认值。</s:String>
+    <s:String x:Key="Settings_Ac_Preview">实时预览</s:String>
+    <s:String x:Key="Settings_Ac_Preview_Desc">用你当前设置渲染的一把火焰剑示例——随下方编辑实时更新。</s:String>
+    <s:String x:Key="Settings_Ac_Include">包含内容</s:String>
+    <s:String x:Key="Settings_Ac_Behaviour">行为</s:String>
+    <s:String x:Key="Settings_Ac_Overwrite">运行自动补全时覆盖已有文字</s:String>
+    <s:String x:Key="Settings_Ac_DefaultUnid">默认未鉴定描述</s:String>
+    <s:String x:Key="Settings_Ac_DefaultUnid_PH">应用于自动补全的未鉴定描述（留空 = 保持原样）</s:String>
+    <s:String x:Key="Settings_Ac_Fallback">没有服务端值的字段的回退文字</s:String>
+    <s:String x:Key="Settings_Ac_Fallback_PH">留空 = 隐藏该行</s:String>
+    <s:String x:Key="Settings_Ac_Colors">颜色</s:String>
+    <s:String x:Key="Settings_Ac_Colors_Desc">应用于生成行的十六进制（RRGGBB）颜色。</s:String>
+    <s:String x:Key="Settings_Ac_WeaponColors">武器属性颜色</s:String>
+    <s:String x:Key="Settings_Ac_FieldLabels">字段标签</s:String>
+    <s:String x:Key="Settings_Ac_FieldLabels_Desc">重命名每个值前面显示的词（例如“重量”→“物品重量”）。留空 = 默认。</s:String>
+    <s:String x:Key="Settings_Ac_HexPH">RRGGBB</s:String>
+
+    <!-- ===== Onboarding（首次引导） ===== -->
+    <s:String x:Key="Onboard_Skip">跳过引导</s:String>
+    <s:String x:Key="Onboard_Back">上一步</s:String>
+    <s:String x:Key="Onboard_Next">下一步</s:String>
+    <s:String x:Key="Onboard_GetStarted">开始使用</s:String>
+    <s:String x:Key="Onboard_P1_Title">欢迎使用 Midgard Studio</s:String>
+    <s:String x:Key="Onboard_P1_Body">在一个原生应用里编辑你仙境传说服务器的数据库和客户端文件——无需脚本、无需猜测。</s:String>
+    <s:String x:Key="Onboard_P2_Title">所有数据库，集于一处</s:String>
+    <s:String x:Key="Onboard_P2_Body">物品、魔物、宠物、技能、组合和分组。你的自定义和覆盖条目会安全地写入 import 文件——基础数据永远不会被改动。</s:String>
+    <s:String x:Key="Onboard_P3_Title">客户端物品、精灵与 GRF</s:String>
+    <s:String x:Key="Onboard_P3_Body">名称、描述、图标和穿戴精灵均带实时预览，外加内置 GRF 浏览器——无需在不同工具间来回切换。</s:String>
+    <s:String x:Key="Onboard_P4_Title">打造与自动补全</s:String>
+    <s:String x:Key="Onboard_P4_Body">在一个流程里创建完整的自定义物品——服务端条目、客户端文字和精灵——并自动生成丰富的描述。</s:String>
+    <s:String x:Key="Onboard_P5_Title">内置安全网</s:String>
+    <s:String x:Key="Onboard_P5_Body">校验闸门会在错误进入你的服务器之前拦截它们，并提供一键修复——而每次手动保存都会创建带日期的备份。</s:String>
+
+    <!-- ===== 配置向导 ===== -->
+    <s:String x:Key="Wizard_Title">工作区配置</s:String>
+    <s:String x:Key="Wizard_Subtitle">管理你要编辑的服务器。在左侧选择一个配置文件，在右侧设置其文件，然后点击打开。</s:String>
+    <s:String x:Key="Wizard_CloseTip">关闭配置 (Esc)</s:String>
+    <s:String x:Key="Wizard_Profiles">配置文件</s:String>
+    <s:String x:Key="Wizard_NewProfile">新建配置文件</s:String>
+    <s:String x:Key="Wizard_DeleteProfileTip">删除此配置文件</s:String>
+    <s:String x:Key="Wizard_ServerDb">服务端数据库</s:String>
+    <s:String x:Key="Wizard_ClientLua">客户端 lua 文件</s:String>
+    <s:String x:Key="Wizard_BaseItemInfo">基础物品信息</s:String>
+    <s:String x:Key="Wizard_CustomItemInfo">自定义物品信息</s:String>
+    <s:String x:Key="Wizard_GrfCount">{0} 个 GRF / 数据路径</s:String>
+    <s:String x:Key="Wizard_GrfUnit">个 GRF / 数据路径</s:String>
+    <s:String x:Key="Wizard_Profile">配置文件</s:String>
+    <s:String x:Key="Wizard_ProfileName">配置文件名称</s:String>
+    <s:String x:Key="Wizard_System">系统（规则集）</s:String>
+    <s:String x:Key="Wizard_DisplayEncoding">显示编码</s:String>
+    <s:String x:Key="Wizard_EncodingDesc">用于读取服务器数据库文件中遗留的非 UTF-8 名称的回退编码（例如 Latin-1 的“Poção”或 EUC-KR 的 item_db）。服务器文件保存为 UTF-8；客户端文字和图标/精灵资源名始终使用标准的 Windows-1252。</s:String>
+    <s:String x:Key="Wizard_FilesTitle">服务端与客户端文件</s:String>
+    <s:String x:Key="Wizard_FilesDesc">把应用指向这个服务器的文件。下方的 GRF 压缩包就是 GRF 浏览器读取的内容——你无需在那里再次设置。</s:String>
+    <s:String x:Key="Wizard_ServerDbFolder">服务端数据库文件夹  ( ../rAthena/db )</s:String>
+    <s:String x:Key="Wizard_ClientLuaFolder">客户端 Lua 文件  ( data/luafiles514/lua files )</s:String>
+    <s:String x:Key="Wizard_BaseItemInfoPath">基础 iteminfo.lua  ( SystemEN/LuaFiles514/itemInfo.lua )</s:String>
+    <s:String x:Key="Wizard_CustomItemInfoPath">自定义 Iteminfo.lua  ( SystemEN/itemInfo_C.lua )</s:String>
+    <s:String x:Key="Wizard_Browse">浏览…</s:String>
+    <s:String x:Key="Wizard_ItemInfoPH">…\System\itemInfo.lua（可选）</s:String>
+    <s:String x:Key="Wizard_ItemInfoCustomPH">…\System\itemInfo_C.lua（留空则写入基础文件）</s:String>
+    <s:String x:Key="Wizard_GrfTitle">GRF 压缩包与数据文件夹</s:String>
+    <s:String x:Key="Wizard_AddGrf">添加 GRF…</s:String>
+    <s:String x:Key="Wizard_AddData">添加数据文件夹…</s:String>
+    <s:String x:Key="Wizard_GrfReorderTip">拖动以调整优先级</s:String>
+    <s:String x:Key="Wizard_GrfPriorityTip">图层优先级（最底部的条目优先）</s:String>
+    <s:String x:Key="Wizard_Remove">移除</s:String>
+    <s:String x:Key="Wizard_GrfDesc">拖动手柄可重新排序。图层从上到下加载——一个条目会覆盖其上方的所有内容（最底部优先）。可选——留空则跳过 GRF 预览。</s:String>
+    <s:String x:Key="Wizard_SaveProfile">保存配置文件</s:String>
+    <s:String x:Key="Wizard_Open">打开</s:String>
+    <s:String x:Key="Wizard_Close">关闭</s:String>
+
+    <!-- ===== 商城管理器 ===== -->
+    <s:String x:Key="CashShop_Title">商城管理器</s:String>
+    <s:String x:Key="CashShop_Desc">按名称、Aegis 名或 ID 为每个页签添加物品并设置点券价格。拖动卡片可重新排序，或将一张卡片拖到另一个页签上以移动它。</s:String>
+    <s:String x:Key="CashShop_AddPH">物品名称、Aegis 名或 ID——输入即搜索（用逗号分隔可批量添加）</s:String>
+    <s:String x:Key="CashShop_PricePH">价格</s:String>
+    <s:String x:Key="CashShop_Add">添加</s:String>
+    <s:String x:Key="CashShop_AddTip">添加到选中的页签（可撤销；保存时写入 import）。粘贴多个用逗号分隔的名称可批量添加。</s:String>
+    <s:String x:Key="CashShop_EmptyTitle">此页签为空</s:String>
+    <s:String x:Key="CashShop_EmptyDesc">在上方用 Aegis 名添加物品即可在此上架——或从其他页签拖入一张卡片。</s:String>
+    <s:String x:Key="CashShop_PriceTip">点券价格（#CASHPOINTS）。</s:String>
+    <s:String x:Key="CashShop_RemoveTip">从页签中移除此物品。</s:String>
+    <s:String x:Key="CashShop_Base">基础</s:String>
+
+    <!-- ===== 数据库工作区 ===== -->
+    <s:String x:Key="Db_Loading">正在加载数据库…</s:String>
+    <s:String x:Key="Db_AddTip">添加一个新的自定义条目</s:String>
+    <s:String x:Key="Db_DupTip">将选中条目复制为新的自定义条目</s:String>
+    <s:String x:Key="Db_CopyTip">将选中条目复制为 YAML——选中多个（Ctrl/Shift+点击）可全部复制</s:String>
+    <s:String x:Key="Db_FilterTip">只显示你的自定义/覆盖条目</s:String>
+    <s:String x:Key="Db_SearchPH">搜索 id / aegis / 名称 / 类型…  (Ctrl+F)</s:String>
+    <s:String x:Key="Db_Ctx_Duplicate">复制</s:String>
+    <s:String x:Key="Db_Ctx_CopyYaml">复制 YAML</s:String>
+    <s:String x:Key="Db_Ctx_ChangeId">更改 ID…</s:String>
+    <s:String x:Key="Db_Ctx_CopyToId">复制到 ID…</s:String>
+    <s:String x:Key="Db_Ctx_Restore">恢复为默认</s:String>
+    <s:String x:Key="Db_Ctx_RestoreTip">放弃自定义并将此条目恢复为基础值</s:String>
+    <s:String x:Key="Db_Ctx_Delete">删除</s:String>
+    <s:String x:Key="Db_Ctx_SelectInClientItems">在客户端物品中选择</s:String>
+    <s:String x:Key="Db_Ctx_AddInClientItems">添加到客户端物品</s:String>
+    <s:String x:Key="Db_Ctx_SelectInClientSkills">在客户端技能中选择</s:String>
+    <s:String x:Key="Db_SelectEntry">选择一个条目以查看或编辑。</s:String>
+    <s:String x:Key="Db_Info">信息</s:String>
+    <s:String x:Key="Db_Validation">校验</s:String>
+    <s:String x:Key="Db_ClientSprite">客户端精灵</s:String>
+
+    <!-- ===== 备份管理 ===== -->
+    <s:String x:Key="Backup_Title">备份管理器</s:String>
+    <s:String x:Key="Backup_Desc">每次手动保存后会为你的服务端+客户端数据拍摄一个快照；未更改的文件会去重以节省空间。在下方可还原、固定、校验或导出任意时间点。</s:String>
+    <s:String x:Key="Backup_CreateNow">立即创建备份</s:String>
+    <s:String x:Key="Backup_CreateNowTip">立即为当前服务端+客户端数据拍摄快照。</s:String>
+    <s:String x:Key="Backup_Import">导入…</s:String>
+    <s:String x:Key="Backup_ImportTip">从本机或其他机器导出的 .zip 导入备份。</s:String>
+    <s:String x:Key="Backup_OpenFolder">打开文件夹</s:String>
+    <s:String x:Key="Backup_OpenFolderTip">在磁盘上打开备份文件夹。</s:String>
+    <s:String x:Key="Backup_Refresh">刷新</s:String>
+    <s:String x:Key="Backup_RefreshTip">重新加载备份列表。</s:String>
+    <s:String x:Key="Backup_EmptyTitle">暂无备份</s:String>
+    <s:String x:Key="Backup_EmptyDesc">每次保存时都会自动创建备份。你也可以用上方按钮立即创建一个。</s:String>
+    <s:String x:Key="Backup_Col_When">时间</s:String>
+    <s:String x:Key="Backup_Col_Label">标签</s:String>
+    <s:String x:Key="Backup_Col_Files">文件</s:String>
+    <s:String x:Key="Backup_Col_Size">大小</s:String>
+    <s:String x:Key="Backup_FilesSuffix"> 个文件</s:String>
+    <s:String x:Key="Backup_FilesIn">此备份中的文件</s:String>
+    <s:String x:Key="Backup_Restore">还原此备份</s:String>
+    <s:String x:Key="Backup_RestoreTip">用此快照替换你当前的数据。会先创建一个安全备份。</s:String>
+    <s:String x:Key="Backup_PinTip">固定可使此备份不受保留策略影响；取消固定则让它正常过期。</s:String>
+    <s:String x:Key="Backup_Verify">校验</s:String>
+    <s:String x:Key="Backup_VerifyTip">根据存储的校验和重新检查此备份的文件。</s:String>
+    <s:String x:Key="Backup_Export">导出…</s:String>
+    <s:String x:Key="Backup_ExportTip">将此备份保存为 .zip，便于复制到其他机器。</s:String>
+    <s:String x:Key="Backup_Open">打开</s:String>
+    <s:String x:Key="Backup_OpenTip">在磁盘上打开此备份的文件夹。</s:String>
+    <s:String x:Key="Backup_Delete">删除</s:String>
+    <s:String x:Key="Backup_DeleteTip">永久删除此备份。</s:String>
+    <s:String x:Key="Backup_PinnedTip">已固定——不受保留策略影响</s:String>
+    <s:String x:Key="Backup_Unchanged">未更改</s:String>
+    <s:String x:Key="Backup_Changed">已更改</s:String>
+
+    <!-- ===== 打造 ===== -->
+    <s:String x:Key="Forge_Title">物品打造</s:String>
+    <s:String x:Key="Forge_Desc">在一个地方打造完整的自定义物品——服务端数据、客户端外观和精灵。</s:String>
+    <s:String x:Key="Forge_Reset">重置</s:String>
+    <s:String x:Key="Forge_ForgeItem">打造物品</s:String>
+    <s:String x:Key="Forge_Sections">区块</s:String>
+    <s:String x:Key="Forge_ItemId">物品 ID</s:String>
+    <s:String x:Key="Forge_ChangeId">更改 ID</s:String>
+    <s:String x:Key="Forge_Appearance">外观</s:String>
+    <s:String x:Key="Forge_AppearanceDesc">物品在客户端中的外观（写入 itemInfo_C.lua）。</s:String>
+    <s:String x:Key="Forge_IconName">图标资源名（.bmp 基础名）</s:String>
+    <s:String x:Key="Forge_Browse">浏览…</s:String>
+    <s:String x:Key="Forge_Description">描述</s:String>
+    <s:String x:Key="Forge_Costume">外观装</s:String>
+    <s:String x:Key="Forge_HeadgearName">头饰精灵名（自动分配 View id）</s:String>
+    <s:String x:Key="Forge_HeadgearDesc">在 accessoryid.lub / accname.lub（松散文件）中注册一个 ACCESSORY_ID 并设置物品的 View。</s:String>
+    <s:String x:Key="Forge_ForgedPrefix">已打造物品 #{0}</s:String>
+    <s:String x:Key="Forge_ForgedPrefix1">已打造物品 #</s:String>
+    <s:String x:Key="Forge_ForgedDesc">已添加到你的 import 层和客户端文件。检查后点击保存以写入文件（会创建备份）。</s:String>
+    <s:String x:Key="Forge_OpenInServer">在服务端物品中打开</s:String>
+    <s:String x:Key="Forge_Dismiss">关闭</s:String>
+    <s:String x:Key="Forge_Preview">预览</s:String>
+    <s:String x:Key="Forge_Collection">收藏图</s:String>
+    <s:String x:Key="Forge_ItemIdLabel">物品 ID：{0}</s:String>
+    <s:String x:Key="Forge_ItemIdPrefix">物品 ID：</s:String>
+    <s:String x:Key="Forge_Readiness">就绪状态</s:String>
+    <s:String x:Key="Forge_SafeByDesign">设计上安全</s:String>
+    <s:String x:Key="Forge_SafetyTip">你的基础文件不会被改动。任何保存前都会创建带日期的备份。只有你创建的条目会被写入，拼接到你已有的文件中——注释、字段顺序和换行符都会保留。</s:String>
+    <s:String x:Key="Forge_WhatWritten">将写入的内容</s:String>
+    <s:String x:Key="Forge_Live">实时</s:String>
+    <s:String x:Key="Forge_ServerYaml">服务端 · item_db.yml</s:String>
+    <s:String x:Key="Forge_ClientLua">客户端 · itemInfo_C.lua</s:String>
+
+    <!-- ===== 对话框共享标签 ===== -->
+    <s:String x:Key="Dlg_Done">完成</s:String>
+    <s:String x:Key="Dlg_Select">选择</s:String>
+    <s:String x:Key="Dlg_Enter">输入</s:String>
+    <s:String x:Key="Dlg_Edit">编辑</s:String>
+    <s:String x:Key="Dlg_Browse">浏览…</s:String>
+    <s:String x:Key="Dlg_Confirm2">确认</s:String>
+    <s:String x:Key="Dlg_Close2">关闭</s:String>
+    <s:String x:Key="Dlg_Apply">应用</s:String>
+    <s:String x:Key="Dlg_Add">添加</s:String>
+    <s:String x:Key="Dlg_Remove">移除</s:String>
+    <s:String x:Key="Dlg_New">新建</s:String>
+    <s:String x:Key="Dlg_SearchIdAegisName">搜索 id / aegis / 名称…</s:String>
+    <s:String x:Key="Col_ID">ID</s:String>
+    <s:String x:Key="Col_Name">名称</s:String>
+    <s:String x:Key="Col_Aegis">Aegis</s:String>
+
+    <!-- ===== 更改 ID 对话框 ===== -->
+    <s:String x:Key="ChangeId_Title">更改物品 ID</s:String>
+    <s:String x:Key="ChangeId_NewId">新物品 ID</s:String>
+    <s:String x:Key="ChangeId_NextFree">下一个可用</s:String>
+    <s:String x:Key="ChangeId_NextFreeTip">使用下一个未使用的 id</s:String>
+    <s:String x:Key="ChangeId_Confirm">更改 ID</s:String>
+
+    <!-- ===== ID 输入对话框 ===== -->
+    <s:String x:Key="IdInput_Title">输入 ID</s:String>
+    <s:String x:Key="IdInput_NewId">新 ID</s:String>
+
+    <!-- ===== 记录选择对话框 ===== -->
+    <s:String x:Key="RecordPicker_Title">选择</s:String>
+
+    <!-- ===== 引用输入对话框 ===== -->
+    <s:String x:Key="RefInput_Title">输入引用</s:String>
+
+    <!-- ===== 字段编辑器对话框 ===== -->
+    <s:String x:Key="FieldEditor_Title">编辑</s:String>
+
+    <!-- ===== 掉落编辑对话框 ===== -->
+    <s:String x:Key="DropEdit_Title">掉落编辑</s:String>
+    <s:String x:Key="DropEdit_ItemId">物品 ID</s:String>
+    <s:String x:Key="DropEdit_Chance">掉落概率</s:String>
+    <s:String x:Key="DropEdit_ChanceTip">以 10000 为单位——2000 = 20.00%</s:String>
+    <s:String x:Key="DropEdit_StealProtected">禁止偷窃</s:String>
+    <s:String x:Key="DropEdit_RandGroup">随机组</s:String>
+    <s:String x:Key="DropEdit_Ok">确定</s:String>
+    <s:String x:Key="DropEdit_Item">物品</s:String>
+    <s:String x:Key="DropEdit_Rate">概率 (%)</s:String>
+    <s:String x:Key="DropEdit_Unrecognized">未识别 / 无掉落</s:String>
+    <s:String x:Key="DropEdit_Index">序号</s:String>
+
+    <!-- ===== 保存摘要对话框 ===== -->
+    <s:String x:Key="SaveSummary_Title">已保存</s:String>
+    <s:String x:Key="SaveSummary_ChangesSaved">更改已保存</s:String>
+    <s:String x:Key="SaveSummary_FilesWritten">写入的文件</s:String>
+    <s:String x:Key="SaveSummary_File">文件</s:String>
+    <s:String x:Key="SaveSummary_Status">状态</s:String>
+
+    <!-- ===== YAML 预览对话框 ===== -->
+    <s:String x:Key="YamlPreview_Title">YAML 预览</s:String>
+    <s:String x:Key="YamlPreview_Copy">复制</s:String>
+
+    <!-- ===== 引用输入对话框 ===== -->
+    <s:String x:Key="RefInput_Choose">选择</s:String>
+    <s:String x:Key="RefInput_TypeSearch">输入以搜索…</s:String>
+
+    <!-- ===== 图标选择对话框 ===== -->
+    <s:String x:Key="IconPicker_Title">选择图标</s:String>
+    <s:String x:Key="IconPicker_Desc">输入资源名进行预览，或浏览 GRF / 数据文件夹中的图标。</s:String>
+    <s:String x:Key="IconPicker_SourceLabel">来源</s:String>
+    <s:String x:Key="IconPicker_ResourceLabel">资源名</s:String>
+    <s:String x:Key="IconPicker_SearchPH">搜索图标名…</s:String>
+    <s:String x:Key="IconPicker_ItemSearchPH">按物品 ID 或名称搜索…</s:String>
+    <s:String x:Key="IconPicker_Previewing">正在预览</s:String>
+    <s:String x:Key="IconPicker_CopyFromItem">从物品复制</s:String>
+    <s:String x:Key="IconPicker_BrowseGrf">浏览 GRF 图标</s:String>
+    <s:String x:Key="IconPicker_UseThis">使用此图标</s:String>
+    <s:String x:Key="IconPicker_Loading">正在加载图标…</s:String>
+
+    <!-- ===== 精灵选择对话框 ===== -->
+    <s:String x:Key="SpritePicker_Title">选择头饰精灵</s:String>
+    <s:String x:Key="SpritePicker_TitleGeneric">选择精灵</s:String>
+    <s:String x:Key="SpritePicker_Desc">输入精灵名进行预览，或浏览 GRF / 数据文件夹中的精灵。</s:String>
+    <s:String x:Key="SpritePicker_SourceLabel">来源</s:String>
+    <s:String x:Key="SpritePicker_ResourceLabel">精灵名</s:String>
+    <s:String x:Key="SpritePicker_SearchPH">搜索精灵名…</s:String>
+    <s:String x:Key="SpritePicker_ItemSearchPH">按物品 ID 或名称搜索…</s:String>
+    <s:String x:Key="SpritePicker_Previewing">正在预览</s:String>
+    <s:String x:Key="SpritePicker_CopyFromItem">从物品复制</s:String>
+    <s:String x:Key="SpritePicker_BrowseGrf">浏览 GRF 精灵</s:String>
+    <s:String x:Key="SpritePicker_UseThis">使用此精灵</s:String>
+    <s:String x:Key="SpritePicker_Loading">正在加载精灵…</s:String>
+    <s:String x:Key="SpritePicker_Act">动作</s:String>
+    <s:String x:Key="SpritePicker_Frame">帧</s:String>
+
+    <!-- ===== 技能选择对话框 ===== -->
+    <s:String x:Key="SkillPicker_Title">选择技能</s:String>
+    <s:String x:Key="SkillPicker_SearchPH">按名称或 id 搜索技能…</s:String>
+    <s:String x:Key="SkillPicker_IncludeMonster">包含魔物技能</s:String>
+    <s:String x:Key="SkillPicker_MonsterHint">(NPC_*——玩家通常无法使用)</s:String>
+    <s:String x:Key="SkillPicker_MonsterTag">魔物</s:String>
+    <s:String x:Key="SkillPicker_UseSkill">使用技能</s:String>
+    <s:String x:Key="SkillPicker_Constant">常量</s:String>
+
+    <!-- ===== 加成构建器对话框 ===== -->
+    <s:String x:Key="BonusBuilder_Title">脚本生成器</s:String>
+    <s:String x:Key="BonusBuilder_Category">类别</s:String>
+    <s:String x:Key="BonusBuilder_SearchEffects">搜索效果…</s:String>
+    <s:String x:Key="BonusBuilder_ThisEffect">此效果</s:String>
+    <s:String x:Key="BonusBuilder_AddToScript">加入脚本</s:String>
+    <s:String x:Key="BonusBuilder_AddToScriptTip">将此效果追加到你正在构建的脚本中（下方）</s:String>
+    <s:String x:Key="BonusBuilder_PickSkillPH">选择或输入一个技能</s:String>
+    <s:String x:Key="BonusBuilder_Pick">选择…</s:String>
+    <s:String x:Key="BonusBuilder_YourScript">你的脚本</s:String>
+    <s:String x:Key="BonusBuilder_ClearAll">全部清除</s:String>
+    <s:String x:Key="BonusBuilder_RemoveTip">移除此效果</s:String>
+    <s:String x:Key="BonusBuilder_FinalScript">最终脚本（确定时插入）</s:String>
+    <s:String x:Key="BonusBuilder_Insert">插入到脚本</s:String>
+    <s:String x:Key="BonusBuilder_Desc">可视化构建一条加成语句，然后插入到脚本中。</s:String>
+    <s:String x:Key="BonusBuilder_Bonus">加成</s:String>
+    <s:String x:Key="BonusBuilder_Args">参数</s:String>
+    <s:String x:Key="BonusBuilder_SearchPH">搜索加成…</s:String>
+    <s:String x:Key="BonusBuilder_Preview">预览</s:String>
+
+    <!-- ===== 条件加成构建器对话框 ===== -->
+    <s:String x:Key="CondBonus_Title">精炼 / 附魔等级加成</s:String>
+    <s:String x:Key="CondBonus_Desc">随物品精炼或升级而解锁的加成。更高层级叠加在其上。</s:String>
+    <s:String x:Key="CondBonus_Refinement">精炼</s:String>
+    <s:String x:Key="CondBonus_AddRefineTier">添加精炼层级</s:String>
+    <s:String x:Key="CondBonus_EnchantGrade">附魔等级</s:String>
+    <s:String x:Key="CondBonus_AddGradeTier">添加等级层级</s:String>
+    <s:String x:Key="CondBonus_GeneratedScript">生成的脚本</s:String>
+    <s:String x:Key="CondBonus_ClientDesc">客户端描述</s:String>
+    <s:String x:Key="CondBonus_SaveToScript">保存到脚本</s:String>
+    <s:String x:Key="CondBonus_RefinePlus">精炼 +</s:String>
+    <s:String x:Key="CondBonus_GradeLabel">等级</s:String>
+    <s:String x:Key="CondBonus_RemoveTier">移除层级</s:String>
+    <s:String x:Key="CondBonus_RemoveBonusTip">移除此加成</s:String>
+    <s:String x:Key="CondBonus_AddBonus">添加加成…</s:String>
+    <s:String x:Key="CondBonus_Mode">模式</s:String>
+    <s:String x:Key="CondBonus_Refine">总精炼</s:String>
+    <s:String x:Key="CondBonus_Grade">总附魔等级</s:String>
+    <s:String x:Key="CondBonus_Op">运算符</s:String>
+    <s:String x:Key="CondBonus_Threshold">阈值</s:String>
+    <s:String x:Key="CondBonus_Bonus">加成</s:String>
+    <s:String x:Key="CondBonus_Preview">预览</s:String>
+    <s:String x:Key="CondBonus_Insert">插入</s:String>
+
+    <!-- ===== 组合条件加成构建器 ===== -->
+    <s:String x:Key="ComboCond_Title">组合精炼 / 等级加成</s:String>
+    <s:String x:Key="ComboCond_WinTitle">组合精炼 / 附魔等级加成</s:String>
+    <s:String x:Key="ComboCond_Pieces">组合部件（精炼+等级在这些槽位间检查）：</s:String>
+    <s:String x:Key="ComboCond_Always">始终（作为套装穿戴）</s:String>
+    <s:String x:Key="ComboCond_AddBonus">添加加成</s:String>
+    <s:String x:Key="ComboCond_CondTiers">条件层级</s:String>
+    <s:String x:Key="ComboCond_AddTier">添加层级</s:String>
+    <s:String x:Key="ComboCond_GeneratedScript">生成的脚本</s:String>
+    <s:String x:Key="ComboCond_Preview">预览</s:String>
+    <s:String x:Key="ComboCond_SaveToCombo">保存到组合脚本</s:String>
+    <s:String x:Key="ComboCond_RemoveGate">移除门</s:String>
+    <s:String x:Key="ComboCond_IfSkill">如果技能</s:String>
+    <s:String x:Key="ComboCond_SkillPH">例如 MG_FIREBOLT</s:String>
+    <s:String x:Key="ComboCond_Pick">选择…</s:String>
+    <s:String x:Key="ComboCond_LvGe">等级 ≥</s:String>
+    <s:String x:Key="ComboCond_AddBonusDots">添加加成…</s:String>
+    <s:String x:Key="ComboCond_AddSkillGate">添加技能门…</s:String>
+    <s:String x:Key="ComboCond_RemoveTier">移除层级</s:String>
+    <s:String x:Key="ComboCond_TotalRefineGe">总精炼 ≥</s:String>
+    <s:String x:Key="ComboCond_EveryPieceGradeGe">每个部件等级 ≥</s:String>
+    <s:String x:Key="ComboCond_Desc">添加一条在部件总精炼或附魔等级里程碑时解锁的组合加成（等级仅 Renewal 可用）。</s:String>
+
+    <!-- ===== 更新对话框 ===== -->
+    <s:String x:Key="UpdateDlg_Checking">正在检查更新…</s:String>
+    <s:String x:Key="UpdateDlg_UpToDate">已是最新版本！</s:String>
+    <s:String x:Key="UpdateDlg_UpToDateBody">Midgard Studio 已是最新版本 ({0})。</s:String>
+    <s:String x:Key="UpdateDlg_Available">有可用更新</s:String>
+    <s:String x:Key="UpdateDlg_AvailableBody">{0} 版本可用——你当前是 {1}。</s:String>
+    <s:String x:Key="UpdateDlg_ViewRelease">查看发布</s:String>
+    <s:String x:Key="UpdateDlg_CheckAgain">再次检查</s:String>
+    <s:String x:Key="UpdateDlg_Failed">无法检查更新。</s:String>
+    <s:String x:Key="UpdateDlg_FailedBody">请确保你已联网，然后重试。</s:String>
+    <s:String x:Key="UpdateDlg_ReadyBody">{0} 版本已可下载。\n你当前是 {1}。</s:String>
+    <s:String x:Key="UpdateDlg_Download">下载</s:String>
+    <s:String x:Key="UpdateDlg_Later">以后再说</s:String>
+    <s:String x:Key="UpdateDlg_Retry">重试</s:String>
+    <s:String x:Key="UpdateDlg_CouldntCheck">无法检查更新</s:String>
+    <s:String x:Key="UpdateDlg_CouldntCheckBody">无法连接到更新服务器。请检查你的网络连接后重试。</s:String>
+    <s:String x:Key="UpdateDlg_LatestBody">Midgard Studio {0} 已是最新版本。</s:String>
+
+    <!-- ===== 客户端物品 ===== -->
+    <s:String x:Key="ClientItems_Loading">正在加载客户端物品…</s:String>
+    <s:String x:Key="ClientItems_AddTip">添加一个新的自定义物品</s:String>
+    <s:String x:Key="ClientItems_DupTip">将选中物品复制为新的自定义物品</s:String>
+    <s:String x:Key="ClientItems_CopyTip">将选中物品复制为 YAML——用 Ctrl/Shift+点击选中多个</s:String>
+    <s:String x:Key="ClientItems_FilterTip">只显示你的自定义/覆盖物品</s:String>
+    <s:String x:Key="ClientItems_SearchPH">搜索 id / aegis / 名称…  (Ctrl+F)</s:String>
+    <s:String x:Key="ClientItems_Ctx_AutoFromServer">从服务端自动补全</s:String>
+    <s:String x:Key="ClientItems_Ctx_AutoFromServerTip">生成已鉴定的名称+描述（按类型，来自服务端属性+脚本）以及槽数/ClassNum。选中多个（Ctrl/Shift+点击）可批量执行。</s:String>
+    <s:String x:Key="ClientItems_Ctx_AddCustom">添加自定义</s:String>
+    <s:String x:Key="ClientItems_Ctx_Duplicate">复制</s:String>
+    <s:String x:Key="ClientItems_Ctx_CopyYaml">复制 YAML</s:String>
+    <s:String x:Key="ClientItems_Ctx_CopyYamlTip">将选中物品复制为服务端 YAML</s:String>
+    <s:String x:Key="ClientItems_Ctx_CopyLua">复制客户端 Lua</s:String>
+    <s:String x:Key="ClientItems_Ctx_CopyLuaTip">将此物品的 itemInfo Lua 代码块复制到剪贴板</s:String>
+    <s:String x:Key="ClientItems_Ctx_ChangeId">更改 ID…</s:String>
+    <s:String x:Key="ClientItems_Ctx_CopyToId">复制到 ID…</s:String>
+    <s:String x:Key="ClientItems_Ctx_Restore">恢复为默认</s:String>
+    <s:String x:Key="ClientItems_Ctx_Delete">删除</s:String>
+    <s:String x:Key="ClientItems_Ctx_SelectInItems">在物品中选择</s:String>
+    <s:String x:Key="ClientItems_Ctx_SelectInItemsTip">跳转到服务端物品区段中的此物品</s:String>
+    <s:String x:Key="ClientItems_Col_ID">ID</s:String>
+    <s:String x:Key="ClientItems_Col_Name">名称</s:String>
+    <s:String x:Key="ClientItems_SelectPH">选择一个物品以编辑其客户端信息。</s:String>
+    <s:String x:Key="ClientItems_Autocomplete">自动补全</s:String>
+    <s:String x:Key="ClientItems_AutocompleteTip">生成已鉴定的名称+描述（按类型，来自服务端物品的属性和脚本）以及槽数/ClassNum (Ctrl+Shift+A)</s:String>
+    <s:String x:Key="ClientItems_CopyLua">复制 Lua</s:String>
+    <s:String x:Key="ClientItems_CopyLuaTip">将此物品的 itemInfo Lua 代码块复制到剪贴板 (Ctrl+C)</s:String>
+    <s:String x:Key="ClientItems_Color">颜色</s:String>
+    <s:String x:Key="ClientItems_NewLine">↵ 新行</s:String>
+    <s:String x:Key="ClientItems_NewLineTip">插入一个空行 (^FFFFFF_^000000)</s:String>
+    <s:String x:Key="ClientItems_ResetColors">重置颜色</s:String>
+    <s:String x:Key="ClientItems_ResetColorsTip">移除此物品已鉴定和未鉴定描述中的所有 ^RRGGBB 颜色代码</s:String>
+    <s:String x:Key="ClientItems_CopyToUnidTip">复制已鉴定名称+描述 → 未鉴定</s:String>
+    <s:String x:Key="ClientItems_CopyToIdTip">复制未鉴定名称+描述 → 已鉴定</s:String>
+    <s:String x:Key="ClientItems_Identified">已鉴定</s:String>
+    <s:String x:Key="ClientItems_Unidentified">未鉴定</s:String>
+    <s:String x:Key="ClientItems_DisplayName">显示名称</s:String>
+    <s:String x:Key="ClientItems_ResourceName">资源名称</s:String>
+    <s:String x:Key="ClientItems_Description">描述</s:String>
+    <s:String x:Key="ClientItems_Preview">预览</s:String>
+    <s:String x:Key="ClientItems_BrowseIconTip">从物品或 GRF/松散源中选取一个图标</s:String>
+    <s:String x:Key="ClientItems_Browse">浏览…</s:String>
+    <s:String x:Key="ClientItems_Slots">槽数</s:String>
+    <s:String x:Key="ClientItems_ClassNum">ClassNum / 外观</s:String>
+    <s:String x:Key="ClientItems_Costume">外观装</s:String>
+    <s:String x:Key="ClientItems_HeadgearSprite">头饰精灵</s:String>
+    <s:String x:Key="ClientItems_SpritePH">精灵基础名</s:String>
+    <s:String x:Key="ClientItems_BrowseSpriteTip">浏览头饰精灵（动画预览）</s:String>
+    <s:String x:Key="ClientItems_LinkSprite">关联精灵</s:String>
+
+    <!-- ===== 客户端技能 ===== -->
+    <s:String x:Key="ClientSkills_Loading">正在加载客户端技能…</s:String>
+    <s:String x:Key="ClientSkills_SelectPH">选择一个技能以查看其客户端信息。</s:String>
+    <s:String x:Key="ClientSkills_SelectEditPH">选择一个技能以编辑其客户端信息。</s:String>
+    <s:String x:Key="ClientSkills_NoMatch">没有匹配的技能。</s:String>
+    <s:String x:Key="ClientSkills_Col_ID">ID</s:String>
+    <s:String x:Key="ClientSkills_Col_Name">名称</s:String>
+    <s:String x:Key="ClientSkills_SearchPH">搜索名称 / SKID / 描述…  (Ctrl+F)</s:String>
+    <s:String x:Key="ClientSkills_SearchPH2">搜索 id / 常量 / 名称…  (Ctrl+F)</s:String>
+    <s:String x:Key="ClientSkills_AddTip">添加一个新的自定义技能 (Ctrl+N)</s:String>
+    <s:String x:Key="ClientSkills_CopyLuaTip">复制此技能的 Lua 代码块 (Ctrl+L)</s:String>
+    <s:String x:Key="ClientSkills_Ctx_AddCustom">添加自定义</s:String>
+    <s:String x:Key="ClientSkills_Ctx_CopyLua">复制 Lua</s:String>
+    <s:String x:Key="ClientSkills_Ctx_Delete">删除（仅自定义）</s:String>
+    <s:String x:Key="ClientSkills_Ctx_SelectInSkills">在技能中选择</s:String>
+    <s:String x:Key="ClientSkills_Ctx_SelectInSkillsTip">跳转到服务端技能（skill_db）区段中的此技能</s:String>
+    <s:String x:Key="ClientSkills_CopyLuaDetail">复制 Lua</s:String>
+    <s:String x:Key="ClientSkills_CopyLuaDetailTip">将此技能的 Lua 代码块复制到剪贴板</s:String>
+    <s:String x:Key="ClientSkills_InfoTitle">技能信息  (skillinfolist.lub)</s:String>
+    <s:String x:Key="ClientSkills_DisplayName">显示名称</s:String>
+    <s:String x:Key="ClientSkills_MaxLevel">最高等级</s:String>
+    <s:String x:Key="ClientSkills_MaxLevelTip">更改此项会调整下方每级字段的数量</s:String>
+    <s:String x:Key="ClientSkills_Prereqs">前置技能</s:String>
+    <s:String x:Key="ClientSkills_PrereqsHint">玩家必须先学的技能</s:String>
+    <s:String x:Key="ClientSkills_RemovePrereqTip">移除前置技能</s:String>
+    <s:String x:Key="ClientSkills_ReqLevelTip">所需等级</s:String>
+    <s:String x:Key="ClientSkills_AddPrereq">添加前置技能</s:String>
+    <s:String x:Key="ClientSkills_DescTitle">描述  (skilldescript.lub)</s:String>
+    <s:String x:Key="ClientSkills_DescHint">每行一句。支持 ^777777…^000000 这样的颜色代码。</s:String>
+    <s:String x:Key="ClientSkills_DelayTitle">施法 / 延迟  (skilldelaylist.lub)</s:String>
+    <s:String x:Key="ClientSkills_DelayHint">勾选一个计时项以启用，然后设置每级的毫秒数。未勾选的计时项会被忽略。</s:String>
+    <s:String x:Key="ClientSkills_FillTip">将等级 1 复制到所有等级</s:String>
+
+    <!-- ===== GRF 浏览器 ===== -->
+    <s:String x:Key="Grf_Title">GRF 浏览器</s:String>
+    <s:String x:Key="Grf_ReloadTip">从配置文件重新加载源</s:String>
+    <s:String x:Key="Grf_Archives">压缩包</s:String>
+    <s:String x:Key="Grf_Encoding">编码</s:String>
+    <s:String x:Key="Grf_Go">应用</s:String>
+    <s:String x:Key="Grf_CodepageTip">输入代码页编号，然后回车</s:String>
+    <s:String x:Key="Grf_EncodingComboTip">仅用于查看而重新解码名称和内容——绝不会写入 GRF 或数据文件夹</s:String>
+    <s:String x:Key="Grf_UpTip">上一级文件夹</s:String>
+    <s:String x:Key="Grf_FilterPH">过滤此文件夹…</s:String>
+    <s:String x:Key="Grf_SearchTip">在整个压缩包中搜索文件内容</s:String>
+    <s:String x:Key="Grf_Col_Name">名称</s:String>
+    <s:String x:Key="Grf_Col_Type">类型</s:String>
+    <s:String x:Key="Grf_Col_Size">大小</s:String>
+    <s:String x:Key="Grf_SelectFile">选择一个文件以预览</s:String>
+    <s:String x:Key="Grf_ZoomOutTip">缩小</s:String>
+    <s:String x:Key="Grf_ZoomResetTip">实际大小</s:String>
+    <s:String x:Key="Grf_ZoomInTip">放大</s:String>
+    <s:String x:Key="Grf_BgCheckerTip">棋盘格（透明度）</s:String>
+    <s:String x:Key="Grf_BgBlackTip">黑色</s:String>
+    <s:String x:Key="Grf_BgWhiteTip">白色</s:String>
+    <s:String x:Key="Grf_BgMagentaTip">洋红</s:String>
+    <s:String x:Key="Grf_CustomColorTip">自定义颜色</s:String>
+    <s:String x:Key="Grf_Apply">应用</s:String>
+    <s:String x:Key="Grf_WrapTip">自动换行</s:String>
+    <s:String x:Key="Grf_Wrap">换行</s:String>
+    <s:String x:Key="Grf_DetailsTip">文件详情、属性与哈希</s:String>
+    <s:String x:Key="Grf_Details">详情</s:String>
+    <s:String x:Key="Grf_ExportTip">将此文件导出到磁盘</s:String>
+    <s:String x:Key="Grf_Export">导出</s:String>
+    <s:String x:Key="Grf_Hashes">CRC32 / MD5</s:String>
+    <s:String x:Key="Grf_Compute">计算</s:String>
+    <s:String x:Key="Grf_Resources">资源</s:String>
+    <s:String x:Key="Grf_Textures">纹理</s:String>
+    <s:String x:Key="Grf_SearchResults">搜索结果</s:String>
+    <s:String x:Key="Grf_SearchPH">在整个压缩包中搜索文件内容…</s:String>
+    <s:String x:Key="Grf_Search">搜索</s:String>
+    <s:String x:Key="Grf_Close">关闭</s:String>
+    <s:String x:Key="Grf_Cancel">取消</s:String>
+
+    <!-- ===== 地图缓存编辑器 ===== -->
+    <s:String x:Key="MapCache_Title">地图缓存编辑器</s:String>
+    <s:String x:Key="MapCache_Desc">从 re + pre-re 读取只读基础数据。从 .gat 添加地图，合并另一个 map_cache.dat，然后保存——编辑只写入 db/import/map_cache.dat。</s:String>
+    <s:String x:Key="MapCache_AddGat">添加 .gat 地图…</s:String>
+    <s:String x:Key="MapCache_MergeDat">合并 .dat…</s:String>
+    <s:String x:Key="MapCache_Reload">重新加载</s:String>
+    <s:String x:Key="MapCache_OpenFolder">打开文件夹</s:String>
+    <s:String x:Key="MapCache_Save">保存到 import</s:String>
+    <s:String x:Key="MapCache_Unsaved">● 有未保存的地图缓存更改</s:String>
+    <s:String x:Key="MapCache_SearchPH">搜索地图…</s:String>
+    <s:String x:Key="MapCache_Ctx_Remove">从 import 移除</s:String>
+    <s:String x:Key="MapCache_Col_Map">地图</s:String>
+    <s:String x:Key="MapCache_Col_Size">尺寸</s:String>
+    <s:String x:Key="MapCache_Col_Cells">单元</s:String>
+    <s:String x:Key="MapCache_Col_Origin">来源</s:String>
+
+    <!-- ===== 组合编辑器 ===== -->
+    <s:String x:Key="Combo_AddTip">添加一个新的自定义组合</s:String>
+    <s:String x:Key="Combo_OverrideTip">将选中的基础组合复制到 import 层进行编辑</s:String>
+    <s:String x:Key="Combo_CopyYamlTip">将选中的组合复制为 YAML</s:String>
+    <s:String x:Key="Combo_SearchPH">按物品或脚本搜索…  (Ctrl+F)</s:String>
+    <s:String x:Key="Combo_Ctx_New">新建组合</s:String>
+    <s:String x:Key="Combo_Ctx_CopyToImport">复制到 Import 以编辑</s:String>
+    <s:String x:Key="Combo_Ctx_CopyToImportTip">将此只读基础组合克隆到你的 import 层以便编辑</s:String>
+    <s:String x:Key="Combo_Ctx_CopyYaml">复制 YAML</s:String>
+    <s:String x:Key="Combo_Ctx_Delete">删除</s:String>
+    <s:String x:Key="Combo_Col_Combo">组合</s:String>
+    <s:String x:Key="Combo_SelectPH">选择一个组合以查看其物品集和加成，或新建一个。</s:String>
+    <s:String x:Key="Combo_Title">组合</s:String>
+    <s:String x:Key="Combo_Delete">删除</s:String>
+    <s:String x:Key="Combo_ReadOnlyTitle">只读基础组合</s:String>
+    <s:String x:Key="Combo_ReadOnlyMsg">使用右上角的“复制到 Import 以编辑”来自定义此组合的物品或加成。</s:String>
+    <s:String x:Key="Combo_ItemSets">物品集</s:String>
+    <s:String x:Key="Combo_RemoveItemTip">移除物品</s:String>
+    <s:String x:Key="Combo_AddItemTip">向此集添加物品</s:String>
+    <s:String x:Key="Combo_RemoveSetTip">移除此物品集</s:String>
+    <s:String x:Key="Combo_AddSet">添加物品集</s:String>
+    <s:String x:Key="Combo_AddSetTip">添加一个触发相同加成的备选物品集（例如精炼变体）</s:String>
+    <s:String x:Key="Combo_BonusScript">加成脚本</s:String>
+    <s:String x:Key="Combo_BonusBuilder">加成构建器</s:String>
+    <s:String x:Key="Combo_BonusBuilderTip">可视化构建一条加成语句并追加</s:String>
+    <s:String x:Key="Combo_RefineGrade">精炼 / 附魔等级加成</s:String>
+    <s:String x:Key="Combo_RefineGradeTip">添加在部件总精炼或附魔等级里程碑时解锁的组合加成（等级仅 Renewal 可用）。</s:String>
+
     <!-- ===== 通用错误 / 对话框消息（C# 中使用） ===== -->
     <s:String x:Key="Msg_UnexpectedError_Title">意外错误</s:String>
     <s:String x:Key="Msg_UnexpectedError_Body">出了一些问题，但 Midgard Studio 会继续运行，以免你丢失工作：</s:String>

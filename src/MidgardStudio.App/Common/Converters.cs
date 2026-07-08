@@ -26,9 +26,24 @@ public sealed class OriginToLabelConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object? parameter, CultureInfo culture) => value switch
     {
-        RecordOrigin.Overridden => "OVERRIDE",
-        RecordOrigin.NewCustom => "CUSTOM",
-        _ => "BASE",
+        RecordOrigin.Overridden => Localization.LocalizationService.Get("Db_Origin_Override"),
+        RecordOrigin.NewCustom => Localization.LocalizationService.Get("Db_Origin_Custom"),
+        _ => Localization.LocalizationService.Get("Db_Origin_Base"),
+    };
+
+    public object ConvertBack(object value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotSupportedException();
+}
+
+/// <summary>Maps a validation severity enum to a localized label (the Severity column chip text).</summary>
+public sealed class SeverityToLabelConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object? parameter, CultureInfo culture) => value switch
+    {
+        ValidationSeverity.Error => Localization.LocalizationService.Get("Val_Sev_Error"),
+        ValidationSeverity.Warning => Localization.LocalizationService.Get("Val_Sev_Warning"),
+        ValidationSeverity.Info => Localization.LocalizationService.Get("Val_Sev_Info"),
+        _ => value?.ToString() ?? string.Empty,
     };
 
     public object ConvertBack(object value, Type targetType, object? parameter, CultureInfo culture) =>
@@ -39,8 +54,29 @@ public sealed class OriginToLabelConverter : IValueConverter
 /// else the friendly label of its DbId. Bind the whole issue: <c>{Binding Converter={StaticResource ...}}</c>.</summary>
 public sealed class IssueCategoryConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object? parameter, CultureInfo culture) =>
-        value is ValidationIssue i ? i.Category ?? DbIdToSourceLabelConverter.Label(i.DbId) : string.Empty;
+    /// <summary>Internal Category constants (stored on the issue) → localization resource key.</summary>
+    private static readonly Dictionary<string, string> CategoryMap = new(StringComparer.Ordinal)
+    {
+        ["Client Mobs"] = "ValSrc_ClientMobs",
+        ["Cash Shop"] = "Label_CashShop",
+    };
+
+    public object Convert(object value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is not ValidationIssue i) return string.Empty;
+        if (i.Category is { } cat && CategoryMap.TryGetValue(cat, out var resKey))
+            return Localization.LocalizationService.Get(resKey);
+        return i.Category ?? DbIdToSourceLabelConverter.Label(i.DbId);
+    }
+
+    /// <summary>Resolves the localized display label for an issue's category (shared by the source-chip
+    /// builder in <c>ValidationViewModel</c>, which has the issue but binds the chip text to a string).</summary>
+    public static string ResolveLabel(ValidationIssue issue)
+    {
+        if (issue.Category is { } cat && CategoryMap.TryGetValue(cat, out var resKey))
+            return Localization.LocalizationService.Get(resKey);
+        return issue.Category ?? DbIdToSourceLabelConverter.Label(issue.DbId);
+    }
 
     public object ConvertBack(object value, Type targetType, object? parameter, CultureInfo culture) =>
         throw new NotSupportedException();
@@ -104,15 +140,17 @@ public sealed class FileNameConverter : IValueConverter
 /// ("item_db" -> "Items", "client_skills" -> "Client Skills"); unknown ids are humanized as a fallback.</summary>
 public sealed class DbIdToSourceLabelConverter : IValueConverter
 {
+    /// <summary>db id → localization resource key. Values resolve through LocalizationService so the
+    /// labels follow the active language (the old static English map is gone).</summary>
     private static readonly Dictionary<string, string> Map = new(StringComparer.Ordinal)
     {
-        ["item_db"] = "Items",
-        ["mob_db"] = "Monsters",
-        ["skill_db"] = "Skills",
-        ["client_skills"] = "Client Skills",
-        ["client_items"] = "Client Items",
-        ["item_combo_db"] = "Item Combos",
-        ["mob_skill_db"] = "Mob Skills",
+        ["item_db"] = "ValSrc_Items",
+        ["mob_db"] = "ValSrc_Monsters",
+        ["skill_db"] = "ValSrc_Skills",
+        ["client_skills"] = "ValSrc_ClientSkills",
+        ["client_items"] = "ValSrc_ClientItems",
+        ["item_combo_db"] = "ValSrc_ItemCombos",
+        ["mob_skill_db"] = "ValSrc_MobSkills",
     };
 
     public object Convert(object value, Type targetType, object? parameter, CultureInfo culture) =>
@@ -121,8 +159,8 @@ public sealed class DbIdToSourceLabelConverter : IValueConverter
     /// <summary>The friendly source label for a db id (shared by the XAML group/chip and the view model).</summary>
     public static string Label(string? id)
     {
-        if (string.IsNullOrEmpty(id)) return "Other";
-        if (Map.TryGetValue(id, out var label)) return label;
+        if (string.IsNullOrEmpty(id)) return Localization.LocalizationService.Get("ValSrc_Other");
+        if (Map.TryGetValue(id, out var resKey)) return Localization.LocalizationService.Get(resKey);
         var words = id.Replace("_db", string.Empty).Split('_', StringSplitOptions.RemoveEmptyEntries);
         return string.Join(' ', words.Select(w => char.ToUpperInvariant(w[0]) + w[1..]));
     }

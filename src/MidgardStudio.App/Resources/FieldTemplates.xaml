@@ -20,6 +20,7 @@
     <common:AddOneConverter x:Key="PlusOne" />
     <common:IssueCategoryConverter x:Key="IssueCategory" />
     <common:IssueFileConverter x:Key="IssueFile" />
+    <common:SeverityToLabelConverter x:Key="SeverityLabel" />
 
     <!-- Dark "magic-bento" background for script editors (a subtle purple glow over near-black) so the
          code area is themed instead of a plain white box. Reused by every script editor in the app. -->
@@ -698,14 +699,14 @@
     <DataTemplate DataType="{x:Type vm:ValidationViewModel}">
         <Border Background="{StaticResource ScriptEditorBackground}" CornerRadius="8" Padding="16,14">
             <DockPanel>
-                <TextBlock DockPanel.Dock="Top" Text="Validation" Style="{StaticResource TitleSection}" Margin="0,0,0,10" />
+                <TextBlock DockPanel.Dock="Top" Text="{DynamicResource Val_Title}" Style="{StaticResource TitleSection}" Margin="0,0,0,10" />
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,8">
-                    <ui:Button Content="Run validation" Appearance="Primary" Command="{Binding RunCommand}">
+                    <ui:Button Content="{DynamicResource Val_Run}" Appearance="Primary" Command="{Binding RunCommand}">
                         <ui:Button.Icon><ui:SymbolIcon Symbol="CheckmarkCircle24" /></ui:Button.Icon>
                     </ui:Button>
-                    <ui:Button Content="{Binding AutoFixableCount, StringFormat='Quick Fix All ({0})'}"
+                    <ui:Button Content="{Binding FixAllLabel}"
                                Command="{Binding FixAllCommand}" Margin="8,0,0,0"
-                               ToolTip="Fixes the issues that have one clear, safe solution. Anything that needs a choice from you is left untouched.">
+                               ToolTip="{DynamicResource Val_QuickFixAll_Tip}">
                         <ui:Button.Icon><ui:SymbolIcon Symbol="Sparkle24" /></ui:Button.Icon>
                     </ui:Button>
                     <Grid Margin="12,0,0,0" VerticalAlignment="Center">
@@ -724,12 +725,12 @@
                     <TextBlock Text="{Binding Summary}" VerticalAlignment="Center" Foreground="#C9C9DB" Margin="12,0,0,0" />
                 </StackPanel>
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,12">
-                    <CheckBox Content="Full scan (include base data)" IsChecked="{Binding FullScan}" Foreground="#C9C9DB" Margin="0,0,18,0" />
-                    <TextBlock Text="Show:" VerticalAlignment="Center" Foreground="#8A8AA0" Margin="0,0,8,0" />
-                    <CheckBox Content="Errors" IsChecked="{Binding ShowErrors}" Foreground="#FF8A8A" Margin="0,0,12,0" />
-                    <CheckBox Content="Warnings" IsChecked="{Binding ShowWarnings}" Foreground="#E8C06A" Margin="0,0,12,0" />
-                    <CheckBox Content="Info" IsChecked="{Binding ShowInfos}" Foreground="#7FB2E8" Margin="0,0,12,0" />
-                    <CheckBox Content="Fixed" IsChecked="{Binding ShowFixed}" Foreground="#7FE0A0" />
+                    <CheckBox Content="{DynamicResource Val_FullScan}" IsChecked="{Binding FullScan}" Foreground="#C9C9DB" Margin="0,0,18,0" />
+                    <TextBlock Text="{DynamicResource Val_Show}" VerticalAlignment="Center" Foreground="#8A8AA0" Margin="0,0,8,0" />
+                    <CheckBox Content="{DynamicResource Val_Errors}" IsChecked="{Binding ShowErrors}" Foreground="#FF8A8A" Margin="0,0,12,0" />
+                    <CheckBox Content="{DynamicResource Val_Warnings}" IsChecked="{Binding ShowWarnings}" Foreground="#E8C06A" Margin="0,0,12,0" />
+                    <CheckBox Content="{DynamicResource Val_Info}" IsChecked="{Binding ShowInfos}" Foreground="#7FB2E8" Margin="0,0,12,0" />
+                    <CheckBox Content="{DynamicResource Val_Fixed}" IsChecked="{Binding ShowFixed}" Foreground="#7FE0A0" />
                 </StackPanel>
                 <!-- Source filter chips: click a category to focus it (a flat, virtualized list — no folding). -->
                 <ListBox DockPanel.Dock="Top" ItemsSource="{Binding Sources}" SelectedItem="{Binding SelectedSource}"
@@ -774,24 +775,24 @@
                             <!-- One shared context menu. PlacementTarget is the right-clicked ListViewItem: its Tag is
                                  the ValidationViewModel (commands) and its DataContext is the ValidationIssue (parameter). -->
                             <ContextMenu x:Key="IssueMenu">
-                                <MenuItem Header="Go to record"
+                                <MenuItem Header="{DynamicResource Val_Ctx_GoToRecord}"
                                           Command="{Binding PlacementTarget.Tag.OpenCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding PlacementTarget.DataContext.Issue, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                                <MenuItem Header="Apply quick fix"
+                                <MenuItem Header="{DynamicResource Val_Ctx_ApplyQuickFix}"
                                           Visibility="{Binding PlacementTarget.DataContext.Issue.Fix, Converter={StaticResource NotNullToVis}, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                           Command="{Binding PlacementTarget.Tag.ApplyFixCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding PlacementTarget.DataContext.Issue, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                                 <Separator />
-                                <MenuItem Header="Copy message"
+                                <MenuItem Header="{DynamicResource Val_Ctx_CopyMessage}"
                                           Command="{Binding PlacementTarget.Tag.CopyMessageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding PlacementTarget.DataContext.Issue, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                                <MenuItem Header="Copy full details"
+                                <MenuItem Header="{DynamicResource Val_Ctx_CopyDetails}"
                                           Command="{Binding PlacementTarget.Tag.CopyDetailsCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding PlacementTarget.DataContext.Issue, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                                <MenuItem Header="Copy location (db / key / field)"
+                                <MenuItem Header="{DynamicResource Val_Ctx_CopyLocation}"
                                           Command="{Binding PlacementTarget.Tag.CopyLocationCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding PlacementTarget.DataContext.Issue, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                                <MenuItem Header="Copy rule id"
+                                <MenuItem Header="{DynamicResource Val_Ctx_CopyRuleId}"
                                           Command="{Binding PlacementTarget.Tag.CopyRuleIdCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding PlacementTarget.DataContext.Issue, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                             </ContextMenu>
@@ -834,7 +835,7 @@
                         </ListView.ItemContainerStyle>
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Severity" Width="96">
+                                <GridViewColumn Header="{DynamicResource Val_Col_Severity}" Width="96">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <!-- Colorized severity chip (live), or a green "Fixed" pill for a quick-fixed-pending-save row. -->
@@ -842,11 +843,11 @@
                                                 <Border x:Name="Ring" CornerRadius="5" Padding="1.4"
                                                         common:GradientBorder.Enabled="True" common:GradientBorder.Glow="False">
                                                     <Border x:Name="Face" CornerRadius="4" Padding="8,1" Background="#33FFFFFF">
-                                                        <TextBlock x:Name="Sev" Text="{Binding Issue.Severity}" FontSize="11" FontWeight="SemiBold" Foreground="#E8E8F2" />
+                                                        <TextBlock x:Name="Sev" Text="{Binding Issue.Severity, Converter={StaticResource SeverityLabel}}" FontSize="11" FontWeight="SemiBold" Foreground="#E8E8F2" />
                                                     </Border>
                                                 </Border>
                                                 <Border x:Name="FixedPill" CornerRadius="4" Padding="8,1" Background="#2249C97A" Visibility="Collapsed">
-                                                    <TextBlock Text="&#x2713; Fixed" FontSize="11" FontWeight="SemiBold" Foreground="#5AE0A0" />
+                                                    <TextBlock Text="{DynamicResource Val_FixedPill}" FontSize="11" FontWeight="SemiBold" Foreground="#5AE0A0" />
                                                 </Border>
                                             </Grid>
                                             <DataTemplate.Triggers>
@@ -873,11 +874,11 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="Database" Width="104" DisplayMemberBinding="{Binding Issue, Converter={StaticResource IssueCategory}}" />
-                                <GridViewColumn Header="ID" Width="78" DisplayMemberBinding="{Binding Issue.Key}" />
-                                <GridViewColumn Header="Field" Width="92" DisplayMemberBinding="{Binding Issue.Field}" />
-                                <GridViewColumn Header="File" Width="120" DisplayMemberBinding="{Binding Issue, Converter={StaticResource IssueFile}}" />
-                                <GridViewColumn Header="Message" Width="380">
+                                <GridViewColumn Header="{DynamicResource Val_Col_Database}" Width="104" DisplayMemberBinding="{Binding Issue, Converter={StaticResource IssueCategory}}" />
+                                <GridViewColumn Header="{DynamicResource Val_Col_ID}" Width="78" DisplayMemberBinding="{Binding Issue.Key}" />
+                                <GridViewColumn Header="{DynamicResource Val_Col_Field}" Width="92" DisplayMemberBinding="{Binding Issue.Field}" />
+                                <GridViewColumn Header="{DynamicResource Val_Col_File}" Width="120" DisplayMemberBinding="{Binding Issue, Converter={StaticResource IssueFile}}" />
+                                <GridViewColumn Header="{DynamicResource Val_Col_Message}" Width="380">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Issue.Message}" TextTrimming="CharacterEllipsis">
@@ -895,11 +896,11 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="Actions" Width="150">
+                                <GridViewColumn Header="{DynamicResource Val_Col_Actions}" Width="150">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                <ui:Button Content="Go to" Padding="8,2" FontSize="11"
+                                                <ui:Button Content="{DynamicResource Val_GoTo}" Padding="8,2" FontSize="11"
                                                            Command="{Binding DataContext.OpenCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                                            CommandParameter="{Binding Issue}" />
                                                 <!-- One-click Fix only for an Automatic (deterministic) fix that isn't applied yet. -->
@@ -930,11 +931,11 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0">
                 <TextBlock Opacity="0.7" FontSize="11" TextWrapping="Wrap"
-                           Text="Registers the sprite in npcidentity.lub (JT_NAME = mob id) and jobname.lub." />
+                           Text="{DynamicResource MobSprite_Desc}" />
                 <StackPanel Orientation="Horizontal" Margin="0,8">
-                    <TextBlock Text="Sprite name" VerticalAlignment="Center" Opacity="0.85" Width="90" />
+                    <TextBlock Text="{DynamicResource MobSprite_Name}" VerticalAlignment="Center" Opacity="0.85" Width="90" />
                     <ui:TextBox Text="{Binding SpriteName, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0,0,8,0" />
-                    <ui:Button Content="Register sprite" Appearance="Primary" Command="{Binding RegisterCommand}"
+                    <ui:Button Content="{DynamicResource MobSprite_Register}" Appearance="Primary" Command="{Binding RegisterCommand}"
                                IsEnabled="{Binding CanRegister}" />
                 </StackPanel>
                 <TextBlock Text="{Binding StatusMessage}" Opacity="0.8" Foreground="#7FD0A0" TextWrapping="Wrap"
@@ -950,7 +951,7 @@
                                Visibility="{Binding HasAnimation, Converter={StaticResource BoolToVis}, ConverterParameter=invert}" />
                     </Grid>
                 </Border>
-                <TextBlock Text="live sprite" Opacity="0.45" FontSize="10" HorizontalAlignment="Center" Margin="0,3,0,0"
+                <TextBlock Text="{DynamicResource MobSprite_LivePreview}" Opacity="0.45" FontSize="10" HorizontalAlignment="Center" Margin="0,3,0,0"
                            Visibility="{Binding HasAnimation, Converter={StaticResource BoolToVis}}" />
             </StackPanel>
         </Grid>

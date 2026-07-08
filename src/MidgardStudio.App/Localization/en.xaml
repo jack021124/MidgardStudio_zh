@@ -373,6 +373,69 @@
     <s:String x:Key="Db_Validation">Validation</s:String>
     <s:String x:Key="Db_ClientSprite">Client sprite</s:String>
 
+    <!-- ===== Validation panel ===== -->
+    <s:String x:Key="Val_Title">Validation</s:String>
+    <s:String x:Key="Val_Run">Run validation</s:String>
+    <s:String x:Key="Val_QuickFixAll">Quick Fix All ({0})</s:String>
+    <s:String x:Key="Val_QuickFixAll_Tip">Fixes the issues that have one clear, safe solution. Anything that needs a choice from you is left untouched.</s:String>
+    <s:String x:Key="Val_FullScan">Full scan (include base data)</s:String>
+    <s:String x:Key="Val_Show">Show:</s:String>
+    <s:String x:Key="Val_Errors">Errors</s:String>
+    <s:String x:Key="Val_Warnings">Warnings</s:String>
+    <s:String x:Key="Val_Info">Info</s:String>
+    <s:String x:Key="Val_Fixed">Fixed</s:String>
+    <s:String x:Key="Val_Summary_Pending">Run a check to validate your custom entries across the server and client files.</s:String>
+    <s:String x:Key="Val_Summary_Validating">Validating…</s:String>
+    <s:String x:Key="Val_Summary_NoIssues">No issues found in your custom/overridden entries.</s:String>
+    <s:String x:Key="Val_Summary_HasIssues">{0} error(s) · {1} warning(s) · {2} info {3}</s:String>
+    <s:String x:Key="Val_Summary_FixedDot">{0} fixed</s:String>
+    <s:String x:Key="Val_All">All</s:String>
+    <s:String x:Key="Val_QuickFixPrefix">Quick fix: </s:String>
+    <s:String x:Key="Val_FixAllBatch">Fix {0} issue(s)</s:String>
+    <s:String x:Key="Val_FixButtonDefault">Fix</s:String>
+    <s:String x:Key="Val_FixedPill">✓ Fixed</s:String>
+    <s:String x:Key="Val_Col_Severity">Severity</s:String>
+    <s:String x:Key="Val_Col_Database">Database</s:String>
+    <s:String x:Key="Val_Col_ID">ID</s:String>
+    <s:String x:Key="Val_Col_Field">Field</s:String>
+    <s:String x:Key="Val_Col_File">File</s:String>
+    <s:String x:Key="Val_Col_Message">Message</s:String>
+    <s:String x:Key="Val_Col_Actions">Actions</s:String>
+    <s:String x:Key="Val_GoTo">Go to</s:String>
+    <s:String x:Key="Val_Ctx_GoToRecord">Go to record</s:String>
+    <s:String x:Key="Val_Ctx_ApplyQuickFix">Apply quick fix</s:String>
+    <s:String x:Key="Val_Ctx_CopyMessage">Copy message</s:String>
+    <s:String x:Key="Val_Ctx_CopyDetails">Copy full details</s:String>
+    <s:String x:Key="Val_Ctx_CopyLocation">Copy location (db / key / field)</s:String>
+    <s:String x:Key="Val_Ctx_CopyRuleId">Copy rule id</s:String>
+
+    <!-- Validation source labels (DbIdToSourceLabelConverter + OriginToLabelConverter) -->
+    <s:String x:Key="ValSrc_Items">Items</s:String>
+    <s:String x:Key="ValSrc_Monsters">Monsters</s:String>
+    <s:String x:Key="ValSrc_Skills">Skills</s:String>
+    <s:String x:Key="ValSrc_ClientSkills">Client Skills</s:String>
+    <s:String x:Key="ValSrc_ClientItems">Client Items</s:String>
+    <s:String x:Key="ValSrc_ClientMobs">Client Mobs</s:String>
+    <s:String x:Key="ValSrc_ItemCombos">Item Combos</s:String>
+    <s:String x:Key="ValSrc_MobSkills">Mob Skills</s:String>
+    <s:String x:Key="ValSrc_Other">Other</s:String>
+
+    <!-- Mob sprite registration panel -->
+    <s:String x:Key="MobSprite_Desc">Registers the sprite in npcidentity.lub (JT_NAME = mob id) and jobname.lub.</s:String>
+    <s:String x:Key="MobSprite_Name">Sprite name</s:String>
+    <s:String x:Key="MobSprite_Register">Register sprite</s:String>
+    <s:String x:Key="MobSprite_LivePreview">live sprite</s:String>
+
+    <!-- Validation severity labels (SeverityToLabelConverter) -->
+    <s:String x:Key="Val_Sev_Error">Error</s:String>
+    <s:String x:Key="Val_Sev_Warning">Warning</s:String>
+    <s:String x:Key="Val_Sev_Info">Info</s:String>
+
+    <!-- Record origin pill labels (OriginToLabelConverter) -->
+    <s:String x:Key="Db_Origin_Override">OVERRIDE</s:String>
+    <s:String x:Key="Db_Origin_Custom">CUSTOM</s:String>
+    <s:String x:Key="Db_Origin_Base">BASE</s:String>
+
     <!-- ===== Backup Manager ===== -->
     <s:String x:Key="Backup_Title">Backup Manager</s:String>
     <s:String x:Key="Backup_Desc">A snapshot of your server + client data is taken after each manual save; unchanged files are de-duplicated to save space. Restore, pin, verify, or export any point in time below.</s:String>

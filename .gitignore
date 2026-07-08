@@ -41,3 +41,8 @@ comp_x64.dll
 Thumbs.db
 desktop.ini
 *.local
+
+# Build output folders (self-contained releases)
+MidgardStudio-Release/
+build-exe/
+publish/

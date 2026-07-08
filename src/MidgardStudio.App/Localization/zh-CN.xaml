@@ -367,6 +367,69 @@
     <s:String x:Key="Db_Validation">校验</s:String>
     <s:String x:Key="Db_ClientSprite">客户端精灵</s:String>
 
+    <!-- ===== 校验面板 ===== -->
+    <s:String x:Key="Val_Title">校验</s:String>
+    <s:String x:Key="Val_Run">运行校验</s:String>
+    <s:String x:Key="Val_QuickFixAll">快速全部修复 ({0})</s:String>
+    <s:String x:Key="Val_QuickFixAll_Tip">修复那些有明确、安全解决方案的问题。需要你做出选择的将保持原样。</s:String>
+    <s:String x:Key="Val_FullScan">完整扫描(包含基础数据)</s:String>
+    <s:String x:Key="Val_Show">显示：</s:String>
+    <s:String x:Key="Val_Errors">错误</s:String>
+    <s:String x:Key="Val_Warnings">警告</s:String>
+    <s:String x:Key="Val_Info">信息</s:String>
+    <s:String x:Key="Val_Fixed">已修复</s:String>
+    <s:String x:Key="Val_Summary_Pending">运行一次检查,以校验你的自定义条目在服务端和客户端文件中的一致性。</s:String>
+    <s:String x:Key="Val_Summary_Validating">正在校验…</s:String>
+    <s:String x:Key="Val_Summary_NoIssues">在你的自定义/覆盖条目中未发现问题。</s:String>
+    <s:String x:Key="Val_Summary_HasIssues">{0} 个错误 · {1} 个警告 · {2} 个信息 {3}</s:String>
+    <s:String x:Key="Val_Summary_FixedDot">{0} 已修复</s:String>
+    <s:String x:Key="Val_All">全部</s:String>
+    <s:String x:Key="Val_QuickFixPrefix">快速修复：</s:String>
+    <s:String x:Key="Val_FixAllBatch">修复 {0} 个问题</s:String>
+    <s:String x:Key="Val_FixButtonDefault">修复</s:String>
+    <s:String x:Key="Val_FixedPill">✓ 已修复</s:String>
+    <s:String x:Key="Val_Col_Severity">严重性</s:String>
+    <s:String x:Key="Val_Col_Database">数据库</s:String>
+    <s:String x:Key="Val_Col_ID">ID</s:String>
+    <s:String x:Key="Val_Col_Field">字段</s:String>
+    <s:String x:Key="Val_Col_File">文件</s:String>
+    <s:String x:Key="Val_Col_Message">消息</s:String>
+    <s:String x:Key="Val_Col_Actions">操作</s:String>
+    <s:String x:Key="Val_GoTo">跳转</s:String>
+    <s:String x:Key="Val_Ctx_GoToRecord">跳转到条目</s:String>
+    <s:String x:Key="Val_Ctx_ApplyQuickFix">应用快速修复</s:String>
+    <s:String x:Key="Val_Ctx_CopyMessage">复制消息</s:String>
+    <s:String x:Key="Val_Ctx_CopyDetails">复制完整详情</s:String>
+    <s:String x:Key="Val_Ctx_CopyLocation">复制位置(数据库 / 键 / 字段)</s:String>
+    <s:String x:Key="Val_Ctx_CopyRuleId">复制规则 ID</s:String>
+
+    <!-- 校验来源标签(DbIdToSourceLabelConverter + OriginToLabelConverter) -->
+    <s:String x:Key="ValSrc_Items">物品</s:String>
+    <s:String x:Key="ValSrc_Monsters">魔物</s:String>
+    <s:String x:Key="ValSrc_Skills">技能</s:String>
+    <s:String x:Key="ValSrc_ClientSkills">客户端技能</s:String>
+    <s:String x:Key="ValSrc_ClientItems">客户端物品</s:String>
+    <s:String x:Key="ValSrc_ClientMobs">客户端魔物</s:String>
+    <s:String x:Key="ValSrc_ItemCombos">物品组合</s:String>
+    <s:String x:Key="ValSrc_MobSkills">魔物技能</s:String>
+    <s:String x:Key="ValSrc_Other">其他</s:String>
+
+    <!-- 魔物精灵注册面板 -->
+    <s:String x:Key="MobSprite_Desc">将精灵注册到 npcidentity.lub(JT_NAME = 魔物 ID)和 jobname.lub。</s:String>
+    <s:String x:Key="MobSprite_Name">精灵名称</s:String>
+    <s:String x:Key="MobSprite_Register">注册精灵</s:String>
+    <s:String x:Key="MobSprite_LivePreview">实时精灵</s:String>
+
+    <!-- 校验严重性标签(SeverityToLabelConverter) -->
+    <s:String x:Key="Val_Sev_Error">错误</s:String>
+    <s:String x:Key="Val_Sev_Warning">警告</s:String>
+    <s:String x:Key="Val_Sev_Info">信息</s:String>
+
+    <!-- 条目来源标签(OriginToLabelConverter) -->
+    <s:String x:Key="Db_Origin_Override">覆盖</s:String>
+    <s:String x:Key="Db_Origin_Custom">自定义</s:String>
+    <s:String x:Key="Db_Origin_Base">基础</s:String>
+
     <!-- ===== 备份管理 ===== -->
     <s:String x:Key="Backup_Title">备份管理器</s:String>
     <s:String x:Key="Backup_Desc">每次手动保存后会为你的服务端+客户端数据拍摄一个快照；未更改的文件会去重以节省空间。在下方可还原、固定、校验或导出任意时间点。</s:String>

@@ -133,8 +133,11 @@ public static class LocalizationService
             var source = new Uri(DictionaryPrefix + language + DictionarySuffix, UriKind.Relative);
             return (ResourceDictionary)Application.LoadComponent(source);
         }
-        catch
+        catch (Exception ex)
         {
+            // A duplicate x:Key, malformed element, or encoding issue in the XAML makes LoadComponent throw.
+            // Log it so the silent English fallback is traceable instead of invisible.
+            try { Serilog.Log.Error(ex, "Failed to load localization dictionary '{Language}'", language); } catch { /* logger unavailable */ }
             return null;
         }
     }

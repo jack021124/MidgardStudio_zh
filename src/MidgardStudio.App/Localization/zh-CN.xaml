@@ -913,7 +913,6 @@
     <s:String x:Key="EnumLabel_Kobold">犬妖</s:String>
     <s:String x:Key="EnumLabel_Orc">兽人</s:String>
     <s:String x:Key="EnumLabel_Golem">魔锅蛋</s:String>
-    <s:String x:Key="EnumLabel_Ninja">忍者</s:String>
     <s:String x:Key="EnumLabel_Gvg">GVG</s:String>
     <s:String x:Key="EnumLabel_Treasure">宝箱</s:String>
     <s:String x:Key="EnumLabel_Biolab">生化实验室</s:String>
@@ -967,7 +966,6 @@
     <s:String x:Key="EnumLabel_NoEnemy">非敌方</s:String>
     <s:String x:Key="EnumLabel_NoGuild">非公会</s:String>
     <s:String x:Key="EnumLabel_NoParty">非队伍</s:String>
-    <s:String x:Key="EnumLabel_Party">队伍</s:String>
     <s:String x:Key="EnumLabel_SameGuild">同公会</s:String>
     <s:String x:Key="EnumLabel_WoS">WoS</s:String>
     <s:String x:Key="EnumLabel_Falcon">猎鹰</s:String>

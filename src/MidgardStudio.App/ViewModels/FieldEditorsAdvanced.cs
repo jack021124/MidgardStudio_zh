@@ -102,9 +102,9 @@ public sealed class BoolMapFieldEditorViewModel : FieldEditorViewModel
         {
             var inc = Chips.Where(c => c.State == ChipState.Include).Select(c => c.Label).Concat(_extraIncluded).ToList();
             var exc = Chips.Where(c => c.State == ChipState.Exclude).Select(c => c.Label).Concat(_extraExcluded).ToList();
-            if (inc.Count == 0 && exc.Count == 0) return "None";
+            if (inc.Count == 0 && exc.Count == 0) return SchemaLabels.T("Db_Summary_None");
             string s = string.Join(", ", inc);
-            if (exc.Count > 0) s = (s.Length == 0 ? "—" : s) + " · except " + string.Join(", ", exc);
+            if (exc.Count > 0) s = (s.Length == 0 ? "?" : s) + " " + SchemaLabels.T("Db_Summary_Except") + " " + string.Join(", ", exc);
             return s.Length > 50 ? s[..50] + "…" : s;
         }
     }
@@ -160,7 +160,7 @@ public sealed class ObjectFieldEditorViewModel : FieldEditorViewModel
                 if (!IsDefault(v, f.Default))
                     parts.Add(v is bool ? f.Label : $"{f.Label}: {v}");
             }
-            if (parts.Count == 0) return "None";
+            if (parts.Count == 0) return SchemaLabels.T("Db_Summary_None");
             string s = string.Join(", ", parts);
             return s.Length > 50 ? s[..50] + "…" : s;
         }
@@ -215,7 +215,7 @@ public sealed class ObjectRowViewModel : ObservableObject
                 var s = Record.GetString(nameField.Name);
                 if (!string.IsNullOrWhiteSpace(s)) return s!;
             }
-            return ScalarParts().FirstOrDefault() ?? "(new entry)";
+            return ScalarParts().FirstOrDefault() ?? SchemaLabels.T("Db_Summary_NewEntry");
         }
     }
 
@@ -307,7 +307,7 @@ public sealed partial class ObjectListFieldEditorViewModel : FieldEditorViewMode
     }
 
     public override string Summary =>
-        _list.Count == 0 ? "None" : $"{_list.Count} " + (_list.Count == 1 ? "entry" : "entries");
+        _list.Count == 0 ? SchemaLabels.T("Db_Summary_None") : $"{_list.Count} " + SchemaLabels.T(_list.Count == 1 ? "Db_Summary_Entry" : "Db_Summary_Entries");
 
     private ObjectRowViewModel BuildRow(DbRecord record)
     {
@@ -328,7 +328,7 @@ public sealed partial class ObjectListFieldEditorViewModel : FieldEditorViewMode
         var record = new DbRecord(_element) { Owner = _parent };
         var row = BuildRow(record);
         Stack.Execute(new ListMutateCommand(
-            $"{_parent.Schema.DisplayName}: add {Label} row",
+            "${_parent.Schema.DisplayName}: " + SchemaLabels.T("Db_Undo_Add") + " {Label}",
             () => { _list.Add(record); Rows.Add(row); SelectedRow = row; _parent.IsDirty = true; RaiseChanged(); OnPropertyChanged(nameof(Summary)); },
             () => { _list.Remove(record); Rows.Remove(row); _parent.IsDirty = true; RaiseChanged(); OnPropertyChanged(nameof(Summary)); }));
     }
@@ -345,7 +345,7 @@ public sealed partial class ObjectListFieldEditorViewModel : FieldEditorViewMode
         var newRow = BuildRow(clone);
         int index = _list.IndexOf(row.Record);
         Stack.Execute(new ListMutateCommand(
-            $"{_parent.Schema.DisplayName}: duplicate {Label} row",
+            "${_parent.Schema.DisplayName}: " + SchemaLabels.T("Db_Undo_Duplicate") + " {Label}",
             () =>
             {
                 int i = Math.Clamp(index + 1, 0, _list.Count);
@@ -377,7 +377,7 @@ public sealed partial class ObjectListFieldEditorViewModel : FieldEditorViewMode
         if (!IsEditable || row is null) return;
         int index = _list.IndexOf(row.Record);
         Stack.Execute(new ListMutateCommand(
-            $"{_parent.Schema.DisplayName}: remove {Label} row",
+            "${_parent.Schema.DisplayName}: " + SchemaLabels.T("Db_Undo_Remove") + " {Label}",
             () =>
             {
                 _list.Remove(row.Record); Rows.Remove(row);

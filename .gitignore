@@ -46,3 +46,7 @@ desktop.ini
 MidgardStudio-Release/
 build-exe/
 publish/
+
+# Windows reserved-name artifact (created accidentally by shell redirects)
+nul
+*.zip

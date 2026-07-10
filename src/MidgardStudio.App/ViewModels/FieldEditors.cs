@@ -258,7 +258,7 @@ public sealed class ScriptFieldEditorViewModel : FieldEditorViewModel
         get
         {
             var text = Value;
-            if (string.IsNullOrWhiteSpace(text)) return "None";
+            if (string.IsNullOrWhiteSpace(text)) return SchemaLabels.T("Db_Summary_None");
             var line = text.Replace("\r", string.Empty).Split('\n').FirstOrDefault(l => l.Trim().Length > 0)?.Trim() ?? string.Empty;
             return line.Length > 50 ? line[..50] + "…" : line;
         }
@@ -276,12 +276,12 @@ public sealed class SummaryFieldEditorViewModel : FieldEditorViewModel
 
     private static string Describe(object? value) => value switch
     {
-        null => "(none)",
-        ISet<string> set => set.Count == 0 ? "(none)" : string.Join(", ", set),
-        IList<DbRecord> list => $"{list.Count} entr{(list.Count == 1 ? "y" : "ies")}",
-        DbRecord obj => $"{obj.Values.Count} field(s)",
-        IList scalars => $"{scalars.Count} item(s)",
-        _ => value.ToString() ?? "(none)",
+        null => SchemaLabels.T("Db_Summary_None"),
+        ISet<string> set => set.Count == 0 ? SchemaLabels.T("Db_Summary_None") : string.Join(", ", set),
+        IList<DbRecord> list => $"{list.Count} {SchemaLabels.T(list.Count == 1 ? "Db_Summary_Entry" : "Db_Summary_Entries")}",
+        DbRecord obj => $"{obj.Values.Count} {SchemaLabels.T("Db_Summary_Fields")}",
+        IList scalars => $"{scalars.Count} {SchemaLabels.T("Db_Summary_Items")}",
+        _ => value.ToString() ?? SchemaLabels.T("Db_Summary_None"),
     };
 }
 
@@ -345,4 +345,8 @@ public static class SchemaLabels
         var resolved = Localization.LocalizationService.Get(key);
         return resolved == key ? value : resolved;
     }
+
+    /// <summary>Looks up a generic UI string key (e.g. "Db_Summary_None"). Returns the key itself when the
+    /// resource is missing (en.xaml intentionally omits these — the raw English word is the fallback).</summary>
+    public static string T(string key) => Localization.LocalizationService.Get(key);
 }

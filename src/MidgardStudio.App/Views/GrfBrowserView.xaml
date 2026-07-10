@@ -259,29 +259,12 @@
         <Grid Grid.Column="2" Margin="2,0,2,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <!-- View encoding (above the file list) -->
-            <DockPanel Grid.Row="0" Margin="2,0,2,8">
-                <TextBlock Text="{DynamicResource Grf_Encoding}" DockPanel.Dock="Left" VerticalAlignment="Center" Opacity="0.55" Margin="0,0,8,0" FontSize="12"
-                           Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
-                <ui:Button DockPanel.Dock="Right" Content="{DynamicResource Grf_Go}" Padding="8,4" Margin="6,0,0,0" Command="{Binding ApplyCustomEncodingCommand}"
-                           Visibility="{Binding CustomEncodingVisible, Converter={StaticResource BoolToVis}}" />
-                <TextBox DockPanel.Dock="Right" Text="{Binding CustomEncodingText, UpdateSourceTrigger=PropertyChanged}" Width="64"
-                         VerticalContentAlignment="Center" ToolTip="{DynamicResource Grf_CodepageTip}"
-                         Visibility="{Binding CustomEncodingVisible, Converter={StaticResource BoolToVis}}">
-                    <TextBox.InputBindings><KeyBinding Key="Enter" Command="{Binding ApplyCustomEncodingCommand}" /></TextBox.InputBindings>
-                </TextBox>
-                <ComboBox ItemsSource="{Binding EncodingChoices}" SelectedItem="{Binding SelectedEncoding}"
-                          DisplayMemberPath="Display" HorizontalAlignment="Stretch"
-                          ToolTip="{DynamicResource Grf_EncodingComboTip}" />
-            </DockPanel>
-
             <!-- Up · live filter (auto, no button) · content search -->
-            <Grid Grid.Row="1" Margin="2,0,2,8">
+            <Grid Grid.Row="0" Margin="2,0,2,8">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -299,7 +282,7 @@
                 </ui:Button>
             </Grid>
 
-            <Border Grid.Row="2" Background="#08FFFFFF" BorderBrush="#18FFFFFF" BorderThickness="1" CornerRadius="8">
+            <Border Grid.Row="1" Background="#08FFFFFF" BorderBrush="#18FFFFFF" BorderThickness="1" CornerRadius="8">
                 <ListView x:Name="Files" ItemsSource="{Binding Items}" Background="Transparent" BorderThickness="0"
                           ItemContainerStyle="{StaticResource GrfFileRow}" GridViewColumnHeader.Click="OnHeaderClick"
                           VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
@@ -345,7 +328,7 @@
                 </ListView>
             </Border>
 
-            <TextBlock Grid.Row="3" Text="{Binding Status}" Opacity="0.55" Margin="2,8,0,0" FontSize="11"
+            <TextBlock Grid.Row="2" Text="{Binding Status}" Opacity="0.55" Margin="2,8,0,0" FontSize="11"
                        Foreground="{DynamicResource TextFillColorPrimaryBrush}" TextTrimming="CharacterEllipsis" />
         </Grid>
 

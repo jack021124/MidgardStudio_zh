@@ -360,7 +360,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}" />
-            <Border Grid.Column="1" Style="{StaticResource FieldBox}" Cursor="Hand" ToolTip="Click to edit">
+            <Border Grid.Column="1" Style="{StaticResource FieldBox}" Cursor="Hand" ToolTip="{DynamicResource Db_ClickToEdit}">
                 <Border.InputBindings>
                     <MouseBinding MouseAction="LeftClick" Command="{Binding OpenEditorCommand}" />
                 </Border.InputBindings>
@@ -378,7 +378,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}" />
-            <Border Grid.Column="1" Style="{StaticResource FieldBox}" Cursor="Hand" ToolTip="Click to edit">
+            <Border Grid.Column="1" Style="{StaticResource FieldBox}" Cursor="Hand" ToolTip="{DynamicResource Db_ClickToEdit}">
                 <Border.InputBindings>
                     <MouseBinding MouseAction="LeftClick" Command="{Binding OpenEditorCommand}" />
                 </Border.InputBindings>
@@ -396,7 +396,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}" />
-            <Border Grid.Column="1" Style="{StaticResource FieldBox}" Cursor="Hand" ToolTip="Click to edit">
+            <Border Grid.Column="1" Style="{StaticResource FieldBox}" Cursor="Hand" ToolTip="{DynamicResource Db_ClickToEdit}">
                 <Border.InputBindings>
                     <MouseBinding MouseAction="LeftClick" Command="{Binding OpenEditorCommand}" />
                 </Border.InputBindings>
@@ -1019,8 +1019,8 @@
         <DockPanel>
             <Grid DockPanel.Dock="Top" Margin="0,0,0,6">
                 <TextBlock Text="{Binding Title}" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" VerticalAlignment="Center" />
-                <ui:Button HorizontalAlignment="Right" Content="Add" Padding="9,2" Command="{Binding AddDropCommand}"
-                           IsEnabled="{Binding IsEditable}" ToolTip="Add a drop">
+                <ui:Button HorizontalAlignment="Right" Content="{DynamicResource Db_Drops_Add}" Padding="9,2" Command="{Binding AddDropCommand}"
+                           IsEnabled="{Binding IsEditable}" ToolTip="{DynamicResource Db_Drops_AddTip}">
                     <ui:Button.Icon><ui:SymbolIcon Symbol="Add24" /></ui:Button.Icon>
                 </ui:Button>
             </Grid>

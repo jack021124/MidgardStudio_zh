@@ -759,6 +759,7 @@ public partial class ShellViewModel : ObservableObject
     {
         ApplySaveMode();
         ShortcutsChanged?.Invoke();
+        _grfBrowser.ApplyGlobalEncoding(); // pick up a changed global text encoding
     }
 
     /// <summary>Raised when the user edits a keyboard shortcut (the window rebuilds its input bindings).</summary>

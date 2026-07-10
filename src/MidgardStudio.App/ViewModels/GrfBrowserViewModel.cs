@@ -154,20 +154,19 @@ public sealed partial class GrfBrowserViewModel : ObservableObject
 {
     private readonly GrfService _grf;
     private readonly IWorkspaceConfigService _config;
+    private readonly Services.AppSettingsService _appSettings;
     private readonly Dictionary<string, (SortedSet<string> Sub, SortedSet<string> Files)> _dirs =
         new(StringComparer.OrdinalIgnoreCase);
     private string? _previewPath;
     private int _viewCodePage = ViewEncoding.DefaultCodePage;
     private CancellationTokenSource? _searchCts;
 
-    private static readonly EncodingChoice CustomEncoding = new(-1, "Custom codepage…");
-
-    public GrfBrowserViewModel(GrfService grf, IWorkspaceConfigService config)
+    public GrfBrowserViewModel(GrfService grf, IWorkspaceConfigService config, Services.AppSettingsService appSettings)
     {
         _grf = grf;
         _config = config;
+        _appSettings = appSettings;
         RefreshFromConfig();
-        SelectedEncoding = EncodingChoices[0]; // 1252 default; never written, resets each launch
     }
 
     public ObservableCollection<string> Sources { get; } = new();
@@ -177,9 +176,6 @@ public sealed partial class GrfBrowserViewModel : ObservableObject
     public ObservableCollection<string> InfoItems { get; } = new();
     public ObservableCollection<GrfThumb> Thumbs { get; } = new();
 
-    /// <summary>The view-encoding selector contents: the fixed codepages plus a "Custom codepage…" entry.</summary>
-    public ObservableCollection<EncodingChoice> EncodingChoices { get; } =
-        new(ViewEncoding.Choices.Append(CustomEncoding));
     public ObservableCollection<InfoRow> DetailRows { get; } = new();
     public ObservableCollection<SearchHit> SearchResults { get; } = new();
 
@@ -210,11 +206,6 @@ public sealed partial class GrfBrowserViewModel : ObservableObject
     [ObservableProperty] private double _zoom = 1.0;
     [ObservableProperty] private bool _wrapText;
     [ObservableProperty] private Brush? _previewBackground; // null => the checkerboard underlay shows through
-
-    // View encoding (re-decodes content + display names; never written, resets each launch)
-    [ObservableProperty] private EncodingChoice? _selectedEncoding;
-    [ObservableProperty] private bool _customEncodingVisible;
-    [ObservableProperty] private string _customEncodingText = string.Empty;
 
     // File filter
     [ObservableProperty] private string _filterText = string.Empty;
@@ -256,6 +247,9 @@ public sealed partial class GrfBrowserViewModel : ObservableObject
         // Encoding does NOT apply here (it would mojibake every resource path and hide all icons).
         _grf.SetDisplayCodepage(1252);
         _grf.Configure(_config.Load().GrfPaths);
+
+        // Seed the view codepage from the global setting so the browser starts in the user's chosen encoding.
+        _viewCodePage = _appSettings.Settings.GlobalCodepage;
 
         Sources.Clear();
         foreach (var s in _grf.Sources) Sources.Add(s);
@@ -605,22 +599,13 @@ public sealed partial class GrfBrowserViewModel : ObservableObject
         OnPropertyChanged(nameof(IsImageKind));
     }
 
-    // ----- View encoding: re-decode content + re-project display names (never writes) -----
+    // ----- View encoding: re-decode content + re-project display names (reads the global setting) -----
 
-    partial void OnSelectedEncodingChanged(EncodingChoice? value)
+    /// <summary>Re-applies the global codepage (set in Settings ▸ General) to the browser's display layer.
+    /// Called by the shell when the global encoding changes. No-op if the value is unchanged.</summary>
+    public void ApplyGlobalEncoding()
     {
-        if (value is null) return;
-        if (value.CodePage < 0) { CustomEncodingVisible = true; return; } // "Custom codepage…" — reveal the box
-        CustomEncodingVisible = false;
-        ApplyCodePage(value.CodePage);
-    }
-
-    /// <summary>Applies the codepage typed into the custom box (bound to Enter / a Go button).</summary>
-    [RelayCommand]
-    private void ApplyCustomEncoding()
-    {
-        if (int.TryParse(CustomEncodingText.Trim(), out int cp) && ViewEncoding.IsKnown(cp)) ApplyCodePage(cp);
-        else Status = $"Unknown codepage \"{CustomEncodingText}\".";
+        ApplyCodePage(_appSettings.Settings.GlobalCodepage);
     }
 
     private void ApplyCodePage(int codePage)

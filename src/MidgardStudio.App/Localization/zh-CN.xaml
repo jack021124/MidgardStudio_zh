@@ -155,6 +155,9 @@
 
     <s:String x:Key="Settings_Encoding_Title">全局文本编码</s:String>
     <s:String x:Key="Settings_Encoding_Desc">用于读取和写入服务端数据库文件及松散客户端 lua 文件中旧式非 UTF-8 文本的回退代码页(例如 Latin-1 的"Poção"或 EUC-KR 的 item_db)。服务端文件以 UTF-8 保存;每个配置文件的显示编码会覆盖此设置。默认:Western (1252)。</s:String>
+    <s:String x:Key="Settings_Encoding_Custom">自定义代码页…</s:String>
+    <s:String x:Key="Settings_Encoding_Go">应用</s:String>
+    <s:String x:Key="Settings_Encoding_CodepageTip">输入代码页编号，然后回车</s:String>
 
     <s:String x:Key="Settings_SaveBehaviour">保存行为</s:String>
     <s:String x:Key="Settings_SaveBehaviour_Desc">选择编辑何时写入磁盘。自动保存是安全的（就地写入，永远不会覆盖你的函数），但只有手动保存才会在备份管理器里创建带日期的还原点。</s:String>
@@ -408,6 +411,23 @@
     <s:String x:Key="Db_Drops_Col_DropRate">掉落 %</s:String>
     <s:String x:Key="Db_Drops_Tables">掉落表</s:String>
     <s:String x:Key="Db_Drops_ReadOnly">只读——创建覆盖以编辑</s:String>
+    <s:String x:Key="Db_Drops_Add">添加</s:String>
+    <s:String x:Key="Db_Drops_AddTip">添加掉落</s:String>
+    <s:String x:Key="Db_ClickToEdit">点击编辑</s:String>
+
+    <!-- Field summary strings shown next to "…" buttons and in popup editors -->
+    <s:String x:Key="Db_Summary_None">无</s:String>
+    <s:String x:Key="Db_Summary_Except">除…外</s:String>
+    <s:String x:Key="Db_Summary_Entry">项</s:String>
+    <s:String x:Key="Db_Summary_Entries">项</s:String>
+    <s:String x:Key="Db_Summary_Fields">个字段</s:String>
+    <s:String x:Key="Db_Summary_Items">项</s:String>
+    <s:String x:Key="Db_Summary_NewEntry">(新建条目)</s:String>
+
+    <!-- Undo history descriptions for object-list add/duplicate/remove -->
+    <s:String x:Key="Db_Undo_Add">新增</s:String>
+    <s:String x:Key="Db_Undo_Duplicate">复制</s:String>
+    <s:String x:Key="Db_Undo_Remove">移除</s:String>
     <s:String x:Key="Db_DroppedBy_Title">掉落来源</s:String>
     <s:String x:Key="Db_DroppedBy_CtxSelectMob">选择魔物</s:String>
     <s:String x:Key="Db_DroppedBy_CtxAddNormal">添加普通掉落</s:String>
@@ -716,6 +736,283 @@
     <s:String x:Key="EnumLabel_DelayConsume">延迟消耗</s:String>
     <s:String x:Key="EnumLabel_ChangeTarget">换目标</s:String>
     <s:String x:Key="EnumLabel_Aggressive">主动攻击</s:String>
+
+    <!-- ===== 适合职业(item_db Jobs 枚举,原始值即标签) ===== -->
+    <s:String x:Key="EnumLabel_Novice">初心者</s:String>
+    <s:String x:Key="EnumLabel_SuperNovice">超级初心者</s:String>
+    <s:String x:Key="EnumLabel_Swordman">剑士</s:String>
+    <s:String x:Key="EnumLabel_Mage">魔法师</s:String>
+    <s:String x:Key="EnumLabel_Archer">弓箭手</s:String>
+    <s:String x:Key="EnumLabel_Acolyte">服事</s:String>
+    <s:String x:Key="EnumLabel_Merchant">商人</s:String>
+    <s:String x:Key="EnumLabel_Thief">盗贼</s:String>
+    <s:String x:Key="EnumLabel_Knight">骑士</s:String>
+    <s:String x:Key="EnumLabel_Wizard">巫师</s:String>
+    <s:String x:Key="EnumLabel_Hunter">猎人</s:String>
+    <s:String x:Key="EnumLabel_Priest">牧师</s:String>
+    <s:String x:Key="EnumLabel_Blacksmith">铁匠</s:String>
+    <s:String x:Key="EnumLabel_Assassin">刺客</s:String>
+    <s:String x:Key="EnumLabel_Crusader">十字军</s:String>
+    <s:String x:Key="EnumLabel_Sage">贤者</s:String>
+    <s:String x:Key="EnumLabel_BardDancer">诗人/舞者</s:String>
+    <s:String x:Key="EnumLabel_Monk">武僧</s:String>
+    <s:String x:Key="EnumLabel_Rogue">流氓</s:String>
+    <s:String x:Key="EnumLabel_Alchemist">炼金术士</s:String>
+    <s:String x:Key="EnumLabel_Taekwon">跆拳道</s:String>
+    <s:String x:Key="EnumLabel_StarGladiator">星辰守护者</s:String>
+    <s:String x:Key="EnumLabel_SoulLinker">灵魂使者</s:String>
+    <s:String x:Key="EnumLabel_Gunslinger">神枪手</s:String>
+    <s:String x:Key="EnumLabel_Ninja">忍者</s:String>
+    <s:String x:Key="EnumLabel_KagerouOboro">影狼/胧</s:String>
+    <s:String x:Key="EnumLabel_Rebellion">反叛者</s:String>
+    <s:String x:Key="EnumLabel_Summoner">召唤师</s:String>
+
+    <!-- ===== 职业阶层(item_db Classes 枚举,标签文本作为 key) ===== -->
+    <s:String x:Key="EnumLabel_All Classes">全部职业</s:String>
+    <s:String x:Key="EnumLabel_Transcendent">转生职业</s:String>
+    <s:String x:Key="EnumLabel_Baby">婴儿职业</s:String>
+    <s:String x:Key="EnumLabel_Third Class">三转职业</s:String>
+    <s:String x:Key="EnumLabel_Third Class (Trans)">三转(转生)</s:String>
+    <s:String x:Key="EnumLabel_Third Class (Baby)">三转(婴儿)</s:String>
+    <s:String x:Key="EnumLabel_Fourth Class">四转职业</s:String>
+    <s:String x:Key="EnumLabel_All Transcendent">全部转生</s:String>
+    <s:String x:Key="EnumLabel_All Baby">全部婴儿</s:String>
+    <s:String x:Key="EnumLabel_All Third Class">全部三转</s:String>
+
+    <!-- ===== 魔物阶级补充(MobClass,部分已含 Normal/Boss) ===== -->
+    <s:String x:Key="EnumLabel_Guardian">守护者</s:String>
+    <s:String x:Key="EnumLabel_Battlefield">战场</s:String>
+    <s:String x:Key="EnumLabel_Event">活动</s:String>
+
+    <!-- ===== 大小写兼容(MobRace 用 Demihuman,BonusCatalog 用 All classes) ===== -->
+    <s:String x:Key="EnumLabel_Demihuman">人形</s:String>
+    <s:String x:Key="EnumLabel_All classes">全部职业</s:String>
+    <s:String x:Key="EnumLabel_Player_Human">玩家(人类)</s:String>
+    <s:String x:Key="EnumLabel_Player_Doram">玩家(多兰)</s:String>
+
+    <!-- ===== 物品类型(Type 枚举,标签文本作 key) ===== -->
+    <s:String x:Key="EnumLabel_Healing Item">恢复道具</s:String>
+    <s:String x:Key="EnumLabel_Etc / Miscellaneous">杂项 / 其他</s:String>
+    <s:String x:Key="EnumLabel_Pet Egg">宠物蛋</s:String>
+    <s:String x:Key="EnumLabel_Pet Equipment">宠物装备</s:String>
+    <s:String x:Key="EnumLabel_Ammunition">弹药</s:String>
+    <s:String x:Key="EnumLabel_Delayed Consumable">延迟消耗品</s:String>
+    <s:String x:Key="EnumLabel_Shadow Equipment">影子装备</s:String>
+    <s:String x:Key="EnumLabel_Cash Shop Item">商城道具</s:String>
+
+    <!-- ===== 武器子类型(SubType 枚举,标签文本作 key) ===== -->
+    <s:String x:Key="EnumLabel_Bare Fist">空手</s:String>
+    <s:String x:Key="EnumLabel_Dagger">短剑</s:String>
+    <s:String x:Key="EnumLabel_One-Handed Sword">单手剑</s:String>
+    <s:String x:Key="EnumLabel_Two-Handed Sword">双手剑</s:String>
+    <s:String x:Key="EnumLabel_One-Handed Spear">单手矛</s:String>
+    <s:String x:Key="EnumLabel_Two-Handed Spear">双手矛</s:String>
+    <s:String x:Key="EnumLabel_One-Handed Axe">单手斧</s:String>
+    <s:String x:Key="EnumLabel_Two-Handed Axe">双手斧</s:String>
+    <s:String x:Key="EnumLabel_Mace">钝器</s:String>
+    <s:String x:Key="EnumLabel_Two-Handed Mace">双手钝器</s:String>
+    <s:String x:Key="EnumLabel_One-Handed Staff">单手法杖</s:String>
+    <s:String x:Key="EnumLabel_Two-Handed Staff">双手法杖</s:String>
+    <s:String x:Key="EnumLabel_Bow">弓</s:String>
+    <s:String x:Key="EnumLabel_Knuckle">拳套</s:String>
+    <s:String x:Key="EnumLabel_Musical Instrument">乐器</s:String>
+    <s:String x:Key="EnumLabel_Whip">鞭子</s:String>
+    <s:String x:Key="EnumLabel_Book">书</s:String>
+    <s:String x:Key="EnumLabel_Katar">拳刃</s:String>
+    <s:String x:Key="EnumLabel_Revolver">左轮手枪</s:String>
+    <s:String x:Key="EnumLabel_Rifle">步枪</s:String>
+    <s:String x:Key="EnumLabel_Gatling Gun">加特林机枪</s:String>
+    <s:String x:Key="EnumLabel_Shotgun">霰弹枪</s:String>
+    <s:String x:Key="EnumLabel_Grenade Launcher">榴弹发射器</s:String>
+    <s:String x:Key="EnumLabel_Huuma Shuriken">风魔手里剑</s:String>
+    <s:String x:Key="EnumLabel_Arrow">箭矢</s:String>
+    <s:String x:Key="EnumLabel_Bullet">子弹</s:String>
+    <s:String x:Key="EnumLabel_Shell">弹壳</s:String>
+    <s:String x:Key="EnumLabel_Shuriken">手里剑</s:String>
+    <s:String x:Key="EnumLabel_Kunai">苦无</s:String>
+    <s:String x:Key="EnumLabel_Cannon Ball">炮弹</s:String>
+    <s:String x:Key="EnumLabel_Throwing Weapon">投掷武器</s:String>
+    <s:String x:Key="EnumLabel_Throwing Dagger">投掷短剑</s:String>
+    <s:String x:Key="EnumLabel_Grenade">榴弹</s:String>
+    <s:String x:Key="EnumLabel_Enchant">附魔</s:String>
+    <s:String x:Key="EnumLabel_Normal (Card)">普通</s:String>
+    <s:String x:Key="EnumLabel_Enchant (Card)">附魔</s:String>
+
+    <!-- ===== 装备位置(Locations 枚举,标签文本作 key) ===== -->
+    <s:String x:Key="EnumLabel_Upper Headgear">头上</s:String>
+    <s:String x:Key="EnumLabel_Middle Headgear">头中</s:String>
+    <s:String x:Key="EnumLabel_Lower Headgear">头下</s:String>
+    <s:String x:Key="EnumLabel_Right Hand (Weapon)">右手(武器)</s:String>
+    <s:String x:Key="EnumLabel_Left Hand (Shield)">左手(盾牌)</s:String>
+    <s:String x:Key="EnumLabel_Both Hands (Two-Handed Weapon)">双手(双手武器)</s:String>
+    <s:String x:Key="EnumLabel_Garment">披风</s:String>
+    <s:String x:Key="EnumLabel_Shoes">鞋子</s:String>
+    <s:String x:Key="EnumLabel_Right Accessory">右饰品</s:String>
+    <s:String x:Key="EnumLabel_Left Accessory">左饰品</s:String>
+    <s:String x:Key="EnumLabel_Both Accessories">双饰品</s:String>
+    <s:String x:Key="EnumLabel_Costume Upper Headgear">时装头上</s:String>
+    <s:String x:Key="EnumLabel_Costume Middle Headgear">时装头中</s:String>
+    <s:String x:Key="EnumLabel_Costume Lower Headgear">时装头下</s:String>
+    <s:String x:Key="EnumLabel_Costume Garment">时装披风</s:String>
+    <s:String x:Key="EnumLabel_Shadow Armor">影子铠甲</s:String>
+    <s:String x:Key="EnumLabel_Shadow Weapon">影子武器</s:String>
+    <s:String x:Key="EnumLabel_Shadow Shield">影子盾牌</s:String>
+    <s:String x:Key="EnumLabel_Shadow Shoes">影子鞋子</s:String>
+    <s:String x:Key="EnumLabel_Shadow Right Accessory">影子右饰品</s:String>
+    <s:String x:Key="EnumLabel_Shadow Left Accessory">影子左饰品</s:String>
+
+    <!-- ===== 掉落特效(DropEffect 枚举) ===== -->
+    <s:String x:Key="EnumLabel_Client">客户端</s:String>
+    <s:String x:Key="EnumLabel_White Pillar">白色光柱</s:String>
+    <s:String x:Key="EnumLabel_Blue Pillar">蓝色光柱</s:String>
+    <s:String x:Key="EnumLabel_Yellow Pillar">黄色光柱</s:String>
+    <s:String x:Key="EnumLabel_Purple Pillar">紫色光柱</s:String>
+    <s:String x:Key="EnumLabel_Orange Pillar">橙色光柱</s:String>
+    <s:String x:Key="EnumLabel_Green Pillar">绿色光柱</s:String>
+    <s:String x:Key="EnumLabel_Red Pillar">红色光柱</s:String>
+
+    <!-- ===== 等级/绑定(Grade/BindType 静态枚举) ===== -->
+    <s:String x:Key="EnumLabel_D">D</s:String>
+    <s:String x:Key="EnumLabel_C">C</s:String>
+    <s:String x:Key="EnumLabel_B">B</s:String>
+    <s:String x:Key="EnumLabel_A">A</s:String>
+    <s:String x:Key="EnumLabel_Account">账号</s:String>
+    <s:String x:Key="EnumLabel_Guild">公会</s:String>
+    <s:String x:Key="EnumLabel_Party">队伍</s:String>
+    <s:String x:Key="EnumLabel_Char">角色</s:String>
+
+    <!-- ===== 魔物行为模式(MobModes 静态枚举) ===== -->
+    <s:String x:Key="EnumLabel_CanMove">可移动</s:String>
+    <s:String x:Key="EnumLabel_Looter">拾取</s:String>
+    <s:String x:Key="EnumLabel_Assist">协助</s:String>
+    <s:String x:Key="EnumLabel_CastSensorIdle">待机施法感应</s:String>
+    <s:String x:Key="EnumLabel_NoRandomWalk">禁止随机移动</s:String>
+    <s:String x:Key="EnumLabel_NoCast">禁止施法</s:String>
+    <s:String x:Key="EnumLabel_CanAttack">可攻击</s:String>
+    <s:String x:Key="EnumLabel_CastSensorChase">追击施法感应</s:String>
+    <s:String x:Key="EnumLabel_ChangeChase">切换追击</s:String>
+    <s:String x:Key="EnumLabel_Angry">愤怒</s:String>
+    <s:String x:Key="EnumLabel_ChangeTargetMelee">近战换目标</s:String>
+    <s:String x:Key="EnumLabel_ChangeTargetChase">追击换目标</s:String>
+    <s:String x:Key="EnumLabel_TargetWeak">锁定弱者</s:String>
+    <s:String x:Key="EnumLabel_RandomTarget">随机目标</s:String>
+    <s:String x:Key="EnumLabel_IgnoreMelee">无视近战</s:String>
+    <s:String x:Key="EnumLabel_IgnoreMagic">无视魔法</s:String>
+    <s:String x:Key="EnumLabel_IgnoreRanged">无视远程</s:String>
+    <s:String x:Key="EnumLabel_Mvp">MVP</s:String>
+    <s:String x:Key="EnumLabel_IgnoreMisc">无视杂项</s:String>
+    <s:String x:Key="EnumLabel_KnockbackImmune">击退免疫</s:String>
+    <s:String x:Key="EnumLabel_TeleportBlock">禁止传送</s:String>
+    <s:String x:Key="EnumLabel_FixedItemDrop">固定掉落</s:String>
+    <s:String x:Key="EnumLabel_Detector">侦测</s:String>
+    <s:String x:Key="EnumLabel_StatusImmune">状态免疫</s:String>
+    <s:String x:Key="EnumLabel_SkillImmune">技能免疫</s:String>
+
+    <!-- ===== 种族群组(RaceGroups 静态枚举) ===== -->
+    <s:String x:Key="EnumLabel_Goblin">哥布林</s:String>
+    <s:String x:Key="EnumLabel_Kobold">犬妖</s:String>
+    <s:String x:Key="EnumLabel_Orc">兽人</s:String>
+    <s:String x:Key="EnumLabel_Golem">魔锅蛋</s:String>
+    <s:String x:Key="EnumLabel_Ninja">忍者</s:String>
+    <s:String x:Key="EnumLabel_Gvg">GVG</s:String>
+    <s:String x:Key="EnumLabel_Treasure">宝箱</s:String>
+    <s:String x:Key="EnumLabel_Biolab">生化实验室</s:String>
+    <s:String x:Key="EnumLabel_Manuk">马努克</s:String>
+    <s:String x:Key="EnumLabel_Splendide">斯普兰迪</s:String>
+    <s:String x:Key="EnumLabel_Scaraba">甲虫</s:String>
+    <s:String x:Key="EnumLabel_Clocktower">钟楼</s:String>
+    <s:String x:Key="EnumLabel_Thanatos">塔纳托斯</s:String>
+    <s:String x:Key="EnumLabel_Malangdo">马兰岛</s:String>
+    <s:String x:Key="EnumLabel_Lasagna">拉斯agna</s:String>
+
+    <!-- ===== 成就组(AchievementGroup 静态枚举) ===== -->
+    <s:String x:Key="EnumLabel_Add_Friend">添加好友</s:String>
+    <s:String x:Key="EnumLabel_Adventure">冒险</s:String>
+    <s:String x:Key="EnumLabel_Battle">战斗</s:String>
+    <s:String x:Key="EnumLabel_Chatting">聊天</s:String>
+    <s:String x:Key="EnumLabel_Chatting_Count">聊天次数</s:String>
+    <s:String x:Key="EnumLabel_Chatting_Create">创建聊天</s:String>
+    <s:String x:Key="EnumLabel_Chatting_Dying">垂死聊天</s:String>
+    <s:String x:Key="EnumLabel_Eat">进食</s:String>
+    <s:String x:Key="EnumLabel_Get_Item">获得道具</s:String>
+    <s:String x:Key="EnumLabel_Get_Zeny">获得 Zeny</s:String>
+    <s:String x:Key="EnumLabel_Goal_Achieve">目标达成</s:String>
+    <s:String x:Key="EnumLabel_Goal_Level">目标等级</s:String>
+    <s:String x:Key="EnumLabel_Goal_Status">目标素质</s:String>
+    <s:String x:Key="EnumLabel_Job_Change">转职</s:String>
+    <s:String x:Key="EnumLabel_Marry">结婚</s:String>
+    <s:String x:Key="EnumLabel_Enchant_Fail">附魔失败</s:String>
+    <s:String x:Key="EnumLabel_Enchant_Success">附魔成功</s:String>
+    <s:String x:Key="EnumLabel_Spend_Zeny">消费 Zeny</s:String>
+    <s:String x:Key="EnumLabel_Taming">驯养</s:String>
+
+    <!-- ===== 技能相关枚举(静态,原始值作 key) ===== -->
+    <s:String x:Key="EnumLabel_Magic">魔法</s:String>
+    <s:String x:Key="EnumLabel_Misc">杂项</s:String>
+    <s:String x:Key="EnumLabel_Attack">攻击</s:String>
+    <s:String x:Key="EnumLabel_Ground">地面</s:String>
+    <s:String x:Key="EnumLabel_Self">自身</s:String>
+    <s:String x:Key="EnumLabel_Support">支援</s:String>
+    <s:String x:Key="EnumLabel_Trap">陷阱</s:String>
+    <s:String x:Key="EnumLabel_Single">单次</s:String>
+    <s:String x:Key="EnumLabel_Multi_Hit">多段</s:String>
+    <s:String x:Key="EnumLabel_Endowed">赋予</s:String>
+    <s:String x:Key="EnumLabel_Random">随机</s:String>
+    <s:String x:Key="EnumLabel_Plagiarism">抄袭</s:String>
+    <s:String x:Key="EnumLabel_Reproduce">复现</s:String>
+    <s:String x:Key="EnumLabel_Ally">友方</s:String>
+    <s:String x:Key="EnumLabel_Enemy">敌方</s:String>
+    <s:String x:Key="EnumLabel_Friend">好友</s:String>
+    <s:String x:Key="EnumLabel_GuildAlly">公会盟友</s:String>
+    <s:String x:Key="EnumLabel_NoEnemy">非敌方</s:String>
+    <s:String x:Key="EnumLabel_NoGuild">非公会</s:String>
+    <s:String x:Key="EnumLabel_NoParty">非队伍</s:String>
+    <s:String x:Key="EnumLabel_Party">队伍</s:String>
+    <s:String x:Key="EnumLabel_SameGuild">同公会</s:String>
+    <s:String x:Key="EnumLabel_WoS">WoS</s:String>
+    <s:String x:Key="EnumLabel_Falcon">猎鹰</s:String>
+    <s:String x:Key="EnumLabel_Peco">大嘴鸟</s:String>
+    <s:String x:Key="EnumLabel_Riding">骑乘</s:String>
+    <s:String x:Key="EnumLabel_Ridingdragon">骑龙</s:String>
+    <s:String x:Key="EnumLabel_Ridingwug">骑狼</s:String>
+    <s:String x:Key="EnumLabel_Wug">狼</s:String>
+    <s:String x:Key="EnumLabel_Mado">机甲</s:String>
+    <s:String x:Key="EnumLabel_Elementalspirit">元素精灵</s:String>
+    <s:String x:Key="EnumLabel_Elementalspirit2">元素精灵2</s:String>
+    <s:String x:Key="EnumLabel_Sunstance">日之姿态</s:String>
+    <s:String x:Key="EnumLabel_Moonstance">月之姿态</s:String>
+    <s:String x:Key="EnumLabel_Starstance">星之姿态</s:String>
+    <s:String x:Key="EnumLabel_Universestance">宇宙姿态</s:String>
+    <s:String x:Key="EnumLabel_MoveEnable">可移动</s:String>
+    <s:String x:Key="EnumLabel_Shield">盾牌</s:String>
+    <s:String x:Key="EnumLabel_Hidden">隐匿</s:String>
+    <s:String x:Key="EnumLabel_RecoverWeightRate">重量恢复率</s:String>
+
+    <!-- ===== BonusCatalog 脚本构造器枚举(标签文本作 key) ===== -->
+    <s:String x:Key="EnumLabel_Brute / Beast">动物 / 兽</s:String>
+    <s:String x:Key="EnumLabel_Demi-Human">人形</s:String>
+    <s:String x:Key="EnumLabel_Player (Human)">玩家(人类)</s:String>
+    <s:String x:Key="EnumLabel_Player (Doram)">玩家(多兰)</s:String>
+    <s:String x:Key="EnumLabel_All races">全部种族</s:String>
+    <s:String x:Key="EnumLabel_All elements">全部属性</s:String>
+    <s:String x:Key="EnumLabel_All sizes">全部体型</s:String>
+    <s:String x:Key="EnumLabel_Normal monsters">普通魔物</s:String>
+    <s:String x:Key="EnumLabel_Boss monsters">首领魔物</s:String>
+    <s:String x:Key="EnumLabel_Guardians">守护者</s:String>
+    <s:String x:Key="EnumLabel_Stun">眩晕</s:String>
+    <s:String x:Key="EnumLabel_Freeze">冰冻</s:String>
+    <s:String x:Key="EnumLabel_Stone Curse">石化</s:String>
+    <s:String x:Key="EnumLabel_Sleep">睡眠</s:String>
+    <s:String x:Key="EnumLabel_Curse">诅咒</s:String>
+    <s:String x:Key="EnumLabel_Silence">沉默</s:String>
+    <s:String x:Key="EnumLabel_Blind">失明</s:String>
+    <s:String x:Key="EnumLabel_Deadly Poison">猛毒</s:String>
+    <s:String x:Key="EnumLabel_Bleeding">出血</s:String>
+    <s:String x:Key="EnumLabel_Confusion">混乱</s:String>
+    <s:String x:Key="EnumLabel_Burning">燃烧</s:String>
+    <s:String x:Key="EnumLabel_Freezing">冰冻</s:String>
+    <s:String x:Key="EnumLabel_Crystalize">结晶</s:String>
+    <s:String x:Key="EnumLabel_Fear">恐惧</s:String>
 
     <!-- ===== 校验面板 ===== -->
     <s:String x:Key="Val_Title">校验</s:String>

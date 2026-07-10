@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using MidgardStudio.App.Services;
 using MidgardStudio.Core.Lua;
@@ -301,10 +302,38 @@ public sealed partial class SettingsViewModel : ObservableObject
         OnPropertyChanged(nameof(SelectedLanguage));
     }
 
-    // ===== Global text encoding =====
+    // ===== Global text encoding (single source of truth — the GRF Browser reads from here too) =====
 
-    /// <summary>The codepages offered in the global-encoding selector (mirrors the GRF Browser's list).</summary>
-    public IReadOnlyList<EncodingChoice> EncodingChoices { get; } = ViewEncoding.Choices;
+    private static readonly EncodingChoice CustomEncoding = new(-1, L("Settings_Encoding_Custom"));
+
+    /// <summary>The codepages offered in the selector: the fixed choices plus a "Custom codepage…" entry
+    /// (CodePage == -1) that reveals a free-text box when selected.</summary>
+    public ObservableCollection<EncodingChoice> EncodingChoices { get; } =
+        new(ViewEncoding.Choices.Append(CustomEncoding));
+
+    /// <summary>True when the "Custom codepage…" entry is selected, showing the free-text box.</summary>
+    public bool CustomEncodingVisible => SelectedGlobalEncoding?.CodePage < 0;
+
+    /// <summary>The text typed into the custom-codepage box (validated against <see cref="ViewEncoding.IsKnown"/>).</summary>
+    [ObservableProperty] private string _customEncodingText = string.Empty;
+
+    /// <summary>Applies the codepage typed into the custom box (bound to Enter / a Go button).</summary>
+    [RelayCommand]
+    private void ApplyCustomEncoding()
+    {
+        if (int.TryParse(CustomEncodingText.Trim(), out int cp) && ViewEncoding.IsKnown(cp))
+        {
+            _settings.Settings.GlobalCodepage = cp;
+            _settings.Save();
+            OnPropertyChanged(nameof(SelectedGlobalEncoding));
+            OnPropertyChanged(nameof(CustomEncodingVisible));
+            _onChanged();
+        }
+        else
+        {
+            CustomEncodingText = string.Empty;
+        }
+    }
 
     /// <summary>The global fallback codepage. Persists to settings on change.</summary>
     public EncodingChoice? SelectedGlobalEncoding
@@ -312,15 +341,19 @@ public sealed partial class SettingsViewModel : ObservableObject
         get
         {
             int cp = _settings.Settings.GlobalCodepage;
-            return EncodingChoices.FirstOrDefault(e => e.CodePage == cp);
+            return EncodingChoices.FirstOrDefault(e => e.CodePage == cp) ?? EncodingChoices[0];
         }
         set
         {
             if (value is null) return;
+            // Picking "Custom codepage…" just reveals the box; the actual codepage is applied by ApplyCustomEncoding.
+            if (value.CodePage < 0) { OnPropertyChanged(nameof(CustomEncodingVisible)); return; }
             if (value.CodePage == _settings.Settings.GlobalCodepage) return;
             _settings.Settings.GlobalCodepage = value.CodePage;
             _settings.Save();
             OnPropertyChanged(nameof(SelectedGlobalEncoding));
+            OnPropertyChanged(nameof(CustomEncodingVisible));
+            _onChanged();
         }
     }
 

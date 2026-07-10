@@ -161,6 +161,9 @@
 
     <s:String x:Key="Settings_Encoding_Title">Global text encoding</s:String>
     <s:String x:Key="Settings_Encoding_Desc">Fallback codepage used to read and write legacy, non-UTF-8 text in server database files and loose client lua files (e.g. a Latin-1 “Poção” or an EUC-KR item_db). Server files are saved as UTF-8; per-profile Display Encoding overrides this. Default: Western (1252).</s:String>
+    <s:String x:Key="Settings_Encoding_Custom">Custom codepage…</s:String>
+    <s:String x:Key="Settings_Encoding_Go">Apply</s:String>
+    <s:String x:Key="Settings_Encoding_CodepageTip">Enter a codepage number and press Enter</s:String>
 
     <s:String x:Key="Settings_SaveBehaviour">Saving behaviour</s:String>
     <s:String x:Key="Settings_SaveBehaviour_Desc">Choose when edits are written to disk. Auto-save writes safely (in-place, never overwriting your functions) but only manual saves create a dated restore point in the Backup Manager.</s:String>
@@ -414,6 +417,23 @@
     <s:String x:Key="Db_Drops_Col_DropRate">Drop %</s:String>
     <s:String x:Key="Db_Drops_Tables">Drop tables</s:String>
     <s:String x:Key="Db_Drops_ReadOnly">Read-only — create an override to edit</s:String>
+    <s:String x:Key="Db_Drops_Add">Add</s:String>
+    <s:String x:Key="Db_Drops_AddTip">Add a drop</s:String>
+    <s:String x:Key="Db_ClickToEdit">Click to edit</s:String>
+
+    <!-- Field summary strings shown next to "…" buttons and in popup editors -->
+    <s:String x:Key="Db_Summary_None">None</s:String>
+    <s:String x:Key="Db_Summary_Except">except</s:String>
+    <s:String x:Key="Db_Summary_Entry">entry</s:String>
+    <s:String x:Key="Db_Summary_Entries">entries</s:String>
+    <s:String x:Key="Db_Summary_Fields">fields</s:String>
+    <s:String x:Key="Db_Summary_Items">items</s:String>
+    <s:String x:Key="Db_Summary_NewEntry">(new entry)</s:String>
+
+    <!-- Undo history descriptions for object-list add/duplicate/remove -->
+    <s:String x:Key="Db_Undo_Add">add</s:String>
+    <s:String x:Key="Db_Undo_Duplicate">duplicate</s:String>
+    <s:String x:Key="Db_Undo_Remove">remove</s:String>
     <s:String x:Key="Db_DroppedBy_Title">Dropped by</s:String>
     <s:String x:Key="Db_DroppedBy_CtxSelectMob">Select monster</s:String>
     <s:String x:Key="Db_DroppedBy_CtxAddNormal">Add normal drop</s:String>

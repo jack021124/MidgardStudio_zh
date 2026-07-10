@@ -125,10 +125,20 @@
                             <TextBlock Text="{DynamicResource Settings_Encoding_Title}" Style="{StaticResource SectionTitle}" FontWeight="SemiBold" Margin="0,0,0,4" />
                             <TextBlock Opacity="0.6" FontSize="12" TextWrapping="Wrap" Margin="0,0,0,12"
                                        Text="{DynamicResource Settings_Encoding_Desc}" />
-                            <ComboBox ItemsSource="{Binding EncodingChoices}"
-                                      DisplayMemberPath="Display"
-                                      SelectedItem="{Binding SelectedGlobalEncoding, Mode=TwoWay}"
-                                      MinWidth="240" HorizontalAlignment="Left" />
+                            <DockPanel>
+                                <ui:Button DockPanel.Dock="Right" Content="{DynamicResource Settings_Encoding_Go}" Padding="8,4" Margin="6,0,0,0"
+                                           Command="{Binding ApplyCustomEncodingCommand}"
+                                           Visibility="{Binding CustomEncodingVisible, Converter={StaticResource BoolToVis}}" />
+                                <TextBox DockPanel.Dock="Right" Text="{Binding CustomEncodingText, UpdateSourceTrigger=PropertyChanged}" Width="64"
+                                         VerticalContentAlignment="Center" ToolTip="{DynamicResource Settings_Encoding_CodepageTip}"
+                                         Visibility="{Binding CustomEncodingVisible, Converter={StaticResource BoolToVis}}">
+                                    <TextBox.InputBindings><KeyBinding Key="Enter" Command="{Binding ApplyCustomEncodingCommand}" /></TextBox.InputBindings>
+                                </TextBox>
+                                <ComboBox ItemsSource="{Binding EncodingChoices}"
+                                          DisplayMemberPath="Display"
+                                          SelectedItem="{Binding SelectedGlobalEncoding, Mode=TwoWay}"
+                                          MinWidth="240" HorizontalAlignment="Left" />
+                            </DockPanel>
                         </StackPanel>
                     </ui:Card>
 

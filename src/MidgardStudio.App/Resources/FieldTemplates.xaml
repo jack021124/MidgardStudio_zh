@@ -428,7 +428,7 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <TextBlock Opacity="0.5" FontSize="10.5" Margin="2,0,0,5" TextWrapping="Wrap"
-                           Text="Click to cycle: Off → Include (purple) → Exclude (red).  Exclude = “All, except this”."
+                           Text="{DynamicResource Db_BoolMap_Hint}"
                            Visibility="{Binding SupportsExclude, Converter={StaticResource BoolToVis}}" />
                 <ItemsControl ItemsSource="{Binding Chips}" IsEnabled="{Binding IsEditable}">
                     <ItemsControl.ItemsPanel>
@@ -494,7 +494,7 @@
 
             <!-- Toolbar: add + count -->
             <Grid Grid.Row="0" Margin="0,0,0,10">
-                <ui:Button HorizontalAlignment="Left" Content="Add entry"
+                <ui:Button HorizontalAlignment="Left" Content="{DynamicResource Db_ObjList_Add}"
                            Command="{Binding AddRowCommand}" IsEnabled="{Binding IsEditable}">
                     <ui:Button.Icon><ui:SymbolIcon Symbol="Add24" /></ui:Button.Icon>
                 </ui:Button>
@@ -516,7 +516,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <ui:TextBox Grid.Row="0" Margin="0,0,0,6" PlaceholderText="Search entries…"
+                    <ui:TextBox Grid.Row="0" Margin="0,0,0,6" PlaceholderText="{DynamicResource Db_ObjList_SearchPH}"
                                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
                     <Border Grid.Row="1" BorderBrush="#1FFFFFFF" BorderThickness="1" CornerRadius="6"
                             Background="#0AFFFFFF">
@@ -537,20 +537,20 @@
                         </ListBox.InputBindings>
                         <ListBox.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Add entry" InputGestureText="Ins"
+                                <MenuItem Header="{DynamicResource Db_ObjList_CtxAdd}" InputGestureText="Ins"
                                           Visibility="{Binding PlacementTarget.DataContext.IsEditable, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource BoolToVis}}"
                                           Command="{Binding PlacementTarget.DataContext.AddRowCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                     <MenuItem.Icon><ui:SymbolIcon Symbol="Add24" /></MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="Duplicate" InputGestureText="Ctrl+D"
+                                <MenuItem Header="{DynamicResource Db_ObjList_CtxDuplicate}" InputGestureText="Ctrl+D"
                                           Visibility="{Binding PlacementTarget.DataContext.IsEditable, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource BoolToVis}}"
                                           Command="{Binding PlacementTarget.DataContext.DuplicateRowCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                                <MenuItem Header="Copy YAML" InputGestureText="Ctrl+C"
+                                <MenuItem Header="{DynamicResource Db_ObjList_CtxCopyYaml}" InputGestureText="Ctrl+C"
                                           Command="{Binding PlacementTarget.DataContext.CopyRowYamlCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                                 <Separator Visibility="{Binding PlacementTarget.DataContext.IsEditable, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource BoolToVis}}" />
-                                <MenuItem Header="Remove" InputGestureText="Del"
+                                <MenuItem Header="{DynamicResource Db_ObjList_CtxRemove}" InputGestureText="Del"
                                           Visibility="{Binding PlacementTarget.DataContext.IsEditable, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource BoolToVis}}"
                                           Command="{Binding PlacementTarget.DataContext.RemoveRowCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
@@ -579,7 +579,7 @@
                                     </StackPanel>
                                     <ui:Button Grid.Column="1" Content="✕" Appearance="Transparent"
                                                Padding="6,0" Margin="4,0,0,0" VerticalAlignment="Center" FontSize="11"
-                                               ToolTip="Remove this entry"
+                                               ToolTip="{DynamicResource Db_ObjList_RemoveTip}"
                                                Visibility="{Binding DataContext.IsEditable, RelativeSource={RelativeSource AncestorType=ListBox}, Converter={StaticResource BoolToVis}}"
                                                Command="{Binding DataContext.RemoveRowCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
                                                CommandParameter="{Binding}" />
@@ -592,7 +592,7 @@
 
                 <!-- Detail: the selected entry's fields, or a placeholder when nothing is selected -->
                 <Grid Grid.Column="2">
-                    <TextBlock Text="Select an entry on the left to edit its fields, or add a new one."
+                    <TextBlock Text="{DynamicResource Db_ObjList_SelectEntry}"
                                TextWrapping="Wrap" TextAlignment="Center" Opacity="0.5" MaxWidth="300"
                                HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock.Style>
@@ -618,13 +618,13 @@
     <DataTemplate x:Key="ScriptFullTemplate">
         <DockPanel MinHeight="360">
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,8">
-                <ui:Button Content="Script generator" Appearance="Primary" Command="{Binding InsertBonusCommand}" IsEnabled="{Binding IsEditable}"
-                           ToolTip="Open the visual script generator — pick effects in plain English (no scripting needed), preview them live, and insert one or many at once">
+                <ui:Button Content="{DynamicResource Db_Script_Generator}" Appearance="Primary" Command="{Binding InsertBonusCommand}" IsEnabled="{Binding IsEditable}"
+                           ToolTip="{DynamicResource Db_Script_GeneratorTip}">
                     <ui:Button.Icon><ui:SymbolIcon Symbol="Sparkle24" /></ui:Button.Icon>
                 </ui:Button>
-                <ui:Button Content="Refine / Grade bonuses" Command="{Binding ConditionalBonusesCommand}" IsEnabled="{Binding IsEditable}" Margin="8,0,0,0"
-                           ToolTip="Add bonuses that unlock at refine or enchant-grade milestones — builds the nested script and the matching client description (grade is Renewal-only)." />
-                <TextBlock Text="No scripting needed — browse effects by category, set values, stack as many as you like."
+                <ui:Button Content="{DynamicResource Db_Script_CondBonuses}" Command="{Binding ConditionalBonusesCommand}" IsEnabled="{Binding IsEditable}" Margin="8,0,0,0"
+                           ToolTip="{DynamicResource Db_Script_CondBonusesTip}" />
+                <TextBlock Text="{DynamicResource Db_Script_Hint}"
                            VerticalAlignment="Center" Opacity="0.5" FontSize="11.5" Margin="12,0,0,0" TextTrimming="CharacterEllipsis" />
             </StackPanel>
             <Border BorderBrush="#5A8D2DF2" BorderThickness="1" CornerRadius="6">
@@ -649,35 +649,35 @@
             <StackPanel Grid.Column="0">
                 <TextBlock Text="{Binding TargetLabel}" Opacity="0.7" FontSize="11" Margin="0,0,0,6" />
                 <Grid Margin="0,2"><Grid.ColumnDefinitions><ColumnDefinition Width="150"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-                    <TextBlock Text="Display Name" VerticalAlignment="Center" Opacity="0.85" />
+                    <TextBlock Text="{DynamicResource Db_CText_DisplayName}" VerticalAlignment="Center" Opacity="0.85" />
                     <ui:TextBox Grid.Column="1" Text="{Binding IdentifiedDisplayName, UpdateSourceTrigger=LostFocus}" />
                 </Grid>
                 <Grid Margin="0,2"><Grid.ColumnDefinitions><ColumnDefinition Width="150"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-                    <TextBlock Text="Resource Name" VerticalAlignment="Center" Opacity="0.85" ToolTip="Sprite/icon base file name" />
+                    <TextBlock Text="{DynamicResource Db_CText_ResourceName}" VerticalAlignment="Center" Opacity="0.85" ToolTip="{DynamicResource Db_CText_ResourceNameTip}" />
                     <ui:TextBox Grid.Column="1" Text="{Binding IdentifiedResourceName, UpdateSourceTrigger=LostFocus}" />
                 </Grid>
-                <TextBlock Text="Description" Opacity="0.85" Margin="0,6,0,2" />
+                <TextBlock Text="{DynamicResource Db_CText_Description}" Opacity="0.85" Margin="0,6,0,2" />
                 <ui:TextBox Text="{Binding IdentifiedDescription, UpdateSourceTrigger=LostFocus}" AcceptsReturn="True"
                             MinHeight="80" MaxHeight="160" VerticalScrollBarVisibility="Auto" FontFamily="Consolas" />
                 <Grid Margin="0,6"><Grid.ColumnDefinitions><ColumnDefinition Width="150"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-                    <TextBlock Text="Unidentified Name" VerticalAlignment="Center" Opacity="0.85" />
+                    <TextBlock Text="{DynamicResource Db_CText_UnidName}" VerticalAlignment="Center" Opacity="0.85" />
                     <ui:TextBox Grid.Column="1" Text="{Binding UnidentifiedDisplayName, UpdateSourceTrigger=LostFocus}" />
                 </Grid>
                 <StackPanel Orientation="Horizontal" Margin="0,4">
-                    <TextBlock Text="Slots" VerticalAlignment="Center" Opacity="0.85" Width="60" />
+                    <TextBlock Text="{DynamicResource Db_CText_Slots}" VerticalAlignment="Center" Opacity="0.85" Width="60" />
                     <ui:TextBox Text="{Binding SlotCount, UpdateSourceTrigger=LostFocus}" Width="60" Margin="0,0,16,0" />
-                    <TextBlock Text="ClassNum / View" VerticalAlignment="Center" Opacity="0.85" Width="110" />
+                    <TextBlock Text="{DynamicResource Db_CText_ClassNum}" VerticalAlignment="Center" Opacity="0.85" Width="110" />
                     <ui:TextBox Text="{Binding ClassNum, UpdateSourceTrigger=LostFocus}" Width="70" Margin="0,0,16,0" />
-                    <ui:ToggleSwitch Content="Costume" IsChecked="{Binding Costume}" />
+                    <ui:ToggleSwitch Content="{DynamicResource Db_CText_Costume}" IsChecked="{Binding Costume}" />
                 </StackPanel>
 
                 <!-- Headgear sprite linkage -->
                 <StackPanel Orientation="Horizontal" Margin="0,6"
                             Visibility="{Binding CanLinkSprite, Converter={StaticResource BoolToVis}}">
-                    <TextBlock Text="Headgear sprite" VerticalAlignment="Center" Opacity="0.85" Width="100" />
+                    <TextBlock Text="{DynamicResource Db_CText_HeadgearSprite}" VerticalAlignment="Center" Opacity="0.85" Width="100" />
                     <ui:TextBox Text="{Binding SpriteName, UpdateSourceTrigger=PropertyChanged}"
-                                PlaceholderText="sprite base name" Width="180" Margin="0,0,8,0" />
-                    <ui:Button Content="Link sprite" Command="{Binding LinkSpriteCommand}" />
+                                PlaceholderText="{DynamicResource Db_CText_SpritePH}" Width="180" Margin="0,0,8,0" />
+                    <ui:Button Content="{DynamicResource Db_CText_LinkSprite}" Command="{Binding LinkSpriteCommand}" />
                 </StackPanel>
                 <TextBlock Text="{Binding SpriteLinkMessage}" Opacity="0.8" Foreground="#7FD0A0" TextWrapping="Wrap"
                            Visibility="{Binding SpriteLinkMessage, Converter={StaticResource StringToVis}}" />
@@ -690,7 +690,7 @@
                            RenderOptions.BitmapScalingMode="HighQuality"
                            HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="240" />
                 </Border>
-                <TextBlock Text="in-game preview" Opacity="0.45" FontSize="10" HorizontalAlignment="Center" Margin="0,3,0,0" />
+                <TextBlock Text="{DynamicResource Db_CText_InGamePreview}" Opacity="0.45" FontSize="10" HorizontalAlignment="Center" Margin="0,3,0,0" />
             </StackPanel>
         </Grid>
     </DataTemplate>
@@ -1041,48 +1041,48 @@
                                     CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ListView}}" />
                         <KeyBinding Key="V" Modifiers="Control" Command="{Binding PasteDropCommand}" />
                     </ListView.InputBindings>
-                    <ListView.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="Select item in DB" InputGestureText="Ctrl+G"
-                                      Visibility="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource NotNullToVis}}"
-                                      Command="{Binding PlacementTarget.DataContext.SelectItemCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                      CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                            <MenuItem Header="Edit chance" InputGestureText="F2"
-                                      Visibility="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource NotNullToVis}}"
-                                      Command="{Binding PlacementTarget.DataContext.EditDropCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                      CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                            <MenuItem Header="Remove" InputGestureText="Del"
-                                      Visibility="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource NotNullToVis}}"
-                                      Command="{Binding PlacementTarget.DataContext.RemoveDropCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                      CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                            <MenuItem Header="Copy" InputGestureText="Ctrl+C"
-                                      Visibility="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource NotNullToVis}}"
-                                      Command="{Binding PlacementTarget.DataContext.CopyDropCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                      CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                            <Separator Visibility="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource NotNullToVis}}" />
-                            <MenuItem Header="Paste" InputGestureText="Ctrl+V"
-                                      Command="{Binding PlacementTarget.DataContext.PasteDropCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                            <MenuItem Header="Add drop" InputGestureText="Ins"
-                                      Command="{Binding PlacementTarget.DataContext.AddDropCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                        </ContextMenu>
-                    </ListView.ContextMenu>
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="ID" Width="56">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding ItemId}" FontFamily="Consolas" Foreground="#8AD0FF" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Name" Width="188">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding ItemName}" Foreground="#ECECEC" TextTrimming="CharacterEllipsis" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Drop %" Width="70">
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="{DynamicResource Db_Drops_Item_CtxSelectInDb}" InputGestureText="Ctrl+G"
+                                          Visibility="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource NotNullToVis}}"
+                                          Command="{Binding PlacementTarget.DataContext.SelectItemCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                          CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                                <MenuItem Header="{DynamicResource Db_Drops_Item_CtxEditChance}" InputGestureText="F2"
+                                          Visibility="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource NotNullToVis}}"
+                                          Command="{Binding PlacementTarget.DataContext.EditDropCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                          CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                                <MenuItem Header="{DynamicResource Db_Drops_Item_CtxRemove}" InputGestureText="Del"
+                                          Visibility="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource NotNullToVis}}"
+                                          Command="{Binding PlacementTarget.DataContext.RemoveDropCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                          CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                                <MenuItem Header="{DynamicResource Db_Drops_Item_CtxCopy}" InputGestureText="Ctrl+C"
+                                          Visibility="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource NotNullToVis}}"
+                                          Command="{Binding PlacementTarget.DataContext.CopyDropCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                          CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                                <Separator Visibility="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource NotNullToVis}}" />
+                                <MenuItem Header="{DynamicResource Db_Drops_Item_CtxPaste}" InputGestureText="Ctrl+V"
+                                          Command="{Binding PlacementTarget.DataContext.PasteDropCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                                <MenuItem Header="{DynamicResource Db_Drops_Item_CtxAddDrop}" InputGestureText="Ins"
+                                          Command="{Binding PlacementTarget.DataContext.AddDropCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="{DynamicResource Db_Drops_Col_ID}" Width="56">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ItemId}" FontFamily="Consolas" Foreground="#8AD0FF" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{DynamicResource Db_Drops_Col_Name}" Width="188">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ItemName}" Foreground="#ECECEC" TextTrimming="CharacterEllipsis" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{DynamicResource Db_Drops_Col_DropRate}" Width="70">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding RateText}" FontFamily="Consolas" Foreground="#79D2A6" HorizontalAlignment="Right" />
@@ -1101,9 +1101,9 @@
         <ui:Card Padding="14,12">
             <StackPanel>
                 <DockPanel Margin="0,0,0,10">
-                    <TextBlock Text="Drop tables" Style="{StaticResource TitleSection}" VerticalAlignment="Center" />
+                    <TextBlock Text="{DynamicResource Db_Drops_Tables}" Style="{StaticResource TitleSection}" VerticalAlignment="Center" />
                     <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center"
-                               Text="Read-only — create an override to edit" Opacity="0.55" FontSize="11"
+                               Text="{DynamicResource Db_Drops_ReadOnly}" Opacity="0.55" FontSize="11"
                                Visibility="{Binding IsEditable, Converter={StaticResource BoolToVis}, ConverterParameter=invert}" />
                 </DockPanel>
                 <Grid>
@@ -1124,7 +1124,7 @@
         <ui:Card Padding="14,12">
             <DockPanel>
                 <DockPanel DockPanel.Dock="Top" Margin="0,0,0,10">
-                    <TextBlock Text="Dropped by" Style="{StaticResource TitleSection}" VerticalAlignment="Center" />
+                    <TextBlock Text="{DynamicResource Db_DroppedBy_Title}" Style="{StaticResource TitleSection}" VerticalAlignment="Center" />
                     <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center"
                                Text="{Binding Summary}" Opacity="0.6" FontSize="11" />
                 </DockPanel>
@@ -1145,49 +1145,49 @@
                         </ListView.InputBindings>
                         <ListView.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Select monster" InputGestureText="Ctrl+G"
+                                <MenuItem Header="{DynamicResource Db_DroppedBy_CtxSelectMob}" InputGestureText="Ctrl+G"
                                           Visibility="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource NotNullToVis}}"
                                           Command="{Binding PlacementTarget.DataContext.SelectMobCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                                <MenuItem Header="Edit chance" InputGestureText="F2"
+                                <MenuItem Header="{DynamicResource Db_Drops_Item_CtxEditChance}" InputGestureText="F2"
                                           Visibility="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource NotNullToVis}}"
                                           Command="{Binding PlacementTarget.DataContext.EditChanceCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                                <MenuItem Header="Remove" InputGestureText="Del"
+                                <MenuItem Header="{DynamicResource Db_Drops_Item_CtxRemove}" InputGestureText="Del"
                                           Visibility="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource NotNullToVis}}"
                                           Command="{Binding PlacementTarget.DataContext.RemoveDropCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                                 <Separator Visibility="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource NotNullToVis}}" />
-                                <MenuItem Header="Add normal drop" InputGestureText="Ins"
+                                <MenuItem Header="{DynamicResource Db_DroppedBy_CtxAddNormal}" InputGestureText="Ins"
                                           Command="{Binding PlacementTarget.DataContext.AddNormalDropCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                                <MenuItem Header="Add MVP drop" InputGestureText="Ctrl+Ins"
+                                <MenuItem Header="{DynamicResource Db_DroppedBy_CtxAddMvp}" InputGestureText="Ctrl+Ins"
                                           Command="{Binding PlacementTarget.DataContext.AddMvpDropCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                             </ContextMenu>
                         </ListView.ContextMenu>
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Mob ID" Width="64">
+                                <GridViewColumn Header="{DynamicResource Db_DroppedBy_Col_MobId}" Width="64">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding MobId}" FontFamily="Consolas" Foreground="#8AD0FF" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="Monster" Width="190">
+                                <GridViewColumn Header="{DynamicResource Db_DroppedBy_Col_Monster}" Width="190">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding MobName}" Foreground="#ECECEC" TextTrimming="CharacterEllipsis" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="Type" Width="52">
+                                <GridViewColumn Header="{DynamicResource Db_DroppedBy_Col_Type}" Width="52">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Kind}" Foreground="#AAB2BF" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="Drop %" Width="70">
+                                <GridViewColumn Header="{DynamicResource Db_Drops_Col_DropRate}" Width="70">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding RateText}" FontFamily="Consolas" Foreground="#79D2A6" HorizontalAlignment="Right" />

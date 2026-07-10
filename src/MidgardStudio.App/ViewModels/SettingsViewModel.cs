@@ -8,6 +8,7 @@ using MidgardStudio.App.Services;
 using MidgardStudio.Core.Lua;
 using MidgardStudio.Core.Model;
 using MidgardStudio.Core.Schemas;
+using MidgardStudio.Core.Grf;
 
 namespace MidgardStudio.App.ViewModels;
 
@@ -298,6 +299,29 @@ public sealed partial class SettingsViewModel : ObservableObject
         Languages.Add(new("en", Localization.LocalizationService.Get("Settings_Language_English")));
         OnPropertyChanged(nameof(Languages));
         OnPropertyChanged(nameof(SelectedLanguage));
+    }
+
+    // ===== Global text encoding =====
+
+    /// <summary>The codepages offered in the global-encoding selector (mirrors the GRF Browser's list).</summary>
+    public IReadOnlyList<EncodingChoice> EncodingChoices { get; } = ViewEncoding.Choices;
+
+    /// <summary>The global fallback codepage. Persists to settings on change.</summary>
+    public EncodingChoice? SelectedGlobalEncoding
+    {
+        get
+        {
+            int cp = _settings.Settings.GlobalCodepage;
+            return EncodingChoices.FirstOrDefault(e => e.CodePage == cp);
+        }
+        set
+        {
+            if (value is null) return;
+            if (value.CodePage == _settings.Settings.GlobalCodepage) return;
+            _settings.Settings.GlobalCodepage = value.CodePage;
+            _settings.Save();
+            OnPropertyChanged(nameof(SelectedGlobalEncoding));
+        }
     }
 
     public bool IsGateAdvisory { get => SaveGate == ValidationGateMode.Advisory; set { if (value) SaveGate = ValidationGateMode.Advisory; } }

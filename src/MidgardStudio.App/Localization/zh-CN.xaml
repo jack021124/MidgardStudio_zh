@@ -35,8 +35,8 @@
     <s:String x:Key="Menu_View">视图(_V)</s:String>
     <s:String x:Key="Menu_View_GoTo">跳转到(_G)</s:String>
     <s:String x:Key="Menu_View_System">系统(_S)</s:String>
-    <s:String x:Key="Menu_View_Renewal">Renewal（重生）</s:String>
-    <s:String x:Key="Menu_View_PreRenewal">Pre-Renewal（前重生）</s:String>
+    <s:String x:Key="Menu_View_Renewal">Renewal（复兴后）</s:String>
+    <s:String x:Key="Menu_View_PreRenewal">Pre-Renewal（复兴前）</s:String>
 
     <s:String x:Key="Menu_Tools">工具(_T)</s:String>
     <s:String x:Key="Menu_Tools_Grf">GRF 浏览器(_G)</s:String>
@@ -116,8 +116,8 @@
     <s:String x:Key="NavGroup_Tools">工具</s:String>
 
     <!-- ===== 模式标签 ===== -->
-    <s:String x:Key="Mode_Renewal">Renewal</s:String>
-    <s:String x:Key="Mode_PreRenewal">Pre-Renewal</s:String>
+    <s:String x:Key="Mode_Renewal">复兴后</s:String>
+    <s:String x:Key="Mode_PreRenewal">复兴前</s:String>
 
     <!-- ===== ConfirmDialog 默认按钮 ===== -->
     <s:String x:Key="Dlg_Yes">是</s:String>
@@ -152,6 +152,9 @@
     <s:String x:Key="Settings_Language_Desc">选择界面语言。更改会立即生效，无需重启。</s:String>
     <s:String x:Key="Settings_Language_Chinese">中文 (简体)</s:String>
     <s:String x:Key="Settings_Language_English">English</s:String>
+
+    <s:String x:Key="Settings_Encoding_Title">全局文本编码</s:String>
+    <s:String x:Key="Settings_Encoding_Desc">用于读取和写入服务端数据库文件及松散客户端 lua 文件中旧式非 UTF-8 文本的回退代码页(例如 Latin-1 的"Poção"或 EUC-KR 的 item_db)。服务端文件以 UTF-8 保存;每个配置文件的显示编码会覆盖此设置。默认:Western (1252)。</s:String>
 
     <s:String x:Key="Settings_SaveBehaviour">保存行为</s:String>
     <s:String x:Key="Settings_SaveBehaviour_Desc">选择编辑何时写入磁盘。自动保存是安全的（就地写入，永远不会覆盖你的函数），但只有手动保存才会在备份管理器里创建带日期的还原点。</s:String>
@@ -366,6 +369,52 @@
     <s:String x:Key="Db_Info">信息</s:String>
     <s:String x:Key="Db_Validation">校验</s:String>
     <s:String x:Key="Db_ClientSprite">客户端精灵</s:String>
+
+    <!-- ===== 字段模板(对象列表、脚本、客户端文本、掉落表) ===== -->
+    <s:String x:Key="Db_BoolMap_Hint">点击循环切换:关闭 → 包含(紫色) → 排除(红色)。排除 = "全部,除了此项"。</s:String>
+    <s:String x:Key="Db_ObjList_Add">添加条目</s:String>
+    <s:String x:Key="Db_ObjList_SearchPH">搜索条目…</s:String>
+    <s:String x:Key="Db_ObjList_CtxAdd">添加条目</s:String>
+    <s:String x:Key="Db_ObjList_CtxDuplicate">复制</s:String>
+    <s:String x:Key="Db_ObjList_CtxCopyYaml">复制为 YAML</s:String>
+    <s:String x:Key="Db_ObjList_CtxRemove">移除</s:String>
+    <s:String x:Key="Db_ObjList_RemoveTip">移除此条目</s:String>
+    <s:String x:Key="Db_ObjList_SelectEntry">在左侧选择一个条目来编辑其字段,或添加一个新条目。</s:String>
+    <s:String x:Key="Db_Script_Generator">脚本生成器</s:String>
+    <s:String x:Key="Db_Script_GeneratorTip">打开可视化脚本生成器——用纯中文/英文选择效果(无需脚本编写),实时预览,一次插入一个或多个。</s:String>
+    <s:String x:Key="Db_Script_CondBonuses">精炼/附魔等级加成</s:String>
+    <s:String x:Key="Db_Script_CondBonusesTip">添加在精炼或附魔等级里程碑时解锁的加成——构建嵌套脚本和匹配的客户端描述(等级仅 Renewal 可用)。</s:String>
+    <s:String x:Key="Db_Script_Hint">无需脚本编写——按类别浏览效果,设置数值,随心叠加。</s:String>
+    <s:String x:Key="Db_CText_DisplayName">显示名称</s:String>
+    <s:String x:Key="Db_CText_ResourceName">资源名称</s:String>
+    <s:String x:Key="Db_CText_ResourceNameTip">精灵/图标基础文件名</s:String>
+    <s:String x:Key="Db_CText_Description">描述</s:String>
+    <s:String x:Key="Db_CText_UnidName">未鉴定名称</s:String>
+    <s:String x:Key="Db_CText_Slots">插槽</s:String>
+    <s:String x:Key="Db_CText_ClassNum">职业类型/视图</s:String>
+    <s:String x:Key="Db_CText_Costume">时装</s:String>
+    <s:String x:Key="Db_CText_HeadgearSprite">头饰精灵</s:String>
+    <s:String x:Key="Db_CText_SpritePH">精灵基础名称</s:String>
+    <s:String x:Key="Db_CText_LinkSprite">关联精灵</s:String>
+    <s:String x:Key="Db_CText_InGamePreview">游戏内预览</s:String>
+    <s:String x:Key="Db_Drops_Item_CtxSelectInDb">在数据库中选择物品</s:String>
+    <s:String x:Key="Db_Drops_Item_CtxEditChance">编辑几率</s:String>
+    <s:String x:Key="Db_Drops_Item_CtxRemove">移除</s:String>
+    <s:String x:Key="Db_Drops_Item_CtxCopy">复制</s:String>
+    <s:String x:Key="Db_Drops_Item_CtxPaste">粘贴</s:String>
+    <s:String x:Key="Db_Drops_Item_CtxAddDrop">添加掉落</s:String>
+    <s:String x:Key="Db_Drops_Col_ID">ID</s:String>
+    <s:String x:Key="Db_Drops_Col_Name">名称</s:String>
+    <s:String x:Key="Db_Drops_Col_DropRate">掉落 %</s:String>
+    <s:String x:Key="Db_Drops_Tables">掉落表</s:String>
+    <s:String x:Key="Db_Drops_ReadOnly">只读——创建覆盖以编辑</s:String>
+    <s:String x:Key="Db_DroppedBy_Title">掉落来源</s:String>
+    <s:String x:Key="Db_DroppedBy_CtxSelectMob">选择魔物</s:String>
+    <s:String x:Key="Db_DroppedBy_CtxAddNormal">添加普通掉落</s:String>
+    <s:String x:Key="Db_DroppedBy_CtxAddMvp">添加 MVP 掉落</s:String>
+    <s:String x:Key="Db_DroppedBy_Col_MobId">魔物 ID</s:String>
+    <s:String x:Key="Db_DroppedBy_Col_Monster">魔物</s:String>
+    <s:String x:Key="Db_DroppedBy_Col_Type">类型</s:String>
 
     <!-- ===== 校验面板 ===== -->
     <s:String x:Key="Val_Title">校验</s:String>

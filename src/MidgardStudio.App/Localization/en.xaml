@@ -159,6 +159,9 @@
     <s:String x:Key="Settings_Language_Chinese">中文 (简体)</s:String>
     <s:String x:Key="Settings_Language_English">English</s:String>
 
+    <s:String x:Key="Settings_Encoding_Title">Global text encoding</s:String>
+    <s:String x:Key="Settings_Encoding_Desc">Fallback codepage used to read and write legacy, non-UTF-8 text in server database files and loose client lua files (e.g. a Latin-1 “Poção” or an EUC-KR item_db). Server files are saved as UTF-8; per-profile Display Encoding overrides this. Default: Western (1252).</s:String>
+
     <s:String x:Key="Settings_SaveBehaviour">Saving behaviour</s:String>
     <s:String x:Key="Settings_SaveBehaviour_Desc">Choose when edits are written to disk. Auto-save writes safely (in-place, never overwriting your functions) but only manual saves create a dated restore point in the Backup Manager.</s:String>
     <s:String x:Key="Settings_Save_Manual">Manual save</s:String>
@@ -373,7 +376,51 @@
     <s:String x:Key="Db_Validation">Validation</s:String>
     <s:String x:Key="Db_ClientSprite">Client sprite</s:String>
 
-    <!-- ===== Validation panel ===== -->
+    <!-- ===== Field templates (object-list, script, client text, drops) ===== -->
+    <s:String x:Key="Db_BoolMap_Hint">Click to cycle: Off → Include (purple) → Exclude (red).  Exclude = “All, except this”.</s:String>
+    <s:String x:Key="Db_ObjList_Add">Add entry</s:String>
+    <s:String x:Key="Db_ObjList_SearchPH">Search entries…</s:String>
+    <s:String x:Key="Db_ObjList_CtxAdd">Add entry</s:String>
+    <s:String x:Key="Db_ObjList_CtxDuplicate">Duplicate</s:String>
+    <s:String x:Key="Db_ObjList_CtxCopyYaml">Copy YAML</s:String>
+    <s:String x:Key="Db_ObjList_CtxRemove">Remove</s:String>
+    <s:String x:Key="Db_ObjList_RemoveTip">Remove this entry</s:String>
+    <s:String x:Key="Db_ObjList_SelectEntry">Select an entry on the left to edit its fields, or add a new one.</s:String>
+    <s:String x:Key="Db_Script_Generator">Script generator</s:String>
+    <s:String x:Key="Db_Script_GeneratorTip">Open the visual script generator — pick effects in plain English (no scripting needed), preview them live, and insert one or many at once</s:String>
+    <s:String x:Key="Db_Script_CondBonuses">Refine / Grade bonuses</s:String>
+    <s:String x:Key="Db_Script_CondBonusesTip">Add bonuses that unlock at refine or enchant-grade milestones — builds the nested script and the matching client description (grade is Renewal-only).</s:String>
+    <s:String x:Key="Db_Script_Hint">No scripting needed — browse effects by category, set values, stack as many as you like.</s:String>
+    <s:String x:Key="Db_CText_DisplayName">Display Name</s:String>
+    <s:String x:Key="Db_CText_ResourceName">Resource Name</s:String>
+    <s:String x:Key="Db_CText_ResourceNameTip">Sprite/icon base file name</s:String>
+    <s:String x:Key="Db_CText_Description">Description</s:String>
+    <s:String x:Key="Db_CText_UnidName">Unidentified Name</s:String>
+    <s:String x:Key="Db_CText_Slots">Slots</s:String>
+    <s:String x:Key="Db_CText_ClassNum">ClassNum / View</s:String>
+    <s:String x:Key="Db_CText_Costume">Costume</s:String>
+    <s:String x:Key="Db_CText_HeadgearSprite">Headgear sprite</s:String>
+    <s:String x:Key="Db_CText_SpritePH">sprite base name</s:String>
+    <s:String x:Key="Db_CText_LinkSprite">Link sprite</s:String>
+    <s:String x:Key="Db_CText_InGamePreview">in-game preview</s:String>
+    <s:String x:Key="Db_Drops_Item_CtxSelectInDb">Select item in DB</s:String>
+    <s:String x:Key="Db_Drops_Item_CtxEditChance">Edit chance</s:String>
+    <s:String x:Key="Db_Drops_Item_CtxRemove">Remove</s:String>
+    <s:String x:Key="Db_Drops_Item_CtxCopy">Copy</s:String>
+    <s:String x:Key="Db_Drops_Item_CtxPaste">Paste</s:String>
+    <s:String x:Key="Db_Drops_Item_CtxAddDrop">Add drop</s:String>
+    <s:String x:Key="Db_Drops_Col_ID">ID</s:String>
+    <s:String x:Key="Db_Drops_Col_Name">Name</s:String>
+    <s:String x:Key="Db_Drops_Col_DropRate">Drop %</s:String>
+    <s:String x:Key="Db_Drops_Tables">Drop tables</s:String>
+    <s:String x:Key="Db_Drops_ReadOnly">Read-only — create an override to edit</s:String>
+    <s:String x:Key="Db_DroppedBy_Title">Dropped by</s:String>
+    <s:String x:Key="Db_DroppedBy_CtxSelectMob">Select monster</s:String>
+    <s:String x:Key="Db_DroppedBy_CtxAddNormal">Add normal drop</s:String>
+    <s:String x:Key="Db_DroppedBy_CtxAddMvp">Add MVP drop</s:String>
+    <s:String x:Key="Db_DroppedBy_Col_MobId">Mob ID</s:String>
+    <s:String x:Key="Db_DroppedBy_Col_Monster">Monster</s:String>
+    <s:String x:Key="Db_DroppedBy_Col_Type">Type</s:String>
     <s:String x:Key="Val_Title">Validation</s:String>
     <s:String x:Key="Val_Run">Run validation</s:String>
     <s:String x:Key="Val_QuickFixAll">Quick Fix All ({0})</s:String>

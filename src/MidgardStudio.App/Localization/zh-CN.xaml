@@ -680,7 +680,6 @@
     <s:String x:Key="SchemaLabel_Cast &amp; Delay">咏唱与延迟</s:String>
     <s:String x:Key="SchemaLabel_Damage &amp; Range">伤害与范围</s:String>
     <s:String x:Key="SchemaLabel_Disguise (job sprite)">伪装(职业精灵)</s:String>
-    <s:String x:Key="SchemaLabel_Ground Unit">地面单位</s:String>
     <s:String x:Key="SchemaLabel_Appearance">外观</s:String>
 
     <!-- ===== 枚举值标签(EnumLabel_*,由 SchemaLabels.ResolveEnum 解析) ===== -->

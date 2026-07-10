@@ -77,7 +77,7 @@ public sealed class BoolMapFieldEditorViewModel : FieldEditorViewModel
             var state = (included?.Contains(option) ?? false) ? ChipState.Include
                       : (excluded?.Contains(option) ?? false) ? ChipState.Exclude
                       : ChipState.None;
-            var chip = new BoolChipViewModel(option, f.Enum?.Label(option) ?? option, state,
+            var chip = new BoolChipViewModel(option, SchemaLabels.ResolveEnum(f.Enum?.Label(option) ?? option), state,
                 canExclude: SupportsExclude && option != "All");
             chip.Toggled += OnChipToggled;
             Chips.Add(chip);

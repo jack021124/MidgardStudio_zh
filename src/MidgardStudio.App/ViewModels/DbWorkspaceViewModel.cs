@@ -82,15 +82,15 @@ public sealed partial class DbWorkspaceViewModel : ObservableObject, IDisposable
     /// <summary>Only the item DB resolves list icons.</summary>
     public bool ShowIconColumn => _schema.Id == "item_db";
 
-    /// <summary>Header for the key column (e.g. "Item ID", "Group", "Skill").</summary>
-    public string KeyColumnHeader => _schema.KeyField?.Label ?? "ID";
+    /// <summary>Header for the key column (e.g. "Item ID", "Group", "Skill"). Localized via SchemaLabels.</summary>
+    public string KeyColumnHeader => SchemaLabels.Resolve(_schema.KeyField?.Label ?? "ID");
 
     /// <summary>Show a separate Name column only when the display field differs from the key
     /// (so string-keyed DBs like Item Groups / Summon Groups show a single column, not a duplicated one).</summary>
     public bool ShowNameColumn =>
         _schema.DisplayField is { } d && _schema.KeyField is { } k && !string.Equals(d.Name, k.Name, StringComparison.Ordinal);
 
-    public string NameColumnHeader => _schema.DisplayField?.Label ?? "Name";
+    public string NameColumnHeader => SchemaLabels.Resolve(_schema.DisplayField?.Label ?? "Name");
 
     [RelayCommand]
     private void DeleteEntry()

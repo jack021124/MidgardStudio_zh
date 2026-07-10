@@ -44,7 +44,9 @@ public abstract class FieldEditorViewModel : ObservableObject
     protected EditCommandStack Stack => Context.Stack;
 
     public string FieldName => Field.Name;
-    public string Label => Field.Label;
+    /// <summary>The field's display label, localized when a <c>SchemaLabel_&lt;Label&gt;</c> resource exists
+    /// (falls back to the schema's English label).</summary>
+    public string Label => SchemaLabels.Resolve(Field.Label);
     public string? Description => Field.Description;
     public bool IsRenewalOnly => Field.Renewal == RenewalScope.RenewalOnly;
     public bool IsEditable { get; }
@@ -196,7 +198,7 @@ public sealed class EnumFieldEditorViewModel : FieldEditorViewModel
         var src = f.EnumSelector?.Invoke(r) ?? f.Enum;
         Options = src is null
             ? Array.Empty<EnumOption>()
-            : src.Values.Select(v => new EnumOption(v, src.Label(v))).ToArray();
+            : src.Values.Select(v => new EnumOption(v, SchemaLabels.ResolveEnum(src.Label(v)))).ToArray();
     }
 
     /// <summary>The selectable values with their friendly labels (the UI shows the label, stores the value).</summary>
@@ -319,4 +321,28 @@ public static class FieldEditorFactory
         FieldKind.ObjectList => new ObjectListFieldEditorViewModel(record, field, ctx),
         _ => new SummaryFieldEditorViewModel(record, field, ctx),
     };
+}
+
+/// <summary>Resolves schema field labels and enum values into the active language. Looks up
+/// <c>SchemaLabel_&lt;english&gt;</c> / <c>EnumLabel_&lt;english&gt;</c> resource keys; falls back to the
+/// raw English label when no translation exists, so every field is always readable.</summary>
+public static class SchemaLabels
+{
+    /// <summary>Resolves a schema field label ("Attack" → "攻击力"). Falls back to the raw label.</summary>
+    public static string Resolve(string? label)
+    {
+        if (string.IsNullOrEmpty(label)) return label ?? string.Empty;
+        var key = "SchemaLabel_" + label;
+        var resolved = Localization.LocalizationService.Get(key);
+        return resolved == key ? label : resolved; // Get() returns the key itself when missing
+    }
+
+    /// <summary>Resolves an enum value's display label ("Weapon" → "武器"). Falls back to the raw value.</summary>
+    public static string ResolveEnum(string? value)
+    {
+        if (string.IsNullOrEmpty(value)) return value ?? string.Empty;
+        var key = "EnumLabel_" + value;
+        var resolved = Localization.LocalizationService.Get(key);
+        return resolved == key ? value : resolved;
+    }
 }

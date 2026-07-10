@@ -21,22 +21,36 @@ public sealed class WorkspaceSession
     private readonly ConcurrentDictionary<string, ModeSet> _modeSets = new(StringComparer.Ordinal);
     private WorkspaceConfig _config;
 
-    public WorkspaceSession(IWorkspaceConfigService configService)
+    public WorkspaceSession(IWorkspaceConfigService configService, AppSettingsService appSettings)
     {
         _config = configService.Load();
         Mode = _config.DefaultMode;
         Validation = ValidationEngine.CreateDefault();
         ScriptCatalog = LoadScriptCatalog(_config);
+        _clientCodec = new LuaFileCodec(appSettings.Settings.GlobalCodepage);
     }
 
     public EditCommandStack Commands { get; } = new();
 
-    /// <summary>The codec for loose client lua/.lub files — ALWAYS Windows-1252. The RO client stores
-    /// sprite / icon / resource names (and the GRF stores its entry names) as cp1252 byte sequences; the
-    /// "Korean-looking" names are 1252 bytes that must round-trip verbatim so resource lookups match the
-    /// GRF (which is also read as 1252, see <see cref="MidgardStudio.Grf.GrfAssetPaths"/>). The per-profile
-    /// Display Encoding governs only how legacy non-UTF-8 SERVER YAML names are decoded — never these.</summary>
-    public LuaFileCodec ClientCodec { get; } = new(1252);
+    private LuaFileCodec _clientCodec;
+
+    /// <summary>The codec for loose client lua/.lub files. Follows the global text-encoding setting
+    /// (Settings ▸ General ▸ Global text encoding, <see cref="AppSettings.GlobalCodepage"/>, default 1252).
+    /// See <see cref="ApplyClientCodepage"/> to swap it at runtime; the client services drop their caches
+    /// via <see cref="WorkspaceReloaded"/> and re-read on next access.</summary>
+    public LuaFileCodec ClientCodec => _clientCodec;
+
+    /// <summary>Rebuilds the client codec from a new codepage and drops cached client data so files are
+    /// re-read with the new encoding on next access. Call when the global text encoding changes.</summary>
+    public void ApplyClientCodepage(int codepage)
+    {
+        if (codepage <= 0) codepage = 1252;
+        if (codepage == _clientCodec.Codepage) return;
+        _clientCodec = new LuaFileCodec(codepage);
+        // Client services subscribe to WorkspaceReloaded to drop their caches; fire it so they re-read
+        // with the new codec on next access. (Server DB caches are unaffected — those are UTF-8.)
+        WorkspaceReloaded?.Invoke();
+    }
 
     /// <summary>The profile's codepage used as the fallback when a SERVER YAML db isn't valid UTF-8
     /// (a Latin-1 / EUC-KR translated item_db). Guarded so a missing/0 value falls back to 1252.</summary>

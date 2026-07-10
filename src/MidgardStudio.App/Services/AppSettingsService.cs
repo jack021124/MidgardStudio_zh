@@ -52,9 +52,10 @@ public sealed class AppSettings
     /// first launch; persisted so the choice survives restarts. See <see cref="Localization.LocalizationService"/>.</summary>
     public string Language { get; set; } = "zh-CN";
 
-    /// <summary>Global fallback codepage used to read/write legacy non-UTF-8 server database text and loose
-    /// client lua files (e.g. an EUC-KR item_db or a Latin-1 "Poção"). Defaults to Windows-1252. Applied to
-    /// every profile that doesn't override it with its own Display Encoding. See <see cref="ViewEncoding"/>.</summary>
+    /// <summary>Global codepage used to read/write client lua/lub files (itemInfo, skillinfolist, accessory
+    /// tables, etc.) and as the GRF Browser's view-encoding. Defaults to Windows-1252 (the RO client boundary).
+    /// Applied globally to every profile. See <see cref="ViewEncoding"/> and
+    /// <see cref="WorkspaceSession.ClientCodec"/>.</summary>
     public int GlobalCodepage { get; set; } = 1252;
 
     /// <summary>Options for the client-item Autocomplete generator.</summary>

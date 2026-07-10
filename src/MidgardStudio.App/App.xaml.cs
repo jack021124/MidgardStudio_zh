@@ -179,6 +179,7 @@ public partial class App : Application
     {
         services.AddSingleton<IWorkspaceConfigService, WorkspaceConfigService>();
         services.AddSingleton<Services.SchemaRegistry>();
+        services.AddSingleton<Services.AppSettingsService>(); // before WorkspaceSession — it reads GlobalCodepage
         services.AddSingleton<Services.WorkspaceSession>();
         services.AddSingleton<Services.ReferenceResolver>();
         services.AddSingleton<MidgardStudio.Grf.GrfService>();
@@ -192,7 +193,6 @@ public partial class App : Application
         services.AddSingleton<Services.BackupService>();
         services.AddSingleton<Services.MapCacheService>();
         services.AddSingleton<Services.CashShopService>();
-        services.AddSingleton<Services.AppSettingsService>();
         services.AddSingleton<Services.ReferenceIndex>();
         services.AddSingleton<Services.WorkspaceValidator>();
         services.AddSingleton<GrfBrowserViewModel>();

@@ -18,7 +18,7 @@ namespace MidgardStudio.App.Services;
 public sealed class SpriteLinkService : IDirtySource
 {
     private readonly WorkspaceSession _session;
-    private LuaFileCodec _codec => _session.ClientCodec; // fixed Windows-1252 (the RO client boundary), independent of the profile Display Encoding
+    private LuaFileCodec _codec => _session.ClientCodec; // global text encoding (Settings ▸ General), default 1252
     private readonly List<PendingRegistration> _pending = new();
 
     public SpriteLinkService(WorkspaceSession session)

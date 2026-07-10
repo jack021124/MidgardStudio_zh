@@ -1511,6 +1511,7 @@
     <s:String x:Key="Msg_Reload_Title">从磁盘重新加载</s:String>
     <s:String x:Key="Msg_Reload_Body">要从磁盘重新加载所有数据吗？未保存的更改将被丢弃。</s:String>
     <s:String x:Key="Msg_Reload_Yes">丢弃并重新加载</s:String>
+    <s:String x:Key="Msg_EncodingChange_Body">全局编码已更改。客户端文件将按新编码重新读取，未保存的客户端编辑将被丢弃。是否继续？</s:String>
     <s:String x:Key="Msg_SaveFailed_Title">保存失败</s:String>
     <s:String x:Key="Msg_SaveFailed_Body">你的更改未能完全保存，仍保留在编辑器中：</s:String>
     <s:String x:Key="Msg_SaveFailed_Tail">请关闭可能正在使用这些文件的程序（例如正在运行的服务端），然后再次保存。</s:String>

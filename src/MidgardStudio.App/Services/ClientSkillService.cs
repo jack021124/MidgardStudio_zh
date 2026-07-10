@@ -12,8 +12,8 @@ namespace MidgardStudio.App.Services;
 /// Loads and saves the client-side skill text from <c>lua-files/skillinfoz/</c> (skillid + skillinfolist +
 /// skilldescript + skilldelaylist). Mirrors <see cref="ClientItemService"/>: an in-memory model, a
 /// per-skill content-comparison dirty set (so undo-to-baseline reads clean, no sticky flag), and an
-/// in-place splice save that preserves header comments + untouched entries. Edits are encoded as
-/// Windows-1252 (the fixed RO client boundary), independent of the profile Display Encoding. The skill tree
+/// in-place splice save that preserves header comments + untouched entries. Edits are encoded with the
+/// global text encoding (Settings ▸ General, default Windows-1252). The skill tree
 /// (skilltreeview) is intentionally out of scope.
 /// </summary>
 public sealed class ClientSkillService : IDirtySource

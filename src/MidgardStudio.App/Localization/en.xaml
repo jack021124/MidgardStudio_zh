@@ -938,6 +938,7 @@
     <s:String x:Key="Msg_Reload_Title">Reload from disk</s:String>
     <s:String x:Key="Msg_Reload_Body">Reload all data from disk? Unsaved changes will be discarded.</s:String>
     <s:String x:Key="Msg_Reload_Yes">Discard &amp; reload</s:String>
+    <s:String x:Key="Msg_EncodingChange_Body">The global encoding changed. Client files will be re-read with the new encoding; unsaved client edits will be discarded. Continue?</s:String>
     <s:String x:Key="Msg_SaveFailed_Title">Save failed</s:String>
     <s:String x:Key="Msg_SaveFailed_Body">Your changes were NOT fully saved and are still here in the editor:</s:String>
     <s:String x:Key="Msg_SaveFailed_Tail">Close anything that might be using these files (for example a running server), then save again.</s:String>

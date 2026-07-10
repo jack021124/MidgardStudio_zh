@@ -50,3 +50,4 @@ publish/
 # Windows reserved-name artifact (created accidentally by shell redirects)
 nul
 *.zip
+.zcode/

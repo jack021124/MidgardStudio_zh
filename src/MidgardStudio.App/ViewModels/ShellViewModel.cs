@@ -466,7 +466,8 @@ public partial class ShellViewModel : ObservableObject
     /// format we can't safely round-trip, asks the user whether to load it anyway. Returns false to cancel.</summary>
     private bool ConfirmCompatibility(WorkspaceConfig cfg)
     {
-        var findings = ProfileCompatibilityCheck.Run(cfg.Paths, _schemas.All.ToList(), cfg.DefaultMode, cfg.ClientCodepage);
+        // Client lua/lub compatibility is probed with the global encoding (the codec the client services use).
+        var findings = ProfileCompatibilityCheck.Run(cfg.Paths, _schemas.All.ToList(), cfg.DefaultMode, _appSettings.Settings.GlobalCodepage);
         if (findings.Count == 0) return true;
 
         bool hasBlocker = findings.Any(f => f.Severity == CompatSeverity.Blocker);
@@ -760,6 +761,17 @@ public partial class ShellViewModel : ObservableObject
         ApplySaveMode();
         ShortcutsChanged?.Invoke();
         _grfBrowser.ApplyGlobalEncoding(); // pick up a changed global text encoding
+
+        // The global text encoding also governs how client lua/lub files are decoded. Swapping it must
+        // rebuild the client codec and drop cached client data so files re-read with the new encoding.
+        // If there are unsaved client edits, warn first (changing the codec and re-reading would discard them).
+        if (_session.Commands.IsModified)
+        {
+            if (!Views.ConfirmDialog.Show(L("Msg_Reload_Title"),
+                    L("Msg_EncodingChange_Body"),
+                    yes: L("Msg_Reload_Yes"))) return;
+        }
+        _session.ApplyClientCodepage(_appSettings.Settings.GlobalCodepage);
     }
 
     /// <summary>Raised when the user edits a keyboard shortcut (the window rebuilds its input bindings).</summary>

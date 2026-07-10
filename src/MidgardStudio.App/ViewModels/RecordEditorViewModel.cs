@@ -182,7 +182,7 @@ public sealed partial class RecordEditorViewModel : ObservableObject
                 vm.Changed += OnFieldChanged;
                 fields.Add(vm);
             }
-            Groups.Add(new FieldGroupViewModel(group.Key, fields));
+            Groups.Add(new FieldGroupViewModel(SchemaLabels.Resolve(group.Key), fields));
         }
 
         if (nameVm is not null && aegisVm is not null)

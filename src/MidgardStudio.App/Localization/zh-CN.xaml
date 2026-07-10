@@ -879,6 +879,20 @@
     <s:String x:Key="Msg_Compat_More">……还有 {0} 项。</s:String>
     <s:String x:Key="Msg_Compat_LoadAnyway">仍要加载此配置文件吗？</s:String>
     <s:String x:Key="Msg_Compat_Yes">仍然加载</s:String>
+
+    <!-- 兼容性检查详情消息(根据 CompatFinding.MessageKey + Args 解析) -->
+    <s:String x:Key="Compat_TypeMismatch">{0} 声明了 Type:{1},但此数据库期望的是 {2}——它看起来是不同的数据库。{3}</s:String>
+    <s:String x:Key="Compat_TypeMismatch_Import">保存时会写入一个头部/正文不匹配的文件。</s:String>
+    <s:String x:Key="Compat_TypeMismatch_Base">它无法在此架构下正确加载。</s:String>
+    <s:String x:Key="Compat_VersionDrift">{0} 的版本为 {1};编辑器建模的版本是 {2}。未知字段会被保留,但较新的字段可能为空白,某些结构也可能不同。</s:String>
+    <s:String x:Key="Compat_LuaTableMissing">{0} 存在,但其 '{1}' 表缺失或已被重命名——{2}编辑器无法安全地写入它(旧的/不受支持的客户端格式)。</s:String>
+    <s:String x:Key="Compat_ItemInfoExtraTables">{0} 定义了额外的表({1})。编辑内容会写入 tbl_custom——那些表中的物品在此处无法编辑,可能会重复。</s:String>
+    <s:String x:Key="Compat_ItemInfoNoTables">{0} 既没有 tbl_custom 也没有 tbl_override——编辑器会在保存时追加一个新的 tbl_custom。</s:String>
+    <!-- Compat_LuaTableMissing 中使用的功能名称片段 -->
+    <s:String x:Key="Compat_Feature_ClientSkills">客户端技能</s:String>
+    <s:String x:Key="Compat_Feature_HeadgearSprites">头饰精灵</s:String>
+    <s:String x:Key="Compat_Feature_MobSprites">魔物精灵</s:String>
+    <s:String x:Key="Compat_Feature_BaseItemClientText">基础物品客户端文本</s:String>
     <s:String x:Key="Msg_Update_Available">{0} 版本可用——你当前是 {1}。</s:String>
     <s:String x:Key="Msg_Save_Summary_Single">已将 1 个文件写入磁盘。</s:String>
     <s:String x:Key="Msg_Save_Summary_Multi">已将 {0} 个文件写入磁盘。</s:String>

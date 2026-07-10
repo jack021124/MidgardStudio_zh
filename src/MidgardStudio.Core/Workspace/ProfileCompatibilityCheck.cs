@@ -7,8 +7,10 @@ namespace MidgardStudio.Core.Workspace;
 
 public enum CompatSeverity { Info, Warning, Blocker }
 
-/// <summary>One compatibility finding about a profile's data file.</summary>
-public sealed record CompatFinding(string File, CompatSeverity Severity, string Message);
+/// <summary>One compatibility finding about a profile's data file. <see cref="Message"/> is an English
+/// fallback; <see cref="MessageKey"/> (+ <see cref="Args"/>) lets the App layer localize it.</summary>
+public sealed record CompatFinding(string File, CompatSeverity Severity, string Message,
+    string? MessageKey = null, object[]? Args = null);
 
 /// <summary>
 /// A read-only, headless pre-flight run BEFORE a profile is loaded, to catch files in a format this build
@@ -63,14 +65,16 @@ public static class ProfileCompatibilityCheck
         {
             findings.Add(new CompatFinding(name, CompatSeverity.Blocker,
                 $"{name} declares Type: {type}, but this database expects {schema.HeaderType} — it looks like a different db. " +
-                (isImport ? "Saving would write a header/body-mismatched file." : "It won't load correctly against this schema.")));
+                (isImport ? "Saving would write a header/body-mismatched file." : "It won't load correctly against this schema."),
+                "Compat_TypeMismatch", new object[] { name, type, schema.HeaderType, isImport }));
             return true; // type is already decisive; don't also nag about version
         }
 
         if (version is int v && v != schema.HeaderVersion)
             findings.Add(new CompatFinding(name, CompatSeverity.Warning,
                 $"{name} is Version {v}; the editor models version {schema.HeaderVersion}. " +
-                "Unknown fields are preserved, but newer fields may be blank and some shapes may differ."));
+                "Unknown fields are preserved, but newer fields may be blank and some shapes may differ.",
+                "Compat_VersionDrift", new object[] { name, v, schema.HeaderVersion }));
 
         return type is not null || version is not null;
     }
@@ -130,7 +134,8 @@ public static class ProfileCompatibilityCheck
         if (LuaScan.FindTableOpen(text, table) < 0)
             findings.Add(new CompatFinding(Path.GetFileName(path), CompatSeverity.Warning,
                 $"{Path.GetFileName(path)} is present but its '{table}' table is missing or renamed — the {feature} editor " +
-                "can't safely write to it (old/unsupported client format)."));
+                "can't safely write to it (old/unsupported client format).",
+                "Compat_LuaTableMissing", new object[] { Path.GetFileName(path), table, feature }));
     }
 
     private static readonly Regex TopLevelTbl = new(@"(?m)^(tbl_[A-Za-z0-9_]+)\s*=\s*\{", RegexOptions.Compiled);
@@ -154,10 +159,12 @@ public static class ProfileCompatibilityCheck
         if (extras.Count > 0)
             findings.Add(new CompatFinding(name, CompatSeverity.Warning,
                 $"{name} defines extra tables ({string.Join(", ", extras)}). Edits are written to tbl_custom — items in " +
-                "those tables aren't editable here and may end up duplicated."));
+                "those tables aren't editable here and may end up duplicated.",
+                "Compat_ItemInfoExtraTables", new object[] { name, string.Join(", ", extras) }));
         else if (!hasCustom && !hasOverride)
             findings.Add(new CompatFinding(name, CompatSeverity.Warning,
-                $"{name} has neither tbl_custom nor tbl_override — the editor will append a new tbl_custom on save."));
+                $"{name} has neither tbl_custom nor tbl_override — the editor will append a new tbl_custom on save.",
+                "Compat_ItemInfoNoTables", new object[] { name }));
     }
 
     // ---- io helpers (read-only, best-effort) ----

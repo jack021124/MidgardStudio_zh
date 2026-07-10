@@ -475,12 +475,41 @@ public partial class ShellViewModel : ObservableObject
             ? L("Msg_Compat_Blocker_Intro")
             : L("Msg_Compat_Warn_Intro")).Append("\n\n");
         foreach (var f in findings.Take(12))
-            sb.Append(f.Severity == CompatSeverity.Blocker ? "  ⛔ " : "  ⚠ ").Append(f.Message).Append('\n');
+            sb.Append(f.Severity == CompatSeverity.Blocker ? "  ⛔ " : "  ⚠ ").Append(LocalizeFinding(f)).Append('\n');
         if (findings.Count > 12) sb.Append("  ").Append(string.Format(L("Msg_Compat_More"), findings.Count - 12)).Append('\n');
         sb.Append("\n").Append(L("Msg_Compat_LoadAnyway"));
 
         return Views.ConfirmDialog.Show(L("Msg_Compat_Title"), sb.ToString(), yes: L("Msg_Compat_Yes"));
     }
+
+    /// <summary>Resolves a compatibility finding's message into the active language. Falls back to the
+    /// Core-supplied English <see cref="CompatFinding.Message"/> when no key/args are present.</summary>
+    private static string LocalizeFinding(CompatFinding f)
+    {
+        if (string.IsNullOrEmpty(f.MessageKey) || f.Args is null || f.Args.Length == 0)
+            return f.Message;
+
+        // The Lua-table-missing message carries a feature name ("client skills" / …) that must itself be
+        // localized, so swap it in before formatting.
+        if (f.MessageKey == "Compat_LuaTableMissing" && f.Args.Length >= 3 && f.Args[2] is string feature)
+            f.Args[2] = FeatureLabel(feature);
+
+        if (f.MessageKey == "Compat_TypeMismatch" && f.Args.Length >= 4 && f.Args[3] is bool isImport)
+            f.Args[3] = L(isImport ? "Compat_TypeMismatch_Import" : "Compat_TypeMismatch_Base");
+
+        try { return string.Format(L(f.MessageKey), f.Args); }
+        catch { return f.Message; } // malformed args — never crash the dialog
+    }
+
+    /// <summary>Maps a Core feature string to its localized label (used inside the Lua-table-missing message).</summary>
+    private static string FeatureLabel(string feature) => feature switch
+    {
+        "client skills" => L("Compat_Feature_ClientSkills"),
+        "headgear sprites" => L("Compat_Feature_HeadgearSprites"),
+        "mob sprites" => L("Compat_Feature_MobSprites"),
+        "base item client text" => L("Compat_Feature_BaseItemClientText"),
+        _ => feature,
+    };
 
     [RelayCommand]
     private void SwitchProfile(ProfileMenuItemViewModel? item)

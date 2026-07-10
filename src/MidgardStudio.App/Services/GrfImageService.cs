@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MidgardStudio.App.Common;
+using MidgardStudio.Core.Grf;
 using MidgardStudio.Grf;
 
 namespace MidgardStudio.App.Services;
@@ -12,6 +13,8 @@ namespace MidgardStudio.App.Services;
 public sealed class GrfImageService
 {
     private readonly GrfService _grf;
+    private readonly AppSettingsService _settings;
+    private int _lastCodepage; // tracks the global codepage so a change can flush the icon cache
 
     // Decoding a GRF image (decompress + bitmap build) is expensive and was repeated on every selection /
     // resource-name commit. Cache the frozen ImageSource keyed by GRF path and drop it whenever the configured
@@ -24,15 +27,34 @@ public sealed class GrfImageService
     private readonly object _lock = new();
     private long _bytes;
 
-    public GrfImageService(GrfService grf)
+    public GrfImageService(GrfService grf, AppSettingsService settings)
     {
         _grf = grf;
+        _settings = settings;
+        _lastCodepage = settings.Settings.GlobalCodepage;
         _grf.SourcesChanged += ClearCache;
     }
 
     private void ClearCache()
     {
         lock (_lock) { _cache.Clear(); _order.Clear(); _bytes = 0; }
+    }
+
+    /// <summary>The global codepage used to decode client lua text. Resource names (identifiedResourceName)
+    /// are stored as 1252 bytes in the GRF; when the client codec is something else (e.g. 936 for Chinese
+    /// text), the decoded name must be re-projected back to 1252 so the GRF path lookup matches.</summary>
+    private int ClientCodepage => _settings.Settings.GlobalCodepage;
+
+    /// <summary>If the global encoding differs from 1252, re-projects a resource name from the client
+    /// codepage back to 1252 (byte-preserving round-trip) so it matches the GRF's 1252 entry keys.
+    /// A no-op when the codepage is already 1252. Safe on any string (returns input unchanged on failure).</summary>
+    private string ReprojectToGrf(string? name)
+    {
+        int cp = ClientCodepage;
+        // Drop the icon cache if the codepage changed since the last lookup (paths are now different).
+        if (cp != _lastCodepage) { _lastCodepage = cp; ClearCache(); }
+        if (cp == ViewEncoding.DefaultCodePage || string.IsNullOrEmpty(name)) return name ?? string.Empty;
+        return ViewEncoding.Reproject(name, ViewEncoding.DefaultCodePage, cp);
     }
 
     private ImageSource? Cached(string path, Func<ImageSource?> decode)
@@ -100,7 +122,7 @@ public sealed class GrfImageService
         lock (_lock)
         {
             if (_spriteAnimPick.TryGetValue(baseName, out var hit)) return hit;
-            string sprPath = GrfAssetPaths.HeadgearSpriteFemale(baseName);
+            string sprPath = GrfAssetPaths.HeadgearSpriteFemale(ReprojectToGrf(baseName));
             byte[]? spr = _grf.GetDataFromSource(sprPath);
             var anim = spr is null ? null
                 : SpriteRenderer.Build(spr, _grf.GetDataFromSource(Path.ChangeExtension(sprPath, ".act")));
@@ -112,21 +134,21 @@ public sealed class GrfImageService
     public ImageSource? ItemIcon(string? resourceName)
     {
         if (string.IsNullOrWhiteSpace(resourceName)) return null;
-        var path = GrfAssetPaths.ItemIcon(resourceName!);
+        var path = GrfAssetPaths.ItemIcon(ReprojectToGrf(resourceName));
         return Cached(path, () => GrfImaging.ToImageSource(_grf.GetImage(path)));
     }
 
     public ImageSource? ItemCollection(string? resourceName)
     {
         if (string.IsNullOrWhiteSpace(resourceName)) return null;
-        var path = GrfAssetPaths.ItemCollection(resourceName!);
+        var path = GrfAssetPaths.ItemCollection(ReprojectToGrf(resourceName));
         return Cached(path, () => GrfImaging.ToImageSource(_grf.GetImage(path)));
     }
 
     public ImageSource? MonsterSprite(string? spriteName)
     {
         if (string.IsNullOrWhiteSpace(spriteName)) return null;
-        var path = GrfAssetPaths.MonsterSprite(spriteName!);
+        var path = GrfAssetPaths.MonsterSprite(ReprojectToGrf(spriteName));
         return Cached(path, () => GrfImaging.ToImageSource(_grf.GetImage(path)));
     }
 
@@ -134,7 +156,7 @@ public sealed class GrfImageService
     public SpriteAnimation? MonsterAnimation(string? spriteName)
     {
         if (string.IsNullOrWhiteSpace(spriteName)) return null;
-        string sprPath = GrfAssetPaths.MonsterSprite(spriteName!);
+        string sprPath = GrfAssetPaths.MonsterSprite(ReprojectToGrf(spriteName));
         byte[]? spr = _grf.GetData(sprPath);
         if (spr is null) return null;
         byte[]? act = _grf.GetData(Path.ChangeExtension(sprPath, ".act"));

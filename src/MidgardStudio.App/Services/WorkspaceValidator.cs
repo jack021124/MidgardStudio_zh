@@ -1,3 +1,4 @@
+using System;
 using MidgardStudio.Core.Lua;
 using MidgardStudio.Core.Model;
 using MidgardStudio.Core.Validation;
@@ -113,7 +114,7 @@ public sealed class WorkspaceValidator
         // The rules + their quick-fixes live in Core (ItemClientFileValidator), reached through ports — the
         // live client/GRF/sprite services are wrapped by the adapters below.
         issues.AddRange(ItemClientFileValidator.Validate(overlay.Effective(), scope,
-            new ClientItemProbe(_client), new GrfIconProbe(_grf), new AccessoryMapProbe(_sprite), new ClientItemEditor(_client)));
+            new ClientItemProbe(_client), new GrfIconProbe(_grf, () => _session.ClientCodec.Codepage), new AccessoryMapProbe(_sprite), new ClientItemEditor(_client)));
     }
 
     private void ValidateMobClientFiles(List<ValidationIssue> issues, ValidationScope scope)
@@ -235,10 +236,20 @@ public sealed class WorkspaceValidator
         }
     }
 
-    private sealed class GrfIconProbe(GrfService grf) : IGrfIconProbe
+    private sealed class GrfIconProbe(GrfService grf, Func<int> codepage) : IGrfIconProbe
     {
         public bool IsConfigured => grf.IsConfigured;
-        public bool IconExists(string resourceName) => grf.Exists(GrfAssetPaths.ItemIcon(resourceName));
+
+        public bool IconExists(string resourceName)
+        {
+            // Re-project the resource name back to 1252 so it matches the GRF's entry keys when the client
+            // codec is something other than 1252 (e.g. 936 for Chinese text in itemInfo.lua).
+            int cp = codepage();
+            string name = cp == 1252 || string.IsNullOrEmpty(resourceName)
+                ? resourceName
+                : MidgardStudio.Core.Grf.ViewEncoding.Reproject(resourceName, 1252, cp);
+            return grf.Exists(GrfAssetPaths.ItemIcon(name));
+        }
     }
 
     private sealed class AccessoryMapProbe(SpriteLinkService sprite) : IAccessoryMapProbe

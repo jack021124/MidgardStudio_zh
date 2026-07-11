@@ -68,7 +68,8 @@ public sealed class YamlDbReader
     /// <summary>Wraps plain-scalar mapping values that contain ": " in double quotes, line by line, so the
     /// YAML scanner doesn't mistake them for nested mappings. Only touches a line that looks like an
     /// indented mapping entry (<c>key: value</c>) whose value is NOT already quoted/block and contains a
-    /// ": " after the key. Sequence items (<c>- key: value</c>), already-quoted values, and block scalars
+    /// ": " after the key. Sequence items (<c>- key: value</c>), already-quoted values, comment-only values
+    /// (<c>key: # note</c> — the key has a null value that may attach to a block below), and block scalars
     /// (<c>|</c>/<c>&gt;</c>) are left alone.</summary>
     private static string QuoteAmbiguousScalars(string yaml)
     {
@@ -85,24 +86,28 @@ public sealed class YamlDbReader
             int firstNonWs = 0;
             while (firstNonWs < line.Length && line[firstNonWs] == ' ') firstNonWs++;
             if (firstNonWs == 0 || firstNonWs >= line.Length) continue;        // no indent, or blank
-            if (line[firstNonWs] == '-' || line[firstNonWs] == '#') continue;  // sequence item or comment
+            if (line[firstNonWs] == '-' || line[firstNonWs] == '#') continue;  // sequence item or comment line
             int colon = line.IndexOf(": ", firstNonWs, StringComparison.Ordinal);
             if (colon < 0) continue;
 
-            // The value starts after "Key: ". Check whether the value ITSELF contains another ": ".
+            // The value starts after "Key: ". A YAML comment (" #…") ends the value; a value that starts
+            // with '#' is comment-only (the key is null and may attach to a block sequence/mapping below —
+            // wrapping it would orphan that block). So strip a trailing comment and skip comment-only values.
             int valueStart = colon + 2;
             if (valueStart >= line.Length) continue;
             char v0 = line[valueStart];
+            if (v0 == '#') continue;  // comment-only value (null) — must not quote, the block below attaches here
             if (v0 == '"' || v0 == '\'' || v0 == '|' || v0 == '>' || v0 == '&' || v0 == '*' || v0 == '!' || v0 == '%' || v0 == '@' || v0 == '`')
                 continue;  // already quoted / block scalar / anchor / alias / tag / directive — leave it
-            int innerColon = line.IndexOf(": ", valueStart, StringComparison.Ordinal);
-            if (innerColon < 0) continue;  // value has no ": " — fine as-is
-
-            // Wrap the value in double quotes, escaping any literal double-quotes inside it. Trailing \r
-            // (CRLF files split on \n) is kept outside the quotes.
             string value = line.Substring(valueStart);
             string trailing = string.Empty;
             if (value.EndsWith('\r')) { trailing = "\r"; value = value.Substring(0, value.Length - 1); }
+            int hash = value.IndexOf(" #", StringComparison.Ordinal);  // a " #" starts a trailing comment
+            if (hash >= 0) value = value.Substring(0, hash);            // scan only the real value
+            int innerColon = value.IndexOf(": ", StringComparison.Ordinal);
+            if (innerColon < 0) continue;  // value has no ": " — fine as-is
+
+            // Wrap the value in double quotes, escaping any literal double-quotes/backslashes inside it.
             value = value.Replace("\\", "\\\\").Replace("\"", "\\\"");
             lines[i] = line.Substring(0, valueStart) + "\"" + value + "\"" + trailing;
             changed = true;

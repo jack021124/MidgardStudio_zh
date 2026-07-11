@@ -209,4 +209,58 @@ public class ItemYamlRoundTripTests
         DbRecord r = Assert.Single(file.Records);
         Assert.Equal("Costume: Poker Card", r.GetString("Name"));
     }
+
+    [Fact]
+    public void Does_not_quote_comment_only_value_followed_by_block()
+    {
+        // A "Key: # comment" line has a NULL value; a block sequence/mapping on the next lines attaches
+        // to that key. Wrapping the comment in quotes (as if it were the value) orphans the block and
+        // breaks parsing with "did not find expected key". This is the rAthena pattern
+        // `Duration1: # !TODO: find exact values` followed by a per-level list.
+        var schema = SkillDbSchema.Instance;
+        string yaml =
+            "Header:\n" +
+            "  Type: " + schema.HeaderType + "\n" +
+            "  Version: " + schema.HeaderVersion + "\n" +
+            "Body:\n" +
+            "  - Id: 2450\n" +
+            "    Name: SO_CLOUD_KILL\n" +
+            "    Description: 毒云术\n" +
+            "    Duration1: # !TODO: find exact values\n" +
+            "      - Level: 1\n" +
+            "        Time: 1000\n" +
+            "      - Level: 2\n" +
+            "        Time: 2000\n";
+
+        DbFile file = new YamlDbReader().Read(yaml, schema);
+        DbRecord r = Assert.Single(file.Records);
+        Assert.Equal("SO_CLOUD_KILL", r.GetString("Name"));
+        // (Duration1 is a per-level int that may land in Extras when behind a # comment; the point
+        // of this test is that reading does NOT throw "did not find expected key".)
+    }
+
+    [Fact]
+    public void Does_not_orphan_next_entry_after_commented_key()
+    {
+        // Two skill entries; the first ends with a "Key: # comment" + block. The second (Id 2451) must
+        // still be reachable — proves the block was consumed, not left dangling.
+        var schema = SkillDbSchema.Instance;
+        string yaml =
+            "Header:\n" +
+            "  Type: " + schema.HeaderType + "\n" +
+            "  Version: " + schema.HeaderVersion + "\n" +
+            "Body:\n" +
+            "  - Id: 2450\n" +
+            "    Name: SO_CLOUD_KILL\n" +
+            "    Duration1: # !TODO: find exact values\n" +
+            "      - Level: 1\n" +
+            "        Time: 1000\n" +
+            "  - Id: 2451\n" +
+            "    Name: SO_STRIKING\n";
+
+        DbFile file = new YamlDbReader().Read(yaml, schema);
+        Assert.Equal(2, file.Records.Count);
+        Assert.Equal("SO_CLOUD_KILL", file.Records[0].GetString("Name"));
+        Assert.Equal("SO_STRIKING", file.Records[1].GetString("Name"));
+    }
 }

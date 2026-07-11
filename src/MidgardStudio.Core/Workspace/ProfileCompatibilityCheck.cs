@@ -44,19 +44,29 @@ public static class ProfileCompatibilityCheck
         foreach (var schema in schemas)
         {
             // The import file is what we WRITE — a present, mismatched Type would make a save corrupt it.
-            ProbeYamlHeader(Resolve(paths.ServerDbRoot, schema.Layout.ImportFile), schema, findings, isImport: true);
+            ProbeYamlHeader(Resolve(paths.ServerDbRoot, schema.Layout.ImportFile), schema, findings,
+                isImport: true, out bool importDrift);
 
             // The first base file with a header tells us the server's db version (old/new rAthena).
+            // Suppress the base file's version-drift check when the import file already drifted, so the same
+            // schema doesn't report the same Version mismatch twice (once for import/, once for re/ or pre-re/).
+            // A Type-mismatch Blocker is still reported for either file — it's more severe and semantically
+            // distinct, and a save would actually corrupt the import file.
             foreach (var rel in schema.Layout.BaseFiles(mode))
-                if (ProbeYamlHeader(Resolve(paths.ServerDbRoot, rel), schema, findings, isImport: false))
+                if (ProbeYamlHeader(Resolve(paths.ServerDbRoot, rel), schema, findings,
+                    isImport: false, out _, checkVersion: !importDrift))
                     break;
         }
     }
 
     /// <summary>Reads a file's <c>Header</c> (if present) and flags a Type/Version mismatch. Returns true if
-    /// the file existed and carried a Header.</summary>
-    private static bool ProbeYamlHeader(string path, DbSchema schema, List<CompatFinding> findings, bool isImport)
+    /// the file existed and carried a Header. <paramref name="versionDrift"/> is set true when a Version-mismatch
+    /// warning was actually added this call (used to suppress duplicate drift across import/base files).
+    /// <paramref name="checkVersion"/> skips the Version check (a Type Blocker is still reported).</summary>
+    private static bool ProbeYamlHeader(string path, DbSchema schema, List<CompatFinding> findings, bool isImport,
+        out bool versionDrift, bool checkVersion = true)
     {
+        versionDrift = false;
         if (!File.Exists(path)) return false;
         var (type, version) = ReadYamlHeader(ReadHead(path));
         string name = Path.GetFileName(path);
@@ -70,11 +80,14 @@ public static class ProfileCompatibilityCheck
             return true; // type is already decisive; don't also nag about version
         }
 
-        if (version is int v && v != schema.HeaderVersion)
+        if (checkVersion && version is int v && v != schema.HeaderVersion)
+        {
             findings.Add(new CompatFinding(name, CompatSeverity.Warning,
                 $"{name} is Version {v}; the editor models version {schema.HeaderVersion}. " +
                 "Unknown fields are preserved, but newer fields may be blank and some shapes may differ.",
                 "Compat_VersionDrift", new object[] { name, v, schema.HeaderVersion }));
+            versionDrift = true;
+        }
 
         return type is not null || version is not null;
     }

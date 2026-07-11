@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using MidgardStudio.Core.Schemas;
 using MidgardStudio.Core.Workspace;
 using Xunit;
@@ -51,6 +52,59 @@ public class ProfileCompatibilityCheckTests
             var findings = ProfileCompatibilityCheck.Run(paths, new[] { schema }, ServerMode.Renewal, 1252);
 
             Assert.Empty(findings);
+        }
+        finally { try { Directory.Delete(root, true); } catch { /* best effort */ } }
+    }
+
+    [Fact]
+    public void Reports_version_drift_once_when_both_import_and_base_drift()
+    {
+        // Both import/ and re/ declare a Version older than the editor's — previously this emitted TWO
+        // identical VersionDrift warnings (one per file); the base-file check is now suppressed when the
+        // import file already drifted, so the user sees it only once.
+        string root = Path.Combine(Path.GetTempPath(), "ms-compat-dup-" + Guid.NewGuid().ToString("N"));
+        string serverDb = Path.Combine(root, "db");
+        Directory.CreateDirectory(Path.Combine(serverDb, "import"));
+        Directory.CreateDirectory(Path.Combine(serverDb, "re"));
+        try
+        {
+            var schema = ItemDbSchema.Instance;
+            int older = schema.HeaderVersion - 1;
+            File.WriteAllText(Path.Combine(serverDb, "import", "item_db.yml"),
+                $"Header:\n  Type: {schema.HeaderType}\n  Version: {older}\nBody: []\n");
+            File.WriteAllText(Path.Combine(serverDb, "re", "item_db.yml"),
+                $"Header:\n  Type: {schema.HeaderType}\n  Version: {older}\nBody: []\n");
+
+            var paths = new WorkspacePaths { ServerDbRoot = serverDb };
+            var findings = ProfileCompatibilityCheck.Run(paths, new[] { schema }, ServerMode.Renewal, 1252);
+
+            Assert.Single(findings, f => f.MessageKey == "Compat_VersionDrift");
+        }
+        finally { try { Directory.Delete(root, true); } catch { /* best effort */ } }
+    }
+
+    [Fact]
+    public void Reports_version_drift_for_base_file_when_import_does_not_drift()
+    {
+        // import/ is current but re/ is old — the base file's drift is still surfaced (the dedup only
+        // suppresses the base check when the import ALREADY drifted). Uses mob_db, whose base file is
+        // re/mob_db.yml (Standard layout: same name as the import file).
+        string root = Path.Combine(Path.GetTempPath(), "ms-compat-base-" + Guid.NewGuid().ToString("N"));
+        string serverDb = Path.Combine(root, "db");
+        Directory.CreateDirectory(Path.Combine(serverDb, "import"));
+        Directory.CreateDirectory(Path.Combine(serverDb, "re"));
+        try
+        {
+            var schema = MobDbSchema.Instance;
+            File.WriteAllText(Path.Combine(serverDb, "import", "mob_db.yml"),
+                $"Header:\n  Type: {schema.HeaderType}\n  Version: {schema.HeaderVersion}\nBody: []\n");
+            File.WriteAllText(Path.Combine(serverDb, "re", "mob_db.yml"),
+                $"Header:\n  Type: {schema.HeaderType}\n  Version: {schema.HeaderVersion - 1}\nBody: []\n");
+
+            var paths = new WorkspacePaths { ServerDbRoot = serverDb };
+            var findings = ProfileCompatibilityCheck.Run(paths, new[] { schema }, ServerMode.Renewal, 1252);
+
+            Assert.Single(findings, f => f.MessageKey == "Compat_VersionDrift");
         }
         finally { try { Directory.Delete(root, true); } catch { /* best effort */ } }
     }

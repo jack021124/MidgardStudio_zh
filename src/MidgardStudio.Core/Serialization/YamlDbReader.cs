@@ -54,8 +54,60 @@ public sealed class YamlDbReader
 
     public DbFile Read(string yaml, DbSchema schema, RecordOrigin origin = RecordOrigin.Base)
     {
+        // Tolerate a class of malformed rAthena db files where a string field's plain-scalar value itself
+        // contains ": " (colon-space) — common in private-server packs with translated item names like
+        // `Name: 春之季外套: 春`. YAML reads ": " as a mapping separator, so YamlDotNet throws
+        // "While scanning a plain scalar value, found invalid mapping." We wrap just those values in double
+        // quotes for PARSING ONLY (the parsed string is identical; quotes are stripped by the emitter). The
+        // on-disk file is never modified — base files are read-only and saves only touch the import layer.
+        yaml = QuoteAmbiguousScalars(yaml);
         using var reader = new StringReader(yaml);
         return Read(reader, schema, origin);
+    }
+
+    /// <summary>Wraps plain-scalar mapping values that contain ": " in double quotes, line by line, so the
+    /// YAML scanner doesn't mistake them for nested mappings. Only touches a line that looks like an
+    /// indented mapping entry (<c>key: value</c>) whose value is NOT already quoted/block and contains a
+    /// ": " after the key. Sequence items (<c>- key: value</c>), already-quoted values, and block scalars
+    /// (<c>|</c>/<c>&gt;</c>) are left alone.</summary>
+    private static string QuoteAmbiguousScalars(string yaml)
+    {
+        if (string.IsNullOrEmpty(yaml) || yaml.IndexOf(": ") < 0) return yaml;
+
+        var lines = yaml.Split('\n');
+        bool changed = false;
+        for (int i = 0; i < lines.Length; i++)
+        {
+            var line = lines[i];
+            // Must be an indented mapping entry (leading spaces, then "Key: value"). Skip sequence items
+            // ("- Key: value") and top-level keys (no indent) — those have well-formed values in practice,
+            // and rewriting them risks mis-detecting document structure.
+            int firstNonWs = 0;
+            while (firstNonWs < line.Length && line[firstNonWs] == ' ') firstNonWs++;
+            if (firstNonWs == 0 || firstNonWs >= line.Length) continue;        // no indent, or blank
+            if (line[firstNonWs] == '-' || line[firstNonWs] == '#') continue;  // sequence item or comment
+            int colon = line.IndexOf(": ", firstNonWs, StringComparison.Ordinal);
+            if (colon < 0) continue;
+
+            // The value starts after "Key: ". Check whether the value ITSELF contains another ": ".
+            int valueStart = colon + 2;
+            if (valueStart >= line.Length) continue;
+            char v0 = line[valueStart];
+            if (v0 == '"' || v0 == '\'' || v0 == '|' || v0 == '>' || v0 == '&' || v0 == '*' || v0 == '!' || v0 == '%' || v0 == '@' || v0 == '`')
+                continue;  // already quoted / block scalar / anchor / alias / tag / directive — leave it
+            int innerColon = line.IndexOf(": ", valueStart, StringComparison.Ordinal);
+            if (innerColon < 0) continue;  // value has no ": " — fine as-is
+
+            // Wrap the value in double quotes, escaping any literal double-quotes inside it. Trailing \r
+            // (CRLF files split on \n) is kept outside the quotes.
+            string value = line.Substring(valueStart);
+            string trailing = string.Empty;
+            if (value.EndsWith('\r')) { trailing = "\r"; value = value.Substring(0, value.Length - 1); }
+            value = value.Replace("\\", "\\\\").Replace("\"", "\\\"");
+            lines[i] = line.Substring(0, valueStart) + "\"" + value + "\"" + trailing;
+            changed = true;
+        }
+        return changed ? string.Join('\n', lines) : yaml;
     }
 
     public DbFile Read(TextReader reader, DbSchema schema, RecordOrigin origin = RecordOrigin.Base)

@@ -2,6 +2,7 @@ using MidgardStudio.Core.Model;
 using MidgardStudio.Core.Overlay;
 using MidgardStudio.Core.Schema;
 using MidgardStudio.Core.Serialization;
+using YamlDotNet.Core;
 
 namespace MidgardStudio.Core.Workspace;
 
@@ -39,7 +40,7 @@ public sealed class WorkspaceLoader
         {
             var path = ResolvePath(paths.ServerDbRoot, rel);
             if (!File.Exists(path)) continue;
-            foreach (var rec in _reader.ReadFile(path, schema, RecordOrigin.Base, clientCodepage).Records)
+            foreach (var rec in ReadFileWrappingErrors(path, schema, RecordOrigin.Base, clientCodepage).Records)
                 layer.Add(rec);
         }
         return layer;
@@ -51,10 +52,27 @@ public sealed class WorkspaceLoader
         importPath = ResolvePath(paths.ServerDbRoot, schema.Layout.ImportFile);
         if (File.Exists(importPath))
         {
-            foreach (var rec in _reader.ReadFile(importPath, schema, RecordOrigin.NewCustom, clientCodepage).Records)
+            foreach (var rec in ReadFileWrappingErrors(importPath, schema, RecordOrigin.NewCustom, clientCodepage).Records)
                 layer.Add(rec);
         }
         return layer;
+    }
+
+    /// <summary>Reads a db file, rethrowing any parse error with the file path (and, for YamlDotNet, the
+    /// line/column) prepended — without it the load-failure dialog only shows a bare scanner message with
+    /// no indication of WHICH of a schema's several files is at fault, or where in it.</summary>
+    private DbFile ReadFileWrappingErrors(string path, DbSchema schema, RecordOrigin origin, int clientCodepage)
+    {
+        try { return _reader.ReadFile(path, schema, origin, clientCodepage); }
+        catch (YamlException ex)
+        {
+            throw new IOException(
+                $"{Path.GetFileName(path)} (line {ex.Start.Line}, column {ex.Start.Column}): {ex.Message}", ex);
+        }
+        catch (Exception ex) when (ex is not IOException)
+        {
+            throw new IOException($"{Path.GetFileName(path)}: {ex.Message}", ex);
+        }
     }
 
     private static string ResolvePath(string root, string relative) =>

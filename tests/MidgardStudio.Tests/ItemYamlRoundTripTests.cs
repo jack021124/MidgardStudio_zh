@@ -162,4 +162,51 @@ public class ItemYamlRoundTripTests
         Assert.Contains(file.Records, r => r.GetSet("Jobs") is { Count: > 0 });
         Assert.Contains(file.Records, r => r.GetObject("Trade") is not null);
     }
+
+    [Fact]
+    public void Tolerates_plain_scalar_value_containing_colon_space()
+    {
+        // Some private-server packs store translated item names whose value contains ": " (colon-space),
+        // e.g. `Name: 春之季外套: 春`. Plain YAML can't carry that unquoted — YamlDotNet throws
+        // "While scanning a plain scalar value, found invalid mapping." The reader must tolerate it
+        // (by quoting the value for parsing only) so the file loads; the parsed string keeps the colon.
+        var schema = ItemDbSchema.Instance;
+        string yaml =
+            "Header:\n" +
+            "  Type: " + schema.HeaderType + "\n" +
+            "  Version: " + schema.HeaderVersion + "\n" +
+            "Body:\n" +
+            "  - Id: 480345\n" +
+            "    AegisName: Season_Hood_Spring\n" +
+            "    Name: 春之季外套: 春\n" +
+            "    Type: Armor\n" +
+            "    Weight: 700\n";
+
+        DbFile file = new YamlDbReader().Read(yaml, schema);
+
+        DbRecord r = Assert.Single(file.Records);
+        Assert.Equal(480345, r.GetInt("Id"));
+        Assert.Equal("Season_Hood_Spring", r.GetString("AegisName"));
+        Assert.Equal("春之季外套: 春", r.GetString("Name"));
+    }
+
+    [Fact]
+    public void Does_not_touch_already_quoted_or_sequence_values()
+    {
+        // Already-quoted values and sequence items must be left alone by the tolerant pre-pass.
+        var schema = ItemDbSchema.Instance;
+        string yaml =
+            "Header:\n" +
+            "  Type: " + schema.HeaderType + "\n" +
+            "  Version: " + schema.HeaderVersion + "\n" +
+            "Body:\n" +
+            "  - Id: 1\n" +
+            "    Name: \"Costume: Poker Card\"\n" +              // already double-quoted — untouched
+            "    Type: Armor\n" +
+            "    Weight: 100\n";
+
+        DbFile file = new YamlDbReader().Read(yaml, schema);
+        DbRecord r = Assert.Single(file.Records);
+        Assert.Equal("Costume: Poker Card", r.GetString("Name"));
+    }
 }

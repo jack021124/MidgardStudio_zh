@@ -114,10 +114,11 @@ public sealed class IssueMessageConverter : IValueConverter
     public object Convert(object value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is not ValidationIssue i) return string.Empty;
-        if (string.IsNullOrEmpty(i.MessageKey) || i.MessageArgs is null || i.MessageArgs.Length == 0)
-            return i.Message;
-        try { return string.Format(Localization.LocalizationService.Get(i.MessageKey), i.MessageArgs); }
-        catch { return i.Message; } // malformed args — never crash the panel
+        // Localize whenever a key is present — many messages have no {0} placeholder, so MessageArgs may be
+        // null/empty. Only fall back to the Core-supplied English Message when there's no key at all.
+        if (string.IsNullOrEmpty(i.MessageKey)) return i.Message;
+        try { return string.Format(Localization.LocalizationService.Get(i.MessageKey), i.MessageArgs ?? Array.Empty<object>()); }
+        catch { return i.Message; } // malformed template/args — never crash the panel
     }
 
     public object ConvertBack(object value, Type targetType, object? parameter, CultureInfo culture) =>
@@ -130,9 +131,8 @@ public static class IssueMessage
 {
     public static string Resolve(ValidationIssue issue)
     {
-        if (string.IsNullOrEmpty(issue.MessageKey) || issue.MessageArgs is null || issue.MessageArgs.Length == 0)
-            return issue.Message;
-        try { return string.Format(Localization.LocalizationService.Get(issue.MessageKey), issue.MessageArgs); }
+        if (string.IsNullOrEmpty(issue.MessageKey)) return issue.Message;
+        try { return string.Format(Localization.LocalizationService.Get(issue.MessageKey), issue.MessageArgs ?? Array.Empty<object>()); }
         catch { return issue.Message; }
     }
 }

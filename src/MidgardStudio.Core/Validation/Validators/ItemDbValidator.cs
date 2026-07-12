@@ -58,14 +58,14 @@ public sealed class ItemDbValidator : IRecordValidator
             if (!valid.Contains(subType))
                 yield return new ValidationIssue(ValidationSeverity.Warning, "item_db", key, "SubType",
                     $"Sub Type '{subType}' is not a valid {type} subtype — the server will ignore it and use the {type} default.")
-                { RuleId = "ITEM.SUBTYPE_TYPE_MISMATCH" };
+                { RuleId = "ITEM.SUBTYPE_TYPE_MISMATCH", MessageKey = "Val_Msg_ItemSubtypeMismatch", MessageArgs = new object[] { subType, type! } };
         }
 
         // Equip-type item with no Location → rAthena reverts it to Etc and it can't be worn.
         if (type is not null && EquipTypes.Contains(type) && (record.GetSet("Locations")?.Count ?? 0) == 0)
             yield return new ValidationIssue(ValidationSeverity.Error, "item_db", key, "Locations",
                 $"A {type} with no Location is forced to Etc by rAthena and becomes un-equippable. Set a Location.")
-            { RuleId = "ITEM.EQUIP_NO_LOC" };
+            { RuleId = "ITEM.EQUIP_NO_LOC", MessageKey = "Val_Msg_ItemEquipNoLoc", MessageArgs = new object[] { type } };
 
         // Equip level ordering.
         int min = record.GetInt("EquipLevelMin");
@@ -75,6 +75,8 @@ public sealed class ItemDbValidator : IRecordValidator
                 $"Equip Level Min ({min}) must be ≤ Max ({max}).")
             {
                 RuleId = "ITEM.LEVEL_ORDER",
+                MessageKey = "Val_Msg_ItemLevelOrder",
+                MessageArgs = new object[] { min, max },
                 Fix = record.Origin == RecordOrigin.Base ? null : new QuickFix($"Set Min to {max}",
                     () => record.Set("EquipLevelMin", max), () => record.Set("EquipLevelMin", min)),
             };
@@ -87,7 +89,7 @@ public sealed class ItemDbValidator : IRecordValidator
             if (wl > maxWeaponLevel)
                 yield return new ValidationIssue(ValidationSeverity.Warning, "item_db", key, "WeaponLevel",
                     $"Weapon Level {wl} exceeds the maximum of {maxWeaponLevel} for {context.Mode}.")
-                { RuleId = "ITEM.WEAPONLVL_RANGE", Mode = context.Mode };
+                { RuleId = "ITEM.WEAPONLVL_RANGE", Mode = context.Mode, MessageKey = "Val_Msg_ItemWeaponLvl", MessageArgs = new object[] { wl, maxWeaponLevel, context.Mode.ToString() } };
         }
 
         if (string.Equals(type, "Armor", StringComparison.OrdinalIgnoreCase))
@@ -97,7 +99,7 @@ public sealed class ItemDbValidator : IRecordValidator
             if (al > maxArmorLevel)
                 yield return new ValidationIssue(ValidationSeverity.Warning, "item_db", key, "ArmorLevel",
                     $"Armor Level {al} exceeds the maximum of {maxArmorLevel} for {context.Mode}.")
-                { RuleId = "ITEM.ARMORLVL_RANGE", Mode = context.Mode };
+                { RuleId = "ITEM.ARMORLVL_RANGE", Mode = context.Mode, MessageKey = "Val_Msg_ItemArmorLvl", MessageArgs = new object[] { al, maxArmorLevel, context.Mode.ToString() } };
         }
 
         // No custom-id-range rule: official rAthena items already span huge id bands (up to 1.27M), so there

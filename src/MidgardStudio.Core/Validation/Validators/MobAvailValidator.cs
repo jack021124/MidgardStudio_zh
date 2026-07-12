@@ -31,6 +31,8 @@ public sealed class MobAvailValidator : IRecordValidator
                     $"'{field}' only applies when Sprite is a player job — rAthena rejects this entry. Clear it, or set Sprite to a JOB_* sprite.")
                 {
                     RuleId = "MOBAVAIL.JOB_ONLY_FIELD",
+                    MessageKey = "Val_Msg_MobAvailJobOnly",
+                    MessageArgs = new object[] { context.L(field) },
                     Fix = ClearFix(record, field),
                 };
             }
@@ -44,6 +46,8 @@ public sealed class MobAvailValidator : IRecordValidator
                     $"PetEquip only applies when the Mob ('{mob}') is a defined pet (pet_db). Clear it, or use a pet mob.")
                 {
                     RuleId = "MOBAVAIL.PETEQUIP_NOT_PET",
+                    MessageKey = "Val_Msg_MobAvailPetEquipNotPet",
+                    MessageArgs = new object[] { context.L("Pet Equip"), mob },
                     Fix = ClearFix(record, "PetEquip"),
                 };
         }

@@ -24,30 +24,30 @@ public sealed class MobDbValidator : IRecordValidator
             yield return new ValidationIssue(ValidationSeverity.Error, "mob_db", key, "Id",
                 $"Mob ID {id} is outside the valid range. Use 1001–3998 or 20021–31998 " +
                 "(1000, 3999, 20020 and 31999 are themselves invalid).")
-            { RuleId = "MOB.ID_RANGE" };
+            { RuleId = "MOB.ID_RANGE", MessageKey = "Val_Msg_MobIdRange", MessageArgs = new object[] { id } };
 
         if (record.GetInt("Level") < 1)
             yield return new ValidationIssue(ValidationSeverity.Warning, "mob_db", key, "Level",
                 "Mob Level should be at least 1.")
-            { RuleId = "MOB.LEVEL_RANGE" };
+            { RuleId = "MOB.LEVEL_RANGE", MessageKey = "Val_Msg_MobLevelRange", MessageArgs = new object[] { context.L("Level") } };
 
         int elementLevel = record.GetInt("ElementLevel");
         if (record.Has("ElementLevel") && elementLevel is < 1 or > 4)
             yield return new ValidationIssue(ValidationSeverity.Warning, "mob_db", key, "ElementLevel",
                 $"Element Level must be between 1 and 4 (was {elementLevel}).")
-            { RuleId = "MOB.ELEMENTLVL_RANGE" };
+            { RuleId = "MOB.ELEMENTLVL_RANGE", MessageKey = "Val_Msg_MobElementLvl", MessageArgs = new object[] { elementLevel } };
 
         int dropCount = record.GetList("Drops")?.Count ?? 0;
         if (dropCount > MaxMobDrop)
             yield return new ValidationIssue(ValidationSeverity.Warning, "mob_db", key, "Drops",
                 $"A mob can have at most {MaxMobDrop} normal drops; the extra {dropCount - MaxMobDrop} will be ignored.")
-            { RuleId = "MOB.DROP_COUNT" };
+            { RuleId = "MOB.DROP_COUNT", MessageKey = "Val_Msg_MobDropCount", MessageArgs = new object[] { MaxMobDrop, dropCount - MaxMobDrop } };
 
         int mvpCount = record.GetList("MvpDrops")?.Count ?? 0;
         if (mvpCount > MaxMvpDrop)
             yield return new ValidationIssue(ValidationSeverity.Warning, "mob_db", key, "MvpDrops",
                 $"A mob can have at most {MaxMvpDrop} MVP drops; the extra {mvpCount - MaxMvpDrop} will be ignored.")
-            { RuleId = "MOB.MVPDROP_COUNT" };
+            { RuleId = "MOB.MVPDROP_COUNT", MessageKey = "Val_Msg_MobMvpDropCount", MessageArgs = new object[] { MaxMvpDrop, mvpCount - MaxMvpDrop } };
 
         // MVP rewards configured but the Mvp mode flag is missing → rewards never trigger.
         bool hasMvpRewards = mvpCount > 0 || record.GetInt("MvpExp") > 0;
@@ -55,6 +55,6 @@ public sealed class MobDbValidator : IRecordValidator
         if (hasMvpRewards && !hasMvpMode)
             yield return new ValidationIssue(ValidationSeverity.Warning, "mob_db", key, "Modes",
                 "Mob has MVP drops/EXP but no Mvp mode — the MVP rewards will not trigger.")
-            { RuleId = "MOB.MVP_NO_MVPFLAG" };
+            { RuleId = "MOB.MVP_NO_MVPFLAG", MessageKey = "Val_Msg_MobMvpNoFlag" };
     }
 }

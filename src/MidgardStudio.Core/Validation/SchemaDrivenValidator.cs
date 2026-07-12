@@ -41,6 +41,7 @@ public sealed class SchemaDrivenValidator : IRecordValidator
         foreach (var field in schema.Fields)
         {
             string label = prefix is null ? field.Label : $"{prefix} → {field.Label}";
+            string locLabel = ctx.L(label);
 
             // 1. Applicability — a stray value on a non-applicable field is silently ignored by rAthena.
             if (field.IsApplicable is not null && !field.IsApplicable(record))
@@ -48,7 +49,7 @@ public sealed class SchemaDrivenValidator : IRecordValidator
                 if (!isBase && HasNonDefaultValue(record, field))
                     issues.Add(new ValidationIssue(ValidationSeverity.Warning, dbId, key, field.Name,
                         $"{label} is set but does not apply here — it will be ignored.")
-                    { RuleId = "FIELD.NOT_APPLICABLE" });
+                    { RuleId = "FIELD.NOT_APPLICABLE", MessageKey = "Val_Msg_NotApplicable", MessageArgs = new object[] { locLabel } });
                 continue;
             }
 
@@ -63,7 +64,7 @@ public sealed class SchemaDrivenValidator : IRecordValidator
                     string only = field.Renewal == RenewalScope.RenewalOnly ? "renewal" : "pre-renewal";
                     issues.Add(new ValidationIssue(ValidationSeverity.Warning, dbId, key, field.Name,
                         $"{label} only exists in {only}; it is ignored in the active mode.")
-                    { RuleId = "FIELD.RENEWAL_MISMATCH", Mode = ctx.Mode });
+                    { RuleId = "FIELD.RENEWAL_MISMATCH", Mode = ctx.Mode, MessageKey = "Val_Msg_RenewalMismatch", MessageArgs = new object[] { locLabel, only } });
                 }
                 continue;
             }
@@ -72,7 +73,7 @@ public sealed class SchemaDrivenValidator : IRecordValidator
             if (field.IsRequired && IsEmptyValue(record, field))
                 issues.Add(new ValidationIssue(field.RequiredSeverity, dbId, key, field.Name,
                     $"{label} is required.")
-                { RuleId = "FIELD.REQUIRED" });
+                { RuleId = "FIELD.REQUIRED", MessageKey = "Val_Msg_Required", MessageArgs = new object[] { locLabel } });
 
             // 4. Value-dependent checks.
             switch (field.Kind)
@@ -83,7 +84,7 @@ public sealed class SchemaDrivenValidator : IRecordValidator
                     if (!string.IsNullOrWhiteSpace(v) && field.Enum is { IsReference: false } && !IsKnownValue(field, v, observed))
                         issues.Add(new ValidationIssue(ValidationSeverity.Warning, dbId, key, field.Name,
                             $"'{v}' is not a recognized {field.Label} value — verify the spelling (rAthena may reject it).")
-                        { RuleId = "FIELD.ENUM_INVALID" });
+                        { RuleId = "FIELD.ENUM_INVALID", MessageKey = "Val_Msg_EnumInvalid", MessageArgs = new object[] { v, ctx.L(field.Label) } });
                     break;
                 }
                 case FieldKind.Flags:
@@ -97,7 +98,7 @@ public sealed class SchemaDrivenValidator : IRecordValidator
                             if (!IsKnownValue(field, member, observed))
                                 issues.Add(new ValidationIssue(ValidationSeverity.Warning, dbId, key, field.Name,
                                     $"'{member}' is not a recognized {field.Label} option — verify the spelling (rAthena may reject it).")
-                                { RuleId = "FIELD.FLAG_INVALID" });
+                                { RuleId = "FIELD.FLAG_INVALID", MessageKey = "Val_Msg_FlagInvalid", MessageArgs = new object[] { member, ctx.L(field.Label) } });
                     }
                     break;
                 }
@@ -108,7 +109,7 @@ public sealed class SchemaDrivenValidator : IRecordValidator
                         && ctx.References.Knows(refDb) && !ctx.References.Contains(refDb, v))
                         issues.Add(new ValidationIssue(field.ReferenceSeverity, dbId, key, field.Name,
                             $"{label} '{v}' does not exist in {refDb}.")
-                        { RuleId = "XREF.REFERENCE_MISSING" });
+                        { RuleId = "XREF.REFERENCE_MISSING", MessageKey = "Val_Msg_ReferenceMissing", MessageArgs = new object[] { locLabel, v, refDb } });
                     break;
                 }
                 case FieldKind.Int:
@@ -122,10 +123,13 @@ public sealed class SchemaDrivenValidator : IRecordValidator
                     if (clamped != n)
                     {
                         object? oldVal = record.Get(field.Name);
+                        var (msgKey, msgArgs) = BoundsMessageKey(locLabel, n, field.Min, field.Max);
                         issues.Add(new ValidationIssue(ValidationSeverity.Warning, dbId, key, field.Name,
                             BoundsMessage(label, n, field.Min, field.Max))
                         {
                             RuleId = "FIELD.BOUNDS",
+                            MessageKey = msgKey,
+                            MessageArgs = msgArgs,
                             // No fix on read-only base data (Full Scan): a fix can't edit base in place — the
                             // user overrides the entry first, then fixes their custom copy.
                             Fix = isBase ? null : new QuickFix($"Clamp to {clamped}",
@@ -159,6 +163,8 @@ public sealed class SchemaDrivenValidator : IRecordValidator
                         $"{label} is {s.Length} characters; the maximum is {maxLen}.")
                     {
                         RuleId = "FIELD.MAXLENGTH",
+                        MessageKey = "Val_Msg_MaxLength",
+                        MessageArgs = new object[] { locLabel, s.Length, maxLen },
                         Fix = isBase ? null : new QuickFix($"Trim to {maxLen} characters",
                             () => record.Set(field.Name, s[..maxLen]), () => record.Set(field.Name, s)),
                     });
@@ -237,6 +243,16 @@ public sealed class SchemaDrivenValidator : IRecordValidator
         if (min is { } a && max is { } b) return $"{label} must be between {a} and {b} (was {value}).";
         if (min is { } lo) return $"{label} must be at least {lo} (was {value}).";
         return $"{label} must be at most {max} (was {value}).";
+    }
+
+    /// <summary>The localized (key, args) counterpart of <see cref="BoundsMessage"/>. Three templates cover
+    /// the three bound shapes (min+max, min-only, max-only); the caller's <paramref name="label"/> is
+    /// already localized through <c>ctx.L</c>.</summary>
+    private static (string Key, object[] Args) BoundsMessageKey(string label, long value, int? min, int? max)
+    {
+        if (min is { } a && max is { } b) return ("Val_Msg_BoundsRange", new object[] { label, a, b, value });
+        if (min is { } lo) return ("Val_Msg_BoundsMin", new object[] { label, lo, value });
+        return ("Val_Msg_BoundsMax", new object[] { label, max!.Value, value });
     }
 
     private static bool Contains(IReadOnlyList<string> values, string value)

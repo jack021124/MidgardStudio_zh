@@ -24,7 +24,7 @@ public sealed class ScriptSanityValidator : IRecordValidator
             if (!IsBalanced(script.Text))
                 yield return new ValidationIssue(ValidationSeverity.Warning, table.Schema.Id, record.Key.ToString(),
                     field.Name, $"{field.Label} has unbalanced braces/brackets/parentheses — it may error in-game.")
-                { RuleId = "SCRIPT.UNBALANCED" };
+                { RuleId = "SCRIPT.UNBALANCED", MessageKey = "Val_Msg_ScriptUnbalanced", MessageArgs = new object[] { context.L(field.Label) } };
         }
     }
 

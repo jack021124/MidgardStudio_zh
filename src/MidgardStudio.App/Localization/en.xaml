@@ -420,6 +420,7 @@
     <s:String x:Key="Db_Drops_Add">Add</s:String>
     <s:String x:Key="Db_Drops_AddTip">Add a drop</s:String>
     <s:String x:Key="Db_ClickToEdit">Click to edit</s:String>
+    <s:String x:Key="Db_LevelIntHint">A single value, or per-level as 1:{0}… e.g. "1:3, 2:5, 3:7".</s:String>
 
     <!-- Field summary strings shown next to "…" buttons and in popup editors -->
     <s:String x:Key="Db_Summary_None">None</s:String>
@@ -460,6 +461,7 @@
     <s:String x:Key="Val_QuickFixPrefix">Quick fix: </s:String>
     <s:String x:Key="Val_FixAllBatch">Fix {0} issue(s)</s:String>
     <s:String x:Key="Val_FixButtonDefault">Fix</s:String>
+    <s:String x:Key="Val_FixButtonCreate">Create</s:String>
     <s:String x:Key="Val_FixedPill">✓ Fixed</s:String>
     <s:String x:Key="Val_Col_Severity">Severity</s:String>
     <s:String x:Key="Val_Col_Database">Database</s:String>
@@ -497,6 +499,56 @@
     <s:String x:Key="Val_Sev_Error">Error</s:String>
     <s:String x:Key="Val_Sev_Warning">Warning</s:String>
     <s:String x:Key="Val_Sev_Info">Info</s:String>
+
+    <!-- Validation issue message templates (IssueMessageConverter; args fill placeholders in order) -->
+    <s:String x:Key="Val_Msg_NotApplicable">{0} is set but does not apply here — it will be ignored.</s:String>
+    <s:String x:Key="Val_Msg_RenewalMismatch">{0} only exists in {1}; it is ignored in the active mode.</s:String>
+    <s:String x:Key="Val_Msg_Required">{0} is required.</s:String>
+    <s:String x:Key="Val_Msg_EnumInvalid">'{0}' is not a recognized {1} value — verify the spelling (rAthena may reject it).</s:String>
+    <s:String x:Key="Val_Msg_FlagInvalid">'{0}' is not a recognized {1} option — verify the spelling (rAthena may reject it).</s:String>
+    <s:String x:Key="Val_Msg_ReferenceMissing">{0} '{1}' does not exist in {2}.</s:String>
+    <s:String x:Key="Val_Msg_BoundsRange">{0} must be between {1} and {2} (was {3}).</s:String>
+    <s:String x:Key="Val_Msg_BoundsMin">{0} must be at least {1} (was {2}).</s:String>
+    <s:String x:Key="Val_Msg_BoundsMax">{0} must be at most {1} (was {2}).</s:String>
+    <s:String x:Key="Val_Msg_MaxLength">{0} is {1} characters; the maximum is {2}.</s:String>
+    <s:String x:Key="Val_Msg_ScriptUnbalanced">{0} has unbalanced braces/brackets/parentheses — it may error in-game.</s:String>
+    <s:String x:Key="Val_Msg_Duplicate">Duplicate {0} '{1}' — it must be unique (case-insensitive).</s:String>
+    <s:String x:Key="Val_Msg_MobIdRange">Mob ID {0} is outside the valid range. Use 1001–3998 or 20021–31998 (1000, 3999, 20020 and 31999 are themselves invalid).</s:String>
+    <s:String x:Key="Val_Msg_MobLevelRange">{0} should be at least 1.</s:String>
+    <s:String x:Key="Val_Msg_MobElementLvl">Element Level must be between 1 and 4 (was {0}).</s:String>
+    <s:String x:Key="Val_Msg_MobDropCount">A mob can have at most {0} normal drops; the extra {1} will be ignored.</s:String>
+    <s:String x:Key="Val_Msg_MobMvpDropCount">A mob can have at most {0} MVP drops; the extra {1} will be ignored.</s:String>
+    <s:String x:Key="Val_Msg_MobMvpNoFlag">Mob has MVP drops/EXP but no Mvp mode — the MVP rewards will not trigger.</s:String>
+    <s:String x:Key="Val_Msg_ItemSubtypeMismatch">Sub Type '{0}' is not a valid {1} subtype — the server will ignore it and use the {1} default.</s:String>
+    <s:String x:Key="Val_Msg_ItemEquipNoLoc">A {0} with no Location is forced to Etc by rAthena and becomes un-equippable. Set a Location.</s:String>
+    <s:String x:Key="Val_Msg_ItemLevelOrder">Equip Level Min ({0}) must be ≤ Max ({1}).</s:String>
+    <s:String x:Key="Val_Msg_ItemWeaponLvl">Weapon Level {0} exceeds the maximum of {1} for {2}.</s:String>
+    <s:String x:Key="Val_Msg_ItemArmorLvl">Armor Level {0} exceeds the maximum of {1} for {2}.</s:String>
+    <s:String x:Key="Val_Msg_ComboMinMembers">A combo needs at least 2 items; rAthena rejects combos with fewer.</s:String>
+    <s:String x:Key="Val_Msg_ComboMemberMissing">Combo member '{0}' was not found in item_db; rAthena rejects the whole combo.</s:String>
+    <s:String x:Key="Val_Msg_MobAvailJobOnly">'{0}' only applies when Sprite is a player job — rAthena rejects this entry. Clear it, or set Sprite to a JOB_* sprite.</s:String>
+    <s:String x:Key="Val_Msg_MobAvailPetEquipNotPet">{0} only applies when the Mob ('{1}') is a defined pet (pet_db). Clear it, or use a pet mob.</s:String>
+    <s:String x:Key="Val_Msg_CSkill_SkidMissing">'{0}' is used in the skill tables but is not defined in skillid.lub (SKID) — the client can't resolve it.</s:String>
+    <s:String x:Key="Val_Msg_CSkill_InfoMissing">'{0}' has a description/delay entry but no SKILL_INFO_LIST entry — it won't appear properly in-client.</s:String>
+    <s:String x:Key="Val_Msg_CSkill_NameMismatch">SKILL_INFO_LIST name '{0}' doesn't match the key SKID.{1}.</s:String>
+    <s:String x:Key="Val_Msg_CSkill_MaxLvInvalid">MaxLv is {0} — it must be at least 1.</s:String>
+    <s:String x:Key="Val_Msg_CSkill_DescEmpty">'{0}' has no SKILL_DESCRIPT entry — it shows no description in-client.</s:String>
+    <s:String x:Key="Val_Msg_CSkill_NeedSkillUnknown">Prerequisite SKID.{0} is not defined in skillid.lub.</s:String>
+    <s:String x:Key="Val_Msg_CSkill_NeedSkillUnknownJob">Job prerequisite SKID.{0} (for {1}) is not defined in skillid.lub.</s:String>
+    <s:String x:Key="Val_Msg_CSkill_ArrayTooShort">{0} has {1} entries but MaxLv is {2} — higher levels read undefined values.</s:String>
+    <s:String x:Key="Val_Msg_XFile_NoClientText">Item doesn't exist in Client Items (itemInfo.lua / itemInfo_C.lua) — it will show no name or description in-game.</s:String>
+    <s:String x:Key="Val_Msg_XFile_SlotMismatch">Slots count mismatch — Server [{0}], Client [{1}].</s:String>
+    <s:String x:Key="Val_Msg_XFile_ClassNumMismatch">View / ClassNum mismatch — Server View [{0}], Client ClassNum [{1}]. For headgear and garments these must match or the equipped sprite won't appear.</s:String>
+    <s:String x:Key="Val_Msg_XFile_IconMissing">Inventory icon '{0}.bmp' not found in the configured GRF.</s:String>
+    <s:String x:Key="Val_Msg_XFile_HeadgearNoAccmap">Headgear View {0} is not mapped in accessoryid.lub / accname.lub — the sprite won't show.</s:String>
+    <s:String x:Key="Val_Msg_XFile_MobNotRegistered">Custom mob is not registered in npcidentity.lub — the client will fail to load its sprite.</s:String>
+    <s:String x:Key="Val_Msg_XFile_CSkillNotInSkillDb">No server skill_db entry with id {0} — this client skill has no server-side definition.</s:String>
+    <s:String x:Key="Val_Msg_XFile_CSkillMaxLvMismatch">Max level mismatch — Server [{0}], Client [{1}].</s:String>
+    <s:String x:Key="Val_Msg_XFile_CSkillNameMismatch">Aegis mismatch — server skill #{0} is '{1}', client SKID is '{2}'.</s:String>
+    <s:String x:Key="Val_Msg_CashShop_UnknownItem">'{0}' is not an item in item_db — the server will ignore this cash-shop entry.</s:String>
+    <s:String x:Key="Val_Msg_CashShop_PriceZero">'{0}' in the {1} tab has a price of {2} cash points.</s:String>
+    <s:String x:Key="Val_Msg_CashShop_PriceOverflow">'{0}' in the {1} tab has a price of {2}, above the maximum {3} — the server drops the entire {1} tab.</s:String>
+    <s:String x:Key="Val_Msg_CashShop_DupInTab">'{0}' appears {2} times in the {1} tab.</s:String>
 
     <!-- Record origin pill labels (OriginToLabelConverter) -->
     <s:String x:Key="Db_Origin_Override">OVERRIDE</s:String>

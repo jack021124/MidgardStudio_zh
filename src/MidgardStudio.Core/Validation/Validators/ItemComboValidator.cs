@@ -29,7 +29,7 @@ public sealed class ItemComboValidator : IRecordValidator
             {
                 yield return new ValidationIssue(ValidationSeverity.Error, "item_combos", key, "Combos",
                     "A combo needs at least 2 items; rAthena rejects combos with fewer.")
-                { RuleId = "XREF.COMBO_MIN_MEMBERS" };
+                { RuleId = "XREF.COMBO_MIN_MEMBERS", MessageKey = "Val_Msg_ComboMinMembers" };
                 continue;
             }
 
@@ -39,7 +39,7 @@ public sealed class ItemComboValidator : IRecordValidator
                 if (!context.References.Contains("item_db", member))
                     yield return new ValidationIssue(ValidationSeverity.Error, "item_combos", key, "Combos",
                         $"Combo member '{member}' was not found in item_db; rAthena rejects the whole combo.")
-                    { RuleId = "XREF.COMBO_MEMBER_MISSING" };
+                    { RuleId = "XREF.COMBO_MEMBER_MISSING", MessageKey = "Val_Msg_ComboMemberMissing", MessageArgs = new object[] { member } };
         }
     }
 

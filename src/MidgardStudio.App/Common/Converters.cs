@@ -106,7 +106,36 @@ public sealed class IssueFileConverter : IValueConverter
         throw new NotSupportedException();
 }
 
-/// <summary>A count (int) > 0 -> Visible, else Collapsed (for optional metadata sections).</summary>
+/// <summary>A validation issue -> its display message in the active language. Resolves the issue's
+/// <see cref="ValidationIssue.MessageKey"/> template and formats it with <see cref="ValidationIssue.MessageArgs"/>;
+/// falls back to the Core-supplied English <see cref="ValidationIssue.Message"/> when no key is present.</summary>
+public sealed class IssueMessageConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is not ValidationIssue i) return string.Empty;
+        if (string.IsNullOrEmpty(i.MessageKey) || i.MessageArgs is null || i.MessageArgs.Length == 0)
+            return i.Message;
+        try { return string.Format(Localization.LocalizationService.Get(i.MessageKey), i.MessageArgs); }
+        catch { return i.Message; } // malformed args — never crash the panel
+    }
+
+    public object ConvertBack(object value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotSupportedException();
+}
+
+/// <summary>Resolves a validation issue's display message in the active language — shared by the XAML
+/// converter above and the record editor's inline field warnings (which build the text in C#).</summary>
+public static class IssueMessage
+{
+    public static string Resolve(ValidationIssue issue)
+    {
+        if (string.IsNullOrEmpty(issue.MessageKey) || issue.MessageArgs is null || issue.MessageArgs.Length == 0)
+            return issue.Message;
+        try { return string.Format(Localization.LocalizationService.Get(issue.MessageKey), issue.MessageArgs); }
+        catch { return issue.Message; }
+    }
+}
 public sealed class CountToVisibilityConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object? parameter, CultureInfo culture) =>

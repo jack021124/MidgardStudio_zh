@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -158,7 +158,7 @@ public sealed class ObjectFieldEditorViewModel : FieldEditorViewModel
             {
                 var v = _nested.Get(f.Name);
                 if (!IsDefault(v, f.Default))
-                    parts.Add(v is bool ? f.Label : $"{f.Label}: {v}");
+                    parts.Add(v is bool ? SchemaLabels.Resolve(f.Label) : $"{SchemaLabels.Resolve(f.Label)}: {v}");
             }
             if (parts.Count == 0) return SchemaLabels.T("Db_Summary_None");
             string s = string.Join(", ", parts);
@@ -231,7 +231,7 @@ public sealed class ObjectRowViewModel : ObservableObject
                 continue;
             var v = Record.Get(f.Name);
             if (IsDefault(v, f.Default)) continue;
-            yield return v is bool ? f.Label : $"{f.Label} {v}";
+            yield return v is bool ? SchemaLabels.Resolve(f.Label) : $"{SchemaLabels.Resolve(f.Label)} {v}";
         }
     }
 

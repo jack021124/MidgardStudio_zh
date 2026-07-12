@@ -40,22 +40,22 @@ public static class CashShopValidator
                 if (!knownItems.Contains(it.Item))
                     issues.Add(new ValidationIssue(ValidationSeverity.Error, DbId, key, "Item",
                         $"'{it.Item}' is not an item in item_db — the server will ignore this cash-shop entry.")
-                    { RuleId = "CASHSHOP.UNKNOWN_ITEM", Category = Category });
+                    { RuleId = "CASHSHOP.UNKNOWN_ITEM", Category = Category, MessageKey = "Val_Msg_CashShop_UnknownItem", MessageArgs = new object[] { it.Item } });
 
                 if (it.Price <= 0)
                     issues.Add(new ValidationIssue(ValidationSeverity.Warning, DbId, key, "Price",
                         $"'{it.Item}' in the {tab} tab has a price of {it.Price} cash points.")
-                    { RuleId = "CASHSHOP.PRICE_ZERO", Category = Category });
+                    { RuleId = "CASHSHOP.PRICE_ZERO", Category = Category, MessageKey = "Val_Msg_CashShop_PriceZero", MessageArgs = new object[] { it.Item, tab.ToString(), it.Price } });
 
                 if (it.Price > MaxCashPoint)
                     issues.Add(new ValidationIssue(ValidationSeverity.Error, DbId, key, "Price",
                         $"'{it.Item}' in the {tab} tab has a price of {it.Price}, above the maximum {MaxCashPoint} — the server drops the entire {tab} tab.")
-                    { RuleId = "CASHSHOP.PRICE_OVERFLOW", Category = Category });
+                    { RuleId = "CASHSHOP.PRICE_OVERFLOW", Category = Category, MessageKey = "Val_Msg_CashShop_PriceOverflow", MessageArgs = new object[] { it.Item, tab.ToString(), it.Price, MaxCashPoint } });
 
                 if (counts[it.Item] > 1 && dupReported.Add(it.Item))
                     issues.Add(new ValidationIssue(ValidationSeverity.Warning, DbId, key, "Item",
                         $"'{it.Item}' appears {counts[it.Item]} times in the {tab} tab.")
-                    { RuleId = "CASHSHOP.DUP_IN_TAB", Category = Category });
+                    { RuleId = "CASHSHOP.DUP_IN_TAB", Category = Category, MessageKey = "Val_Msg_CashShop_DupInTab", MessageArgs = new object[] { it.Item, counts[it.Item], tab.ToString() } });
             }
         }
         return issues;

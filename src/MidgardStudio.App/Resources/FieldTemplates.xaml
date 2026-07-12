@@ -20,6 +20,7 @@
     <common:AddOneConverter x:Key="PlusOne" />
     <common:IssueCategoryConverter x:Key="IssueCategory" />
     <common:IssueFileConverter x:Key="IssueFile" />
+    <common:IssueMessageConverter x:Key="IssueMessage" />
     <common:SeverityToLabelConverter x:Key="SeverityLabel" />
 
     <!-- Dark "magic-bento" background for script editors (a subtle purple glow over near-black) so the
@@ -805,7 +806,7 @@
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                 <Setter Property="SnapsToDevicePixels" Value="True" />
                                 <Setter Property="Padding" Value="2,3" />
-                                <Setter Property="ToolTip" Value="{Binding Issue.Message}" />
+                                <Setter Property="ToolTip" Value="{Binding Issue, Converter={StaticResource IssueMessage}}" />
                                 <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource AncestorType=ListView}}" />
                                 <Setter Property="ContextMenu" Value="{StaticResource IssueMenu}" />
                                 <Setter Property="Template">
@@ -881,7 +882,7 @@
                                 <GridViewColumn Header="{DynamicResource Val_Col_Message}" Width="380">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Issue.Message}" TextTrimming="CharacterEllipsis">
+                                            <TextBlock Text="{Binding Issue, Converter={StaticResource IssueMessage}}" TextTrimming="CharacterEllipsis">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
                                                         <Style.Triggers>

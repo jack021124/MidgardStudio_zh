@@ -47,6 +47,15 @@ public sealed record ValidationIssue(
     /// doesn't match how it should be grouped — e.g. a client mob-sprite check has DbId "mob_db" (so "Go to"
     /// opens the Monsters list) but belongs under the "Client Mobs" category. Null = group by DbId.</summary>
     public string? Category { get; init; }
+
+    /// <summary>Localization key for <see cref="Message"/> (e.g. "Val_Msg_FieldRequired"). When set, the App
+    /// layer resolves a localized template via this key and formats it with <see cref="MessageArgs"/>; the
+    /// English <see cref="Message"/> is the fallback. Null when the message isn't yet localized.</summary>
+    public string? MessageKey { get; init; }
+
+    /// <summary>Arguments for the localized <see cref="MessageKey"/> template. Label args should already be
+    /// resolved through <see cref="ValidationContext.L"/> by the validator.</summary>
+    public object[]? MessageArgs { get; init; }
 }
 
 /// <summary>Validates a single record (the common case — enum, bounds, references, …). Cheap enough

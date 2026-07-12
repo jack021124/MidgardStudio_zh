@@ -287,18 +287,24 @@ public sealed partial class RecordEditorViewModel : ObservableObject
     {
         if (_validator is null) return;
 
-        var ctx = ValidationContext.Create(_liveRefs, _mode);
+        var ctx = new ValidationContext
+        {
+            Mode = _mode,
+            References = _liveRefs,
+            LabelResolver = SchemaLabels.Resolve,
+        };
         var byField = new Dictionary<string, (string Message, ValidationSeverity Severity)>(StringComparer.Ordinal);
-        var recordLevel = new List<ValidationIssue>();
+        var recordLevel = new List<string>();
 
         foreach (var issue in _validator.ValidateRecord(record, _table, ctx))
         {
+            string text = Common.IssueMessage.Resolve(issue);
             if (issue.Field is { } f)
             {
                 if (!byField.TryGetValue(f, out var existing) || issue.Severity > existing.Severity)
-                    byField[f] = (issue.Message, issue.Severity);
+                    byField[f] = (text, issue.Severity);
             }
-            else recordLevel.Add(issue);
+            else recordLevel.Add(text);
         }
 
         var visible = new HashSet<string>(StringComparer.Ordinal);
@@ -311,7 +317,7 @@ public sealed partial class RecordEditorViewModel : ObservableObject
             }
 
         var lines = new List<string>();
-        foreach (var issue in recordLevel) lines.Add(issue.Message);
+        foreach (var t in recordLevel) lines.Add(t);
         foreach (var kv in byField)
             if (!visible.Contains(kv.Key)) lines.Add(kv.Value.Message);
 

@@ -174,7 +174,7 @@ public sealed class LevelIntFieldEditorViewModel : FieldEditorViewModel
         }
     }
 
-    public string Hint => $"A single value, or per-level as  1:{Field.LevelValueKey}…  e.g. \"1:3, 2:5, 3:7\".";
+    public string Hint => string.Format(SchemaLabels.T("Db_LevelIntHint"), Field.LevelValueKey);
 }
 
 public sealed class BoolFieldEditorViewModel : FieldEditorViewModel

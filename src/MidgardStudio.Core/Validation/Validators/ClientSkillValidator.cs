@@ -23,12 +23,12 @@ public static class ClientSkillValidator
             if (!tables.Skid.ContainsKey(skill.Constant))
                 issues.Add(new ValidationIssue(ValidationSeverity.Error, DbId, key, "SKID",
                     $"'{skill.Constant}' is used in the skill tables but is not defined in skillid.lub (SKID) — the client can't resolve it.")
-                { RuleId = "CSKILL.SKID_MISSING" });
+                { RuleId = "CSKILL.SKID_MISSING", MessageKey = "Val_Msg_CSkill_SkidMissing", MessageArgs = new object[] { skill.Constant } });
 
             if (skill is { HasInfo: false } && (skill.HasDescript || skill.HasDelay))
                 issues.Add(new ValidationIssue(ValidationSeverity.Warning, DbId, key, "SkillName",
                     $"'{skill.Constant}' has a description/delay entry but no SKILL_INFO_LIST entry — it won't appear properly in-client.")
-                { RuleId = "CSKILL.INFO_MISSING" });
+                { RuleId = "CSKILL.INFO_MISSING", MessageKey = "Val_Msg_CSkill_InfoMissing", MessageArgs = new object[] { skill.Constant } });
 
             if (skill.HasInfo)
             {
@@ -37,7 +37,7 @@ public static class ClientSkillValidator
                     string oldAegis = skill.Aegis;
                     issues.Add(new ValidationIssue(ValidationSeverity.Warning, DbId, key, "Aegis",
                         $"SKILL_INFO_LIST name '{skill.Aegis}' doesn't match the key SKID.{skill.Constant}.")
-                    { RuleId = "CSKILL.NAME_MISMATCH", Fix = new QuickFix($"Set name to '{skill.Constant}'", () => skill.Aegis = skill.Constant, () => skill.Aegis = oldAegis) { Automatic = true } });
+                    { RuleId = "CSKILL.NAME_MISMATCH", MessageKey = "Val_Msg_CSkill_NameMismatch", MessageArgs = new object[] { skill.Aegis, skill.Constant }, Fix = new QuickFix($"Set name to '{skill.Constant}'", () => skill.Aegis = skill.Constant, () => skill.Aegis = oldAegis) { Automatic = true } });
                 }
 
                 // Only flag an explicit, invalid MaxLv. A skill with NO MaxLv field is valid (the official
@@ -48,7 +48,7 @@ public static class ClientSkillValidator
                     int oldMax = skill.MaxLv;
                     issues.Add(new ValidationIssue(ValidationSeverity.Error, DbId, key, "MaxLv",
                         $"MaxLv is {skill.MaxLv} — it must be at least 1.")
-                    { RuleId = "CSKILL.MAXLV_INVALID", Fix = new QuickFix("Set MaxLv to 1", () => skill.MaxLv = 1, () => skill.MaxLv = oldMax) });
+                    { RuleId = "CSKILL.MAXLV_INVALID", MessageKey = "Val_Msg_CSkill_MaxLvInvalid", MessageArgs = new object[] { skill.MaxLv }, Fix = new QuickFix("Set MaxLv to 1", () => skill.MaxLv = 1, () => skill.MaxLv = oldMax) });
                 }
 
                 CheckArray(issues, key, "SpAmount", skill.SpAmount, skill.MaxLv);
@@ -57,20 +57,20 @@ public static class ClientSkillValidator
                 if (!skill.HasDescript || skill.Description.Count == 0)
                     issues.Add(new ValidationIssue(ValidationSeverity.Warning, DbId, key, "Description",
                         $"'{skill.Constant}' has no SKILL_DESCRIPT entry — it shows no description in-client.")
-                    { RuleId = "CSKILL.DESC_EMPTY" });
+                    { RuleId = "CSKILL.DESC_EMPTY", MessageKey = "Val_Msg_CSkill_DescEmpty", MessageArgs = new object[] { skill.Constant } });
 
                 foreach (var p in skill.NeedSkillList)
                     if (!tables.Skid.ContainsKey(p.Skid))
                         issues.Add(new ValidationIssue(ValidationSeverity.Error, DbId, key, "_NeedSkillList",
                             $"Prerequisite SKID.{p.Skid} is not defined in skillid.lub.")
-                        { RuleId = "CSKILL.NEEDSKILL_UNKNOWN" });
+                        { RuleId = "CSKILL.NEEDSKILL_UNKNOWN", MessageKey = "Val_Msg_CSkill_NeedSkillUnknown", MessageArgs = new object[] { p.Skid } });
 
                 foreach (var job in skill.JobNeedSkillList)
                     foreach (var p in job.Reqs)
                         if (!tables.Skid.ContainsKey(p.Skid))
                             issues.Add(new ValidationIssue(ValidationSeverity.Error, DbId, key, "NeedSkillList",
                                 $"Job prerequisite SKID.{p.Skid} (for {job.Job}) is not defined in skillid.lub.")
-                            { RuleId = "CSKILL.NEEDSKILL_UNKNOWN" });
+                            { RuleId = "CSKILL.NEEDSKILL_UNKNOWN", MessageKey = "Val_Msg_CSkill_NeedSkillUnknownJob", MessageArgs = new object[] { p.Skid, job.Job } });
             }
         }
 
@@ -87,6 +87,8 @@ public static class ClientSkillValidator
             $"{field} has {values.Count} entries but MaxLv is {maxLv} — higher levels read undefined values.")
         {
             RuleId = "CSKILL.ARRAY_TOO_SHORT",
+            MessageKey = "Val_Msg_CSkill_ArrayTooShort",
+            MessageArgs = new object[] { field, values.Count, maxLv },
             Fix = new QuickFix($"Pad {field} to {maxLv} levels",
                 () =>
                 {

@@ -35,6 +35,7 @@ public static class ItemClientFileValidator
                     "Item doesn't exist in Client Items (itemInfo.lua / itemInfo_C.lua) — it will show no name or description in-game.")
                 {
                     RuleId = "XFILE.ITEM_NO_CLIENTTEXT",
+                    MessageKey = "Val_Msg_XFile_NoClientText",
                     // Not Automatic: creating a client entry seeds only name/slots/view (placeholder description),
                     // so it needs the user to finish it — apply, then jump to the new record to confirm it.
                     Fix = new QuickFix("Create client text", () => editor.CreateText(id, name, newSlots, newView), () => editor.Remove(id))
@@ -53,6 +54,8 @@ public static class ItemClientFileValidator
                     $"Slots count mismatch — Server [{slots}], Client [{entry.SlotCount}].")
                 {
                     RuleId = "XFILE.SLOTCOUNT_MISMATCH",
+                    MessageKey = "Val_Msg_XFile_SlotMismatch",
+                    MessageArgs = new object[] { slots, entry.SlotCount },
                     Fix = new QuickFix($"Set client slots to {slots}", () => editor.SetSlots(id, slots), () => editor.SetSlots(id, oldSlots)) { Automatic = true },
                 };
             }
@@ -75,6 +78,8 @@ public static class ItemClientFileValidator
                     "For headgear and garments these must match or the equipped sprite won't appear.")
                 {
                     RuleId = "XFILE.CLASSNUM_MISMATCH",
+                    MessageKey = "Val_Msg_XFile_ClassNumMismatch",
+                    MessageArgs = new object[] { view, entry.ClassNum },
                     Fix = new QuickFix($"Set client ClassNum to {view}", () => editor.SetClassNum(id, view), () => editor.SetClassNum(id, oldView)) { Automatic = true },
                 };
             }
@@ -83,12 +88,12 @@ public static class ItemClientFileValidator
                 && !grf.IconExists(entry.IdentifiedResourceName))
                 yield return new ValidationIssue(ValidationSeverity.Warning, "client_items", key, "icon",
                     $"Inventory icon '{entry.IdentifiedResourceName}.bmp' not found in the configured GRF.")
-                { RuleId = "XFILE.ICON_MISSING" };
+                { RuleId = "XFILE.ICON_MISSING", MessageKey = "Val_Msg_XFile_IconMissing", MessageArgs = new object[] { entry.IdentifiedResourceName } };
 
             if (isHeadgear && view > 0 && accmap.IsAvailable && !mappedViews.Contains(view))
                 yield return new ValidationIssue(ValidationSeverity.Warning, "client_items", key, "View",
                     $"Headgear View {view} is not mapped in accessoryid.lub / accname.lub — the sprite won't show.")
-                { RuleId = "XFILE.HEADGEAR_NO_ACCMAP" };
+                { RuleId = "XFILE.HEADGEAR_NO_ACCMAP", MessageKey = "Val_Msg_XFile_HeadgearNoAccmap", MessageArgs = new object[] { view } };
         }
     }
 }

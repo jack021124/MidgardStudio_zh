@@ -40,7 +40,7 @@ public sealed class UniqueFieldValidator : IOverlayValidator
                 if (counts.GetValueOrDefault(value) > 1)
                     yield return new ValidationIssue(ValidationSeverity.Error, table.Schema.Id, rec.Key.ToString(),
                         field.Name, $"Duplicate {field.Label} '{value}' — it must be unique (case-insensitive).")
-                    { RuleId = $"DUP.{field.Name.ToUpperInvariant()}" };
+                    { RuleId = $"DUP.{field.Name.ToUpperInvariant()}", MessageKey = "Val_Msg_Duplicate", MessageArgs = new object[] { context.L(field.Label), value } };
             }
         }
     }

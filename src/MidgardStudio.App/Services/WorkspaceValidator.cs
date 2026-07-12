@@ -43,7 +43,12 @@ public sealed class WorkspaceValidator
 
     /// <summary>A validation context bound to the current mode and the cached reference index. Reused by
     /// the live per-record path (so editing validates against the same references the panel uses).</summary>
-    public ValidationContext CurrentContext() => ValidationContext.Create(_references, _session.Mode);
+    public ValidationContext CurrentContext() => new()
+    {
+        Mode = _session.Mode,
+        References = _references,
+        LabelResolver = ViewModels.SchemaLabels.Resolve,
+    };
 
     /// <summary>Runs the full workspace scan and returns a structured report. Safe to call off the UI thread.</summary>
     public ValidationReport Validate(ValidationScope scope = ValidationScope.CustomOnly)
@@ -136,6 +141,7 @@ public sealed class WorkspaceValidator
                 "Custom mob is not registered in npcidentity.lub — the client will fail to load its sprite.")
             {
                 RuleId = "XFILE.MOB_NOT_REGISTERED",
+                MessageKey = "Val_Msg_XFile_MobNotRegistered",
                 Category = "Client Mobs", // DbId stays mob_db so "Go to" opens the Monsters list (no Client Mobs tab)
                 Fix = string.IsNullOrEmpty(aegis) ? null : MakeMobSpriteFix(id, aegis),
             });
@@ -191,7 +197,7 @@ public sealed class WorkspaceValidator
             {
                 issues.Add(new ValidationIssue(ValidationSeverity.Warning, ClientSkillValidator.DbId, key, "skill_db",
                     $"No server skill_db entry with id {s.Id} — this client skill has no server-side definition.")
-                { RuleId = "XFILE.CSKILL_NOT_IN_SKILLDB" });
+                { RuleId = "XFILE.CSKILL_NOT_IN_SKILLDB", MessageKey = "Val_Msg_XFile_CSkillNotInSkillDb", MessageArgs = new object[] { s.Id } });
                 continue;
             }
 
@@ -202,6 +208,8 @@ public sealed class WorkspaceValidator
                     $"Max level mismatch — Server [{sv.MaxLevel}], Client [{s.MaxLv}].")
                 {
                     RuleId = "XFILE.CSKILL_MAXLV_MISMATCH",
+                    MessageKey = "Val_Msg_XFile_CSkillMaxLvMismatch",
+                    MessageArgs = new object[] { sv.MaxLevel, s.MaxLv },
                     Fix = new QuickFix($"Set client MaxLv to {sv.MaxLevel}", () => SetClientSkillMaxLv(s.Constant, sv.MaxLevel), () => SetClientSkillMaxLv(s.Constant, oldMaxLv)) { Automatic = true },
                 });
             }
@@ -209,7 +217,7 @@ public sealed class WorkspaceValidator
             if (!string.IsNullOrEmpty(sv.Name) && !string.Equals(sv.Name, s.Constant, StringComparison.Ordinal))
                 issues.Add(new ValidationIssue(ValidationSeverity.Warning, ClientSkillValidator.DbId, key, "Name",
                     $"Aegis mismatch — server skill #{s.Id} is '{sv.Name}', client SKID is '{s.Constant}'.")
-                { RuleId = "XFILE.CSKILL_NAME_MISMATCH" });
+                { RuleId = "XFILE.CSKILL_NAME_MISMATCH", MessageKey = "Val_Msg_XFile_CSkillNameMismatch", MessageArgs = new object[] { s.Id, sv.Name, s.Constant } });
         }
     }
 

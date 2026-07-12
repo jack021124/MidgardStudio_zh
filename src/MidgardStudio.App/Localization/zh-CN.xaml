@@ -414,6 +414,7 @@
     <s:String x:Key="Db_Drops_Add">添加</s:String>
     <s:String x:Key="Db_Drops_AddTip">添加掉落</s:String>
     <s:String x:Key="Db_ClickToEdit">点击编辑</s:String>
+    <s:String x:Key="Db_LevelIntHint">填单个数值,或按等级填写,如 1:{0}… 例如 "1:3, 2:5, 3:7"。</s:String>
 
     <!-- Field summary strings shown next to "…" buttons and in popup editors -->
     <s:String x:Key="Db_Summary_None">无</s:String>
@@ -517,6 +518,18 @@
     <s:String x:Key="SchemaLabel_Fixed Cast Time">固定施法时间</s:String>
     <s:String x:Key="SchemaLabel_Cast Cancel">施法取消率</s:String>
     <s:String x:Key="SchemaLabel_Cooldown">冷却时间</s:String>
+    <s:String x:Key="SchemaLabel_After-Cast Act Delay">施法后动作延迟</s:String>
+    <s:String x:Key="SchemaLabel_After-Cast Walk Delay">施法后移动延迟</s:String>
+    <s:String x:Key="SchemaLabel_Duration 1">持续时间 1</s:String>
+    <s:String x:Key="SchemaLabel_Duration 2">持续时间 2</s:String>
+    <s:String x:Key="SchemaLabel_No Near NPC">禁止靠近 NPC</s:String>
+    <s:String x:Key="SchemaLabel_Level (optional)">等级 (可选)</s:String>
+    <s:String x:Key="SchemaLabel_HP Rate Cost %">HP 消耗率 %</s:String>
+    <s:String x:Key="SchemaLabel_SP Rate Cost %">SP 消耗率 %</s:String>
+    <s:String x:Key="SchemaLabel_AP Rate Cost %">AP 消耗率 %</s:String>
+    <s:String x:Key="SchemaLabel_Weapon">武器</s:String>
+    <s:String x:Key="SchemaLabel_Alternate Id">替代 Id</s:String>
+    <s:String x:Key="SchemaLabel_Interval (ms)">间隔 (毫秒)</s:String>
     <s:String x:Key="SchemaLabel_Hit Count">攻击次数</s:String>
     <s:String x:Key="SchemaLabel_CastDefenseReduction">施法防御减免</s:String>
     <s:String x:Key="SchemaLabel_Cast Delay Flags">施法延迟标志</s:String>
@@ -627,6 +640,16 @@
     <s:String x:Key="SchemaLabel_Storage">仓库</s:String>
     <s:String x:Key="SchemaLabel_Trade">交易</s:String>
     <s:String x:Key="SchemaLabel_Trade Partner">交易伙伴</s:String>
+    <s:String x:Key="SchemaLabel_No Drop">禁止丢弃</s:String>
+    <s:String x:Key="SchemaLabel_No Trade">禁止交易</s:String>
+    <s:String x:Key="SchemaLabel_No Sell">禁止出售</s:String>
+    <s:String x:Key="SchemaLabel_No Cart">禁止入手推车</s:String>
+    <s:String x:Key="SchemaLabel_No Storage">禁止入仓库</s:String>
+    <s:String x:Key="SchemaLabel_No Guild Storage">禁止入公会仓库</s:String>
+    <s:String x:Key="SchemaLabel_No Mail">禁止邮件</s:String>
+    <s:String x:Key="SchemaLabel_No Auction">禁止拍卖</s:String>
+    <s:String x:Key="SchemaLabel_No Consume">禁止消耗</s:String>
+    <s:String x:Key="SchemaLabel_Duration (ms)">持续时间 (毫秒)</s:String>
     <s:String x:Key="SchemaLabel_Usable">可用</s:String>
     <s:String x:Key="SchemaLabel_NPC Types">NPC 类型</s:String>
     <s:String x:Key="SchemaLabel_Dead Branch">枯枝</s:String>
@@ -1021,6 +1044,133 @@
     <s:String x:Key="EnumLabel_Crystalize">结晶</s:String>
     <s:String x:Key="EnumLabel_Fear">恐惧</s:String>
 
+    <!-- ===== 技能标志 (SkillFlags) ===== -->
+    <s:String x:Key="EnumLabel_IsQuest">任务技能</s:String>
+    <s:String x:Key="EnumLabel_IsEnsemble">合奏</s:String>
+    <s:String x:Key="EnumLabel_IsTrap">陷阱</s:String>
+    <s:String x:Key="EnumLabel_TargetSelf">以自身为目标</s:String>
+    <s:String x:Key="EnumLabel_NoTargetSelf">不可对自身</s:String>
+    <s:String x:Key="EnumLabel_PartyOnly">仅队伍</s:String>
+    <s:String x:Key="EnumLabel_GuildOnly">仅公会</s:String>
+    <s:String x:Key="EnumLabel_NoTargetEnemy">不可对敌方</s:String>
+    <s:String x:Key="EnumLabel_IsSong">歌曲</s:String>
+    <s:String x:Key="EnumLabel_IsChorus">合唱</s:String>
+    <s:String x:Key="EnumLabel_IsSpirit">精灵</s:String>
+    <s:String x:Key="EnumLabel_IsGuild">公会技能</s:String>
+    <s:String x:Key="EnumLabel_IsWedding">婚礼技能</s:String>
+    <s:String x:Key="EnumLabel_IsNpc">NPC 技能</s:String>
+    <s:String x:Key="EnumLabel_IgnoreLandProtector">无视大地保护</s:String>
+    <s:String x:Key="EnumLabel_IgnoreGtb">无视 GTB</s:String>
+    <s:String x:Key="EnumLabel_IgnoreAutoGuard">无视自动防御</s:String>
+    <s:String x:Key="EnumLabel_IgnoreCicada">无视蝉</s:String>
+    <s:String x:Key="EnumLabel_IgnoreHovering">无视悬浮</s:String>
+    <s:String x:Key="EnumLabel_IgnoreKagehumi">无视影缚</s:String>
+    <s:String x:Key="EnumLabel_IgnoreWugBite">无视狼咬</s:String>
+    <s:String x:Key="EnumLabel_AllowWhenHidden">隐身时可用</s:String>
+    <s:String x:Key="EnumLabel_AllowWhenPerforming">演奏时可用</s:String>
+    <s:String x:Key="EnumLabel_AllowOnWarg">骑狼时可用</s:String>
+    <s:String x:Key="EnumLabel_AllowOnMado">魔导机甲时可用</s:String>
+    <s:String x:Key="EnumLabel_DisableNearNpc">靠近 NPC 时禁用</s:String>
+    <s:String x:Key="EnumLabel_TargetTrap">以陷阱为目标</s:String>
+    <s:String x:Key="EnumLabel_TargetEmperium">以华丽金属为目标</s:String>
+    <s:String x:Key="EnumLabel_TargetHidden">以隐身单位为目标</s:String>
+    <s:String x:Key="EnumLabel_TargetManHole">以人孔为目标</s:String>
+    <s:String x:Key="EnumLabel_IgnoreBgReduction">无视战场减伤</s:String>
+    <s:String x:Key="EnumLabel_IgnoreGvgReduction">无视攻城战减伤</s:String>
+    <s:String x:Key="EnumLabel_IgnoreNonCritAtkBonus">无视非暴击攻击加成</s:String>
+    <s:String x:Key="EnumLabel_IncreaseDanceWithWugDamage">提升与狼共舞伤害</s:String>
+    <s:String x:Key="EnumLabel_ShowScale">显示范围</s:String>
+    <s:String x:Key="EnumLabel_Toggleable">可切换</s:String>
+    <s:String x:Key="EnumLabel_IsAutoShadowSpell">自动暗影咒语</s:String>
+    <s:String x:Key="EnumLabel_AlterRangeVulture">射程调整·秃鹰</s:String>
+    <s:String x:Key="EnumLabel_AlterRangeSnakeEye">射程调整·蛇眼</s:String>
+    <s:String x:Key="EnumLabel_AlterRangeShadowJump">射程调整·暗影跳跃</s:String>
+    <s:String x:Key="EnumLabel_AlterRangeRadius">射程调整·半径</s:String>
+    <s:String x:Key="EnumLabel_AlterRangeResearchTrap">射程调整·陷阱研究</s:String>
+
+    <!-- ===== 伤害标志 (SkillDamageFlags) ===== -->
+    <s:String x:Key="EnumLabel_NoDamage">无伤害</s:String>
+    <s:String x:Key="EnumLabel_Splash">溅射</s:String>
+    <s:String x:Key="EnumLabel_SplashSplit">溅射分裂</s:String>
+    <s:String x:Key="EnumLabel_IgnoreAtkCard">无视攻击卡片</s:String>
+    <s:String x:Key="EnumLabel_IgnoreElement">无视属性</s:String>
+    <s:String x:Key="EnumLabel_IgnoreDefense">无视防御</s:String>
+    <s:String x:Key="EnumLabel_IgnoreFlee">无视回避</s:String>
+    <s:String x:Key="EnumLabel_IgnoreDefCard">无视防御卡片</s:String>
+    <s:String x:Key="EnumLabel_Critical">必中</s:String>
+    <s:String x:Key="EnumLabel_IgnoreLongCard">无视远程卡片</s:String>
+    <s:String x:Key="EnumLabel_SimpleDefense">简易防御</s:String>
+
+    <!-- ===== 施法标志 (SkillCastFlags) ===== -->
+    <s:String x:Key="EnumLabel_IgnoreDex">无视 DEX</s:String>
+    <s:String x:Key="EnumLabel_IgnoreStatus">无视状态</s:String>
+    <s:String x:Key="EnumLabel_IgnoreItemBonus">无视道具加成</s:String>
+
+    <!-- ===== 复制时移除需求 (SkillRemoveRequirement) ===== -->
+    <s:String x:Key="EnumLabel_HpCost">HP 消耗</s:String>
+    <s:String x:Key="EnumLabel_SpCost">SP 消耗</s:String>
+    <s:String x:Key="EnumLabel_ApCost">AP 消耗</s:String>
+    <s:String x:Key="EnumLabel_HpRateCost">HP 消耗率</s:String>
+    <s:String x:Key="EnumLabel_SpRateCost">SP 消耗率</s:String>
+    <s:String x:Key="EnumLabel_ApRateCost">AP 消耗率</s:String>
+    <s:String x:Key="EnumLabel_MaxHpTrigger">最大 HP 触发</s:String>
+    <s:String x:Key="EnumLabel_ZenyCost">Zeny 消耗</s:String>
+    <s:String x:Key="EnumLabel_State">状态需求</s:String>
+    <s:String x:Key="EnumLabel_Status">异常状态需求</s:String>
+    <s:String x:Key="EnumLabel_SpiritSphereCost">灵球消耗</s:String>
+    <s:String x:Key="EnumLabel_ItemCost">物品消耗</s:String>
+    <s:String x:Key="EnumLabel_Equipment">装备需求</s:String>
+
+    <!-- ===== 禁止靠近 NPC 类型 (SkillNoNearNpc) ===== -->
+    <s:String x:Key="EnumLabel_WarpPortal">传送阵</s:String>
+    <s:String x:Key="EnumLabel_Shop">露天商店</s:String>
+    <s:String x:Key="EnumLabel_NPC">NPC</s:String>
+    <s:String x:Key="EnumLabel_Tomb">墓碑</s:String>
+
+    <!-- ===== 武器类型补充 (SkillWeapon 缺失值) ===== -->
+    <s:String x:Key="EnumLabel_1hSword">单手剑</s:String>
+    <s:String x:Key="EnumLabel_2hSword">双手剑</s:String>
+    <s:String x:Key="EnumLabel_1hSpear">单手矛</s:String>
+    <s:String x:Key="EnumLabel_2hSpear">双手矛</s:String>
+    <s:String x:Key="EnumLabel_1hAxe">单手斧</s:String>
+    <s:String x:Key="EnumLabel_2hAxe">双手斧</s:String>
+    <s:String x:Key="EnumLabel_2hMace">双手钝器</s:String>
+    <s:String x:Key="EnumLabel_Cbow">弩</s:String>
+    <s:String x:Key="EnumLabel_Staff">法杖</s:String>
+    <s:String x:Key="EnumLabel_Musical">乐器</s:String>
+    <s:String x:Key="EnumLabel_Gatling">格林枪</s:String>
+    <s:String x:Key="EnumLabel_Huuma">风魔手里剑</s:String>
+    <s:String x:Key="EnumLabel_Fist">拳</s:String>
+    <s:String x:Key="EnumLabel_Double_DD">双持·短剑短剑</s:String>
+    <s:String x:Key="EnumLabel_Double_SS">双持·短剑短剑(同)</s:String>
+    <s:String x:Key="EnumLabel_Double_AA">双持·斧斧</s:String>
+    <s:String x:Key="EnumLabel_Double_DS">双持·短剑斧</s:String>
+    <s:String x:Key="EnumLabel_Double_DA">双持·斧短剑</s:String>
+    <s:String x:Key="EnumLabel_Double_SA">双持·短剑斧(同)</s:String>
+
+    <!-- ===== 弹药类型补充 (SkillAmmo 缺失值) ===== -->
+    <s:String x:Key="EnumLabel_Cannonball">炮弹</s:String>
+    <s:String x:Key="EnumLabel_Throwweapon">投掷武器</s:String>
+
+    <!-- ===== 地面单位标志 (SkillUnitFlag 缺失值) ===== -->
+    <s:String x:Key="EnumLabel_NoReiteration">禁止重复</s:String>
+    <s:String x:Key="EnumLabel_NoFootSet">禁止脚下放置</s:String>
+    <s:String x:Key="EnumLabel_NoOverlap">禁止重叠</s:String>
+    <s:String x:Key="EnumLabel_PathCheck">路径检查</s:String>
+    <s:String x:Key="EnumLabel_NoPc">对玩家无效</s:String>
+    <s:String x:Key="EnumLabel_NoMob">对魔物无效</s:String>
+    <s:String x:Key="EnumLabel_Skill">技能单位</s:String>
+    <s:String x:Key="EnumLabel_Dance">舞蹈</s:String>
+    <s:String x:Key="EnumLabel_Ensemble">合奏</s:String>
+    <s:String x:Key="EnumLabel_Song">歌唱</s:String>
+    <s:String x:Key="EnumLabel_DualMode">双模式</s:String>
+    <s:String x:Key="EnumLabel_NoKnockback">不可击退</s:String>
+    <s:String x:Key="EnumLabel_RangedSingleUnit">远程单一单位</s:String>
+    <s:String x:Key="EnumLabel_CrazyWeedImmune">免疫疯狂种子</s:String>
+    <s:String x:Key="EnumLabel_RemovedByFireRain">被火焰喷射移除</s:String>
+    <s:String x:Key="EnumLabel_KnockbackGroup">击退组</s:String>
+    <s:String x:Key="EnumLabel_HiddenTrap">隐藏陷阱</s:String>
+
     <!-- ===== 校验面板 ===== -->
     <s:String x:Key="Val_Title">校验</s:String>
     <s:String x:Key="Val_Run">运行校验</s:String>
@@ -1041,6 +1191,7 @@
     <s:String x:Key="Val_QuickFixPrefix">快速修复：</s:String>
     <s:String x:Key="Val_FixAllBatch">修复 {0} 个问题</s:String>
     <s:String x:Key="Val_FixButtonDefault">修复</s:String>
+    <s:String x:Key="Val_FixButtonCreate">创建</s:String>
     <s:String x:Key="Val_FixedPill">✓ 已修复</s:String>
     <s:String x:Key="Val_Col_Severity">严重性</s:String>
     <s:String x:Key="Val_Col_Database">数据库</s:String>
@@ -1078,6 +1229,56 @@
     <s:String x:Key="Val_Sev_Error">错误</s:String>
     <s:String x:Key="Val_Sev_Warning">警告</s:String>
     <s:String x:Key="Val_Sev_Info">信息</s:String>
+
+    <!-- 校验问题消息模板(IssueMessageConverter,参数按顺序填入) -->
+    <s:String x:Key="Val_Msg_NotApplicable">{0} 已设置但在当前位置无效,将被忽略。</s:String>
+    <s:String x:Key="Val_Msg_RenewalMismatch">{0} 仅在 {1} 模式存在,当前模式下会被忽略。</s:String>
+    <s:String x:Key="Val_Msg_Required">{0} 是必填项。</s:String>
+    <s:String x:Key="Val_Msg_EnumInvalid">'{0}' 不是有效的 {1} 值 —— 请检查拼写(rAthena 可能会拒绝它)。</s:String>
+    <s:String x:Key="Val_Msg_FlagInvalid">'{0}' 不是有效的 {1} 选项 —— 请检查拼写(rAthena 可能会拒绝它)。</s:String>
+    <s:String x:Key="Val_Msg_ReferenceMissing">{0} '{1}' 在 {2} 中不存在。</s:String>
+    <s:String x:Key="Val_Msg_BoundsRange">{0} 必须在 {1} 到 {2} 之间(当前为 {3})。</s:String>
+    <s:String x:Key="Val_Msg_BoundsMin">{0} 至少为 {1}(当前为 {2})。</s:String>
+    <s:String x:Key="Val_Msg_BoundsMax">{0} 至多为 {1}(当前为 {2})。</s:String>
+    <s:String x:Key="Val_Msg_MaxLength">{0} 长度为 {1} 个字符,最大允许 {2} 个字符。</s:String>
+    <s:String x:Key="Val_Msg_ScriptUnbalanced">{0} 的括号/方括号/圆括号不匹配 —— 游戏中可能会报错。</s:String>
+    <s:String x:Key="Val_Msg_Duplicate">{0} '{1}' 重复 —— 该字段必须唯一(不区分大小写)。</s:String>
+    <s:String x:Key="Val_Msg_MobIdRange">魔物 ID {0} 超出有效范围。请使用 1001–3998 或 20021–31998(1000、3999、20020、31999 本身无效)。</s:String>
+    <s:String x:Key="Val_Msg_MobLevelRange">{0} 应至少为 1。</s:String>
+    <s:String x:Key="Val_Msg_MobElementLvl">属性等级必须在 1 到 4 之间(当前为 {0})。</s:String>
+    <s:String x:Key="Val_Msg_MobDropCount">一个魔物最多只能有 {0} 个普通掉落,多出的 {1} 个将被忽略。</s:String>
+    <s:String x:Key="Val_Msg_MobMvpDropCount">一个魔物最多只能有 {0} 个 MVP 掉落,多出的 {1} 个将被忽略。</s:String>
+    <s:String x:Key="Val_Msg_MobMvpNoFlag">魔物配置了 MVP 掉落/经验但没有 Mvp 模式 —— MVP 奖励不会触发。</s:String>
+    <s:String x:Key="Val_Msg_ItemSubtypeMismatch">子类型 '{0}' 不是有效的 {1} 子类型 —— 服务端会忽略它并使用 {1} 默认值。</s:String>
+    <s:String x:Key="Val_Msg_ItemEquipNoLoc">{0} 没有装备位置,rAthena 会强制改为 Etc 使其无法装备。请设置一个装备位置。</s:String>
+    <s:String x:Key="Val_Msg_ItemLevelOrder">装备最低等级({0})必须 ≤ 最高等级({1})。</s:String>
+    <s:String x:Key="Val_Msg_ItemWeaponLvl">武器等级 {0} 超过了 {2} 模式下的上限 {1}。</s:String>
+    <s:String x:Key="Val_Msg_ItemArmorLvl">防具等级 {0} 超过了 {2} 模式下的上限 {1}。</s:String>
+    <s:String x:Key="Val_Msg_ComboMinMembers">套装至少需要 2 个物品;rAthena 会拒绝少于 2 个的套装。</s:String>
+    <s:String x:Key="Val_Msg_ComboMemberMissing">套装成员 '{0}' 在 item_db 中找不到;rAthena 会拒绝整个套装。</s:String>
+    <s:String x:Key="Val_Msg_MobAvailJobOnly">'{0}' 只有在 Sprite 为玩家职业时才生效 —— rAthena 会拒绝此条目。请清除该字段,或将 Sprite 设为 JOB_* 精灵。</s:String>
+    <s:String x:Key="Val_Msg_MobAvailPetEquipNotPet">{0} 只有在魔物('{1}')是已定义的宠物(pet_db)时才生效。请清除该字段,或使用宠物魔物。</s:String>
+    <s:String x:Key="Val_Msg_CSkill_SkidMissing">'{0}' 在技能表中使用,但未在 skillid.lub(SKID)中定义 —— 客户端无法解析它。</s:String>
+    <s:String x:Key="Val_Msg_CSkill_InfoMissing">'{0}' 有描述/延迟条目但没有 SKILL_INFO_LIST 条目 —— 客户端中不会正确显示。</s:String>
+    <s:String x:Key="Val_Msg_CSkill_NameMismatch">SKILL_INFO_LIST 名称 '{0}' 与 SKID 键 '{1}' 不匹配。</s:String>
+    <s:String x:Key="Val_Msg_CSkill_MaxLvInvalid">MaxLv 为 {0} —— 必须至少为 1。</s:String>
+    <s:String x:Key="Val_Msg_CSkill_DescEmpty">'{0}' 没有 SKILL_DESCRIPT 条目 —— 客户端中不显示描述。</s:String>
+    <s:String x:Key="Val_Msg_CSkill_NeedSkillUnknown">前置技能 SKID.{0} 未在 skillid.lub 中定义。</s:String>
+    <s:String x:Key="Val_Msg_CSkill_NeedSkillUnknownJob">职业前置技能 SKID.{0}(对应 {1})未在 skillid.lub 中定义。</s:String>
+    <s:String x:Key="Val_Msg_CSkill_ArrayTooShort">{0} 有 {1} 个条目但 MaxLv 为 {2} —— 更高等级会读取到未定义的值。</s:String>
+    <s:String x:Key="Val_Msg_XFile_NoClientText">物品在客户端物品(itemInfo.lua / itemInfo_C.lua)中不存在 —— 游戏中将不显示名称或描述。</s:String>
+    <s:String x:Key="Val_Msg_XFile_SlotMismatch">插槽数不匹配 —— 服务端 [{0}],客户端 [{1}]。</s:String>
+    <s:String x:Key="Val_Msg_XFile_ClassNumMismatch">View / ClassNum 不匹配 —— 服务端 View [{0}],客户端 ClassNum [{1}]。头饰和披风必须一致,否则装备后精灵图不会显示。</s:String>
+    <s:String x:Key="Val_Msg_XFile_IconMissing">背包图标 '{0}.bmp' 在配置的 GRF 中找不到。</s:String>
+    <s:String x:Key="Val_Msg_XFile_HeadgearNoAccmap">头饰 View {0} 未在 accessoryid.lub / accname.lub 中映射 —— 精灵图不会显示。</s:String>
+    <s:String x:Key="Val_Msg_XFile_MobNotRegistered">自定义魔物未在 npcidentity.lub 中注册 —— 客户端将无法加载其精灵图。</s:String>
+    <s:String x:Key="Val_Msg_XFile_CSkillNotInSkillDb">skill_db 中没有 id 为 {0} 的条目 —— 此客户端技能没有服务端定义。</s:String>
+    <s:String x:Key="Val_Msg_XFile_CSkillMaxLvMismatch">最大等级不匹配 —— 服务端 [{0}],客户端 [{1}]。</s:String>
+    <s:String x:Key="Val_Msg_XFile_CSkillNameMismatch">Aegis 不匹配 —— 服务端技能 #{0} 为 '{1}',客户端 SKID 为 '{2}'。</s:String>
+    <s:String x:Key="Val_Msg_CashShop_UnknownItem">'{0}' 不是 item_db 中的物品 —— 服务端会忽略此商城条目。</s:String>
+    <s:String x:Key="Val_Msg_CashShop_PriceZero">'{0}' 在 {1} 标签页的价格为 {2} 点数。</s:String>
+    <s:String x:Key="Val_Msg_CashShop_PriceOverflow">'{0}' 在 {1} 标签页的价格为 {2},超过最大值 {3} —— 服务端会丢弃整个 {1} 标签页。</s:String>
+    <s:String x:Key="Val_Msg_CashShop_DupInTab">'{0}' 在 {1} 标签页中出现了 {2} 次。</s:String>
 
     <!-- 条目来源标签(OriginToLabelConverter) -->
     <s:String x:Key="Db_Origin_Override">覆盖</s:String>
